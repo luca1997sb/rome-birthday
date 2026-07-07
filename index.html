@@ -469,6 +469,7 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script src="https://www.youtube.com/iframe_api" async></script>
 
 <div class="grain" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
@@ -584,6 +585,9 @@
       <p>Plan to arrive Thursday 26 November and fly home Sunday 29 November. Flight details and recommendations to follow.</p>
     </div>
   </div>
+  <figure class="photo wide reveal" style="margin-top:1.2rem">
+    <div class="ph"><img src="img/campagna.jpg" alt="Pines and greens at a golf club on the edge of Rome" loading="lazy"></div>
+  </figure>
 </section>
 
 <div class="interlude">
@@ -615,12 +619,6 @@
     </div>
   </div>
 </section>
-
-<div class="interlude">
-  <figure class="photo wide reveal">
-    <div class="ph"><img src="img/campagna.jpg" alt="Pines and green hills on the edge of Rome" loading="lazy"></div>
-  </figure>
-</div>
 
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
@@ -880,12 +878,38 @@
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 
-  /* ------- music: hidden audio-only YouTube stream ------- */
+  /* ------- music: hidden audio-only player, pre-loaded for instant start ------- */
   var musicBtn = document.getElementById("musicbtn");
   var musicLabel = document.getElementById("musiclabel");
   var musicFrame = document.getElementById("musicframe");
-  var musicOn = false;
+  var ytPlayer = null, ytReady = false, musicOn = false;
+
+  window.onYouTubeIframeAPIReady = function(){
+    var host = document.createElement("div");
+    host.id = "ytplayer";
+    musicFrame.appendChild(host);
+    ytPlayer = new YT.Player("ytplayer", {
+      width: 200, height: 120,
+      videoId: "U6NqD0P0eY8",
+      playerVars: { playsinline: 1 },
+      events: {
+        onReady: function(){ ytReady = true; },
+        onStateChange: function(e){
+          var playing = e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING;
+          musicBtn.classList.toggle("playing", playing);
+          musicLabel.textContent = playing ? "Stop music" : "Play music";
+          musicOn = playing;
+        }
+      }
+    });
+  };
+
   musicBtn.addEventListener("click", function(){
+    if (ytReady && ytPlayer) {
+      if (musicOn) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
+      return;
+    }
+    // fallback if the API script was blocked or is still loading
     if (musicOn) {
       musicFrame.innerHTML = "";
       musicBtn.classList.remove("playing");
