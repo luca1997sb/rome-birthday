@@ -888,6 +888,7 @@
   // When the program lands, add entries like:
   //   { name:"Dinner, night one", lat:41.889, lng:12.472, type:"activity", map:"Restaurant+Name+Rome" }
   var PLACES = [
+    { name:"Giulia & Nicola's", lat:41.9058, lng:12.4642, type:"activity", map:"Via+Crescenzio+42+Rome" },
     { name:"St Peter's",        lat:41.9022, lng:12.4539, type:"landmark", map:"St+Peter's+Basilica+Rome" },
     { name:"Piazza del Popolo", lat:41.9109, lng:12.4763, type:"landmark", map:"Piazza+del+Popolo+Rome" },
     { name:"Villa Borghese",    lat:41.9128, lng:12.4853, type:"landmark", map:"Villa+Borghese+Rome" },
@@ -1000,11 +1001,11 @@
   function buildModalBody(){
     if (isiOS && !isStandalone) {
       mBody.innerHTML =
-        '<p>Two taps and this page lives on your Home Screen like an app — with a gentle ping when new plans land.</p>' +
-        '<ol><li>Tap <b>Share</b> below (the square with the arrow)</li>' +
-        '<li>Choose <b>Add to Home Screen</b></li>' +
-        '<li>Open <b>Roma 2026</b> from there once — it\'ll offer notifications</li></ol>' +
-        '<p class="m-note">iPhones only allow notifications for pages on the Home Screen — Apple\'s rule, not ours.</p>';
+        '<p>Put this page on your Home Screen and it becomes the weekend\'s app — with a gentle ping when new plans land. In <b>Safari</b>:</p>' +
+        '<ol><li>Tap <b>Share</b> at the bottom (the square with the arrow&nbsp;<span style="font-family:-apple-system">&#x2BAD;</span>)</li>' +
+        '<li>Scroll down, choose <b>Add to Home Screen</b>, tap <b>Add</b></li>' +
+        '<li>Open <b>Roma 2026</b> from your Home Screen once — it will ask to allow notifications</li></ol>' +
+        '<p class="m-note">Opened this from WhatsApp? Tap <b>&#8943;</b> top-right → <b>Open in Safari</b> first. And iPhones only allow notifications for pages on the Home Screen — Apple\'s rule, not ours.</p>';
       return;
     }
     var installBtn = (!isStandalone && deferredPrompt) ? '<button class="btn btn-ghost" id="minstall">Add the app</button>' : "";
