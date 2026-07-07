@@ -960,6 +960,14 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(function(){});
   }
+  // clear the app-icon badge whenever the app is opened or comes to the foreground
+  function clearBadge(){
+    if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function(){});
+  }
+  clearBadge();
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible") clearBadge();
+  });
   var deferredPrompt = null;
   window.addEventListener("beforeinstallprompt", function(e){
     e.preventDefault();

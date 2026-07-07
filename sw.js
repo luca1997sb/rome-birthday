@@ -1,5 +1,5 @@
 /* Roma 2026 — service worker: offline cache + push notifications */
-var CACHE = "roma26-v1";
+var CACHE = "roma26-v2";
 
 self.addEventListener("install", function (e) {
   self.skipWaiting();
@@ -36,12 +36,18 @@ self.addEventListener("push", function (e) {
       icon: "icon-192.png",
       badge: "icon-192.png",
       data: { url: data.url }
+    }).then(function () {
+      if (!navigator.setAppBadge) return;
+      return self.registration.getNotifications().then(function (list) {
+        return navigator.setAppBadge(Math.max(list.length, 1)).catch(function () {});
+      });
     })
   );
 });
 
 self.addEventListener("notificationclick", function (e) {
   e.notification.close();
+  if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function () {});
   var url = (e.notification.data && e.notification.data.url) || "./";
   e.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
