@@ -311,7 +311,7 @@
   @media(min-width:820px){.info-grid{grid-template-columns:1fr 1fr}}
   .info-card{
     border:1px solid var(--line);background:rgba(255,255,255,.4);
-    padding:2rem 1.9rem;
+    padding:2rem 1.9rem;min-width:0;
     transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
   }
   .info-card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(33,29,24,.35)}
@@ -337,13 +337,6 @@
   .wxd .t{font-family:var(--serif);font-size:.95rem}
   .wxd .t span{color:var(--ink-soft);font-size:.8rem}
 
-  /* ---------- gallery triptych ---------- */
-  .tri{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.4rem}
-  @media(min-width:760px){
-    .tri{grid-template-columns:repeat(3,1fr);align-items:start}
-    .tri .photo:nth-child(2){margin-top:2.2rem}
-  }
-  .tri .photo .ph{aspect-ratio:4/5}
   .bring{list-style:none;margin:0;padding:0}
   .bring li{
     display:flex;gap:.9rem;align-items:baseline;
@@ -353,51 +346,24 @@
   .bring .b-what{font-family:var(--serif);font-size:1.08rem;white-space:nowrap}
   .bring .b-why{font-size:.85rem;color:var(--ink-soft)}
 
-  /* ---------- photos ---------- */
-  .photo{
-    border:1px solid var(--line);background:rgba(255,255,255,.5);
-    padding:.8rem;margin:0;
-    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
-  }
-  .photo:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(33,29,24,.45)}
-  .photo .ph{overflow:hidden;aspect-ratio:16/10;background:var(--paper-2)}
-  .photo img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    filter:sepia(.14) saturate(.88) contrast(.98);
-    transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
-  }
-  .photo:hover img{transform:scale(1.05)}
-  .photo figcaption{
-    font-family:var(--serif);font-style:italic;font-size:.9rem;
-    color:var(--ink-soft);padding:.7rem .2rem 0;
-  }
+  /* ---------- mood bands ---------- */
   .mood{
-    height:52vh;min-height:320px;margin-top:5rem;
-    background:url("img/campagna.jpg") center 65%/cover no-repeat;
+    height:52vh;min-height:300px;margin-top:5rem;
+    background-size:cover;background-repeat:no-repeat;
     border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   }
+  .mood-colosseo{background-image:url("img/colosseo.jpg");background-position:center 42%}
+  .mood-campagna{background-image:url("img/campagna.jpg");background-position:center 65%}
+  .mood-aranci{background-image:url("img/aranci.jpg");background-position:center 58%}
   @media(min-width:900px){.mood{background-attachment:fixed}}
+  @media(max-width:640px){.mood{height:40vh;min-height:240px;margin-top:3.5rem}}
 
-  /* ---------- music ---------- */
-  .music-card{
-    position:fixed;right:1.1rem;top:4rem;z-index:70;
-    width:min(300px,calc(100vw - 2.2rem));
-    background:var(--paper);border:1px solid var(--ink);padding:1rem;
-    box-shadow:0 24px 50px -24px rgba(33,29,24,.55);
-    opacity:0;pointer-events:none;transform:translateY(-10px);
-    transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1);
+  /* ---------- music (hidden audio-only player) ---------- */
+  #musicframe{
+    position:fixed;bottom:0;left:0;width:2px;height:2px;
+    opacity:.01;pointer-events:none;overflow:hidden;z-index:-1;
   }
-  .music-card.open{opacity:1;pointer-events:auto;transform:none}
-  .music-card .mc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.7rem}
-  .music-card .mc-t{font-family:var(--serif);font-style:italic;font-size:1.02rem}
-  .music-card .mc-s{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
-  .music-card .mc-close{
-    background:none;border:none;cursor:pointer;color:var(--ink-soft);
-    font-size:1rem;line-height:1;padding:.2rem;
-  }
-  .music-card .mc-close:hover{color:var(--terra)}
-  .music-card .mc-frame{aspect-ratio:16/9;background:var(--paper-2)}
-  .music-card iframe{width:100%;height:100%;border:0;display:block}
+  #musicframe iframe{width:200px;height:120px;border:0}
 
   /* ---------- skyline ---------- */
   .skyline{
@@ -553,24 +519,7 @@
   </div>
 </section>
 
-<section id="gallery">
-  <div class="sec-kicker reveal">Roma</div>
-  <h2 class="sec-title reveal">Three <em>reasons.</em></h2>
-  <div class="tri">
-    <figure class="photo reveal">
-      <div class="ph"><img src="img/aranci.jpg" alt="Umbrella pines at the Giardino degli Aranci at sunset, St Peter's in the distance" loading="lazy"></div>
-      <figcaption>Golden hour at the Giardino degli Aranci</figcaption>
-    </figure>
-    <figure class="photo reveal d1">
-      <div class="ph"><img src="img/colosseo.jpg" alt="The Colosseum lit by a stormy sunset, framed by umbrella pines" loading="lazy"></div>
-      <figcaption>The Colosseum, after the rain</figcaption>
-    </figure>
-    <figure class="photo reveal d2">
-      <div class="ph"><img src="img/loggia.jpg" alt="A frescoed loggia lined with marble busts" loading="lazy"></div>
-      <figcaption>A quiet loggia, somewhere central</figcaption>
-    </figure>
-  </div>
-</section>
+<div class="mood mood-colosseo reveal" role="img" aria-label="The Colosseum lit by a stormy sunset, framed by umbrella pines"></div>
 
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
@@ -588,6 +537,8 @@
     </div>
   </div>
 </section>
+
+<div class="mood mood-campagna reveal" role="img" aria-label="Pines and green hills on the edge of Rome"></div>
 
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
@@ -613,7 +564,7 @@
   </div>
 </section>
 
-<div class="mood reveal" role="img" aria-label="Pines and green hills on the edge of Rome"></div>
+<div class="mood mood-aranci reveal" role="img" aria-label="Umbrella pines at the Giardino degli Aranci at sunset"></div>
 
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
@@ -674,16 +625,7 @@
   <div class="small">S·P·Q·R &nbsp;·&nbsp; 26 — 29 November 2026</div>
 </footer>
 
-<div class="music-card" id="musiccard" aria-hidden="true">
-  <div class="mc-head">
-    <div>
-      <div class="mc-t">Sì, viaggiare</div>
-      <div class="mc-s">Lucio Battisti · 1977</div>
-    </div>
-    <button class="mc-close" id="musicclose" aria-label="Close player">✕</button>
-  </div>
-  <div class="mc-frame" id="musicframe"></div>
-</div>
+<div id="musicframe" aria-hidden="true"></div>
 
 <script>
 (function(){
@@ -818,6 +760,10 @@
     el.innerHTML = "";
     var map = L.map(el, { scrollWheelZoom:false, zoomControl:true })
       .setView([41.8975, 12.4809], 14);
+    // on phones, one-finger drag would trap page scrolling — keep pinch-zoom only
+    if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
+      map.dragging.disable();
+    }
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom:19
@@ -860,31 +806,24 @@
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 
-  /* ------- music ------- */
+  /* ------- music: hidden audio-only YouTube stream ------- */
   var musicBtn = document.getElementById("musicbtn");
   var musicLabel = document.getElementById("musiclabel");
-  var musicCard = document.getElementById("musiccard");
   var musicFrame = document.getElementById("musicframe");
-  var musicClose = document.getElementById("musicclose");
-  function openMusic(){
-    musicFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/U6NqD0P0eY8?autoplay=1" ' +
-      'title="Sì, viaggiare — Lucio Battisti" allow="autoplay; encrypted-media"></iframe>';
-    musicCard.classList.add("open");
-    musicCard.setAttribute("aria-hidden","false");
-    musicBtn.classList.add("playing");
-    musicLabel.textContent = "Stop music";
-  }
-  function closeMusic(){
-    musicFrame.innerHTML = "";
-    musicCard.classList.remove("open");
-    musicCard.setAttribute("aria-hidden","true");
-    musicBtn.classList.remove("playing");
-    musicLabel.textContent = "Play music";
-  }
+  var musicOn = false;
   musicBtn.addEventListener("click", function(){
-    if (musicCard.classList.contains("open")) closeMusic(); else openMusic();
+    if (musicOn) {
+      musicFrame.innerHTML = "";
+      musicBtn.classList.remove("playing");
+      musicLabel.textContent = "Play music";
+    } else {
+      musicFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/U6NqD0P0eY8?autoplay=1&playsinline=1" ' +
+        'title="Sì, viaggiare — Lucio Battisti" allow="autoplay; encrypted-media"></iframe>';
+      musicBtn.classList.add("playing");
+      musicLabel.textContent = "Stop music";
+    }
+    musicOn = !musicOn;
   });
-  musicClose.addEventListener("click", closeMusic);
 
   /* ------- live weather (Open-Meteo, free, no key) ------- */
   function wxGlyph(c){
