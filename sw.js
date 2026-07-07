@@ -13,6 +13,7 @@ self.addEventListener("activate", function (e) {
 // assets: stale-while-revalidate
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== self.location.origin) return;
+  if (e.request.url.indexOf("tally.json") !== -1) return; // always live, never cached
 
   if (e.request.mode === "navigate") {
     e.respondWith(

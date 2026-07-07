@@ -841,11 +841,23 @@
   /* ------- render ------- */
   var statusEl = document.getElementById("status");
 
+  // shared tally: tally.json in the repo is kept in sync with the RSVPs
+  // that reach Luca; local answers on this device take precedence for freshness
+  var sharedTally = {};
+  function loadTally(){
+    fetch("tally.json?v=" + Date.now(), { cache: "no-store" })
+      .then(function(r){ return r.json(); })
+      .then(function(t){ if (t && typeof t === "object") { sharedTally = t; renderTally(); } })
+      .catch(function(){});
+  }
+
   function answerFor(name){
     if (CONFIRMED.indexOf(name) !== -1) return "yes";
     var a = null;
     try { a = localStorage.getItem(ansKey(name)); } catch(e){}
-    return (a === "yes" || a === "no" || a === "maybe") ? a : null;
+    if (a === "yes" || a === "no" || a === "maybe") return a;
+    var s = sharedTally[name];
+    return (s === "yes" || s === "no" || s === "maybe") ? s : null;
   }
 
   var tallyEl = document.getElementById("tally");
@@ -1202,6 +1214,10 @@
   }
 
   render();
+  loadTally();
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible") loadTally();
+  });
 })();
 </script>
 </body>
