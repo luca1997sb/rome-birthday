@@ -505,6 +505,15 @@
     border-top:1px solid var(--line);
     padding:3rem 1.25rem 3.5rem;text-align:center;
   }
+  .countdown{margin-bottom:1.8rem}
+  .countdown .cd-n{
+    display:block;font-family:var(--serif);font-size:clamp(2.6rem,7vw,4rem);
+    line-height:1;color:var(--terra);
+  }
+  .countdown .cd-l{
+    display:block;margin-top:.4rem;
+    font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);
+  }
   footer .big{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,4vw,2.1rem);margin-bottom:.6rem}
   footer .small{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
 
@@ -725,6 +734,10 @@
 </svg>
 
 <footer>
+  <div class="countdown reveal" id="countdown" hidden>
+    <span class="cd-n" id="cdnum"></span>
+    <span class="cd-l" id="cdlabel"></span>
+  </div>
   <div class="big">Ci vediamo a Roma.</div>
   <div class="small">S·P·Q·R &nbsp;·&nbsp; 26-29 November 2026</div>
 </footer>
@@ -1237,6 +1250,24 @@
   } else {
     document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
   }
+
+  /* ------- countdown ------- */
+  (function(){
+    var box = document.getElementById("countdown");
+    var start = new Date("2026-11-26T13:00:00+01:00"); // the late lunch
+    var end = new Date("2026-11-29T23:59:00+01:00");
+    var now = new Date();
+    if (now > end) return; // weekend over, stay quiet
+    box.hidden = false;
+    if (now >= start) {
+      document.getElementById("cdnum").textContent = "Ora";
+      document.getElementById("cdlabel").textContent = "it's Roma weekend";
+    } else {
+      var days = Math.ceil((start - now) / 86400000);
+      document.getElementById("cdnum").textContent = days;
+      document.getElementById("cdlabel").textContent = days === 1 ? "day to Roma" : "days to Roma";
+    }
+  })();
 
   render();
   loadTally();
