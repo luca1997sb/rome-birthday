@@ -437,31 +437,6 @@
     margin:1.6rem 0 0;min-height:1.6em;color:var(--ink);
   }
   #status .none{color:var(--ink-soft)}
-  /* notify prefs */
-  .notify{margin-top:1.6rem;border-top:1px dotted var(--line);padding-top:1.3rem}
-  .notify-t{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--terra);margin-bottom:.6rem}
-  .notify-p{font-size:.85rem;color:var(--ink-soft);margin:0 0 1rem;max-width:56ch}
-  .notify-fields{display:grid;grid-template-columns:1fr;gap:.7rem;max-width:560px}
-  @media(min-width:640px){.notify-fields{grid-template-columns:1fr 1fr}}
-  .notify input{
-    background:rgba(255,255,255,.5);border:1px solid var(--ink);border-radius:0;
-    padding:.8rem .95rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);width:100%;
-  }
-  .notify input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 1px var(--terra)}
-  .notify input::placeholder{color:rgba(87,80,63,.55)}
-  .npills{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.2rem}
-  .npill{
-    font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
-    padding:.55rem 1.1rem;border:1px solid var(--ink);border-radius:999px;
-    background:transparent;color:var(--ink);cursor:pointer;
-    transition:all .25s cubic-bezier(.2,.7,.2,1);
-  }
-  .npill:hover{transform:translateY(-1px)}
-  .npill.on{background:var(--ink);color:var(--paper)}
-  .notify-status{
-    font-family:var(--serif);font-style:italic;font-size:.95rem;
-    color:var(--terra);margin-top:.9rem;min-height:1.3em;
-  }
   .applink{
     display:inline-block;margin-top:1rem;background:none;border:none;cursor:pointer;
     font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--terra);
@@ -624,24 +599,7 @@
       <button class="yn no" id="btnno">Sadly can't</button>
     </div>
     <div id="status"><span class="none">Waiting on you…</span></div>
-
-    <div class="notify" id="notifybox" hidden>
-      <div class="notify-t">Stay in the loop</div>
-      <p class="notify-p">New activities and info will appear on this page as the weekend takes shape. Leave a way to reach you and you'll get a heads-up when something new lands — or choose "no thanks" and just check back here.</p>
-      <div class="notify-fields">
-        <input type="email" id="nemail" placeholder="Your email" autocomplete="email">
-        <input type="tel" id="nphone" placeholder="Your mobile (with country code)" autocomplete="tel">
-      </div>
-      <div class="npills" id="npills">
-        <button class="npill" data-n="email">Email me</button>
-        <button class="npill" data-n="sms">Text me</button>
-        <button class="npill" data-n="both">Both</button>
-        <button class="npill" data-n="none">No thanks</button>
-      </div>
-      <button class="btn btn-primary" id="nsave">Save</button>
-      <div class="notify-status" id="nstatus"></div>
-      <button class="applink" id="applink">Or add this page as an app &amp; get push alerts →</button>
-    </div>
+    <button class="applink" id="applink" hidden>Get a ping when new plans land — add the app →</button>
 
     <div class="tally">
       <div class="tally-t">The tally</div>
@@ -1077,66 +1035,8 @@
     }
   }
 
-  /* ------- contact & notification preferences ------- */
-  var notifyBox = document.getElementById("notifybox");
-  var nEmail = document.getElementById("nemail");
-  var nPhone = document.getElementById("nphone");
-  var nPillsEl = document.getElementById("npills");
-  var nStatus = document.getElementById("nstatus");
-  var nPref = null;
-  var prefilledFor = null;
-
-  function contactKey(name){ return "roma26.contact." + name; }
-  function getContact(name){
-    try { return JSON.parse(localStorage.getItem(contactKey(name)) || "null"); } catch(e){ return null; }
-  }
-
-  nPillsEl.addEventListener("click", function(e){
-    var b = e.target.closest(".npill");
-    if (!b) return;
-    nPref = b.getAttribute("data-n");
-    nPillsEl.querySelectorAll(".npill").forEach(function(p){ p.classList.toggle("on", p === b); });
-  });
-
-  document.getElementById("nsave").addEventListener("click", function(){
-    if (!guest) return needName();
-    var email = nEmail.value.trim();
-    var phone = nPhone.value.trim();
-    if (!nPref) { nStatus.textContent = "Pick how you'd like to hear from me."; return; }
-    if ((nPref === "email" || nPref === "both") && email.indexOf("@") === -1) {
-      nStatus.textContent = "That email doesn't look right."; return;
-    }
-    if ((nPref === "sms" || nPref === "both") && phone.replace(/\D/g, "").length < 8) {
-      nStatus.textContent = "That number doesn't look right."; return;
-    }
-    var data = { email: email, phone: phone, notify: nPref };
-    try { localStorage.setItem(contactKey(guest), JSON.stringify(data)); } catch(e){}
-    nStatus.textContent = "Saving…";
-    postForm({
-      _subject: "Roma 2026 contact — " + guest + " (" + nPref + ")",
-      name: guest, email: email || "—", phone: phone || "—", notifications: nPref
-    }).then(function(r){
-      if (!r.ok) throw new Error();
-      nStatus.textContent = nPref === "none" ? "Noted — no pings for you." : "Saved — you'll hear when something new lands. ✓";
-    }).catch(function(){
-      nStatus.textContent = "Saved here, but it didn't reach Luca — mention it to him.";
-    });
-  });
-
   function renderNotify(){
-    var show = guest && getAnswer() === "yes";
-    notifyBox.hidden = !show;
-    if (show && prefilledFor !== guest) {
-      prefilledFor = guest;
-      var c = getContact(guest) || {};
-      nEmail.value = c.email || "";
-      nPhone.value = c.phone || "";
-      nPref = c.notify || null;
-      nPillsEl.querySelectorAll(".npill").forEach(function(p){
-        p.classList.toggle("on", p.getAttribute("data-n") === nPref);
-      });
-      nStatus.textContent = "";
-    }
+    document.getElementById("applink").hidden = !(guest && getAnswer() === "yes");
   }
 
   /* ------- music: hidden audio-only player, pre-loaded for instant start ------- */
