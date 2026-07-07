@@ -275,6 +275,14 @@
   .map-title{font-family:var(--serif);font-weight:400;font-size:1.6rem}
   .map-title em{font-style:italic}
   .map-sub{font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
+  .maplist{
+    display:inline-block;margin-top:.7rem;
+    font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--terra);text-decoration:none;
+    border-bottom:1px dotted var(--terra);padding-bottom:.15rem;
+    transition:opacity .25s;
+  }
+  .maplist:hover{opacity:.7}
   #leafmap{
     height:440px;width:100%;background:var(--paper-2);
     border:1px solid var(--line);position:relative;z-index:1;
@@ -671,6 +679,7 @@
       <div>
         <div class="map-title">Rome, <em>roughly</em></div>
         <div class="map-sub">Where the weekend will happen. Activities and hotels get pinned in orange as they're announced. Tap a dot to open it in Maps.</div>
+        <a class="maplist" href="https://maps.app.goo.gl/4nWDv4162wB9Ud7KA" target="_blank" rel="noopener">Here's a list of places to get inspired &rarr;</a>
       </div>
     </div>
     <div id="leafmap">
