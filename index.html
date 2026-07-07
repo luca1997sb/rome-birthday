@@ -980,9 +980,9 @@
     if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function(){});
   }
   clearBadge();
-  // refresh content when the app is reopened after a while (standard PWA practice:
-  // network-first HTML in the SW + reload on foreground if stale)
-  var STALE_AFTER = 15 * 60 * 1000; // 15 min
+  // refresh content on every reopen (network-first HTML in the SW + reload on
+  // foreground). The 5s guard only skips banner pulls / app-switcher flicks.
+  var STALE_AFTER = 5 * 1000;
   var hiddenAt = null;
   document.addEventListener("visibilitychange", function(){
     if (document.visibilityState === "hidden") { hiddenAt = Date.now(); return; }
