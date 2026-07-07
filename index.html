@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Roma · Luca's Birthday Weekend</title>
 <meta name="description" content="Luca's birthday weekend in Rome — 26–29 November 2026. Are you in?">
 <meta property="og:type" content="website">
@@ -13,6 +13,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f1e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Roma 2026">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 <style>*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}</style>
 </head>
@@ -431,6 +437,68 @@
     margin:1.6rem 0 0;min-height:1.6em;color:var(--ink);
   }
   #status .none{color:var(--ink-soft)}
+  /* notify prefs */
+  .notify{margin-top:1.6rem;border-top:1px dotted var(--line);padding-top:1.3rem}
+  .notify-t{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--terra);margin-bottom:.6rem}
+  .notify-p{font-size:.85rem;color:var(--ink-soft);margin:0 0 1rem;max-width:56ch}
+  .notify-fields{display:grid;grid-template-columns:1fr;gap:.7rem;max-width:560px}
+  @media(min-width:640px){.notify-fields{grid-template-columns:1fr 1fr}}
+  .notify input{
+    background:rgba(255,255,255,.5);border:1px solid var(--ink);border-radius:0;
+    padding:.8rem .95rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);width:100%;
+  }
+  .notify input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 1px var(--terra)}
+  .notify input::placeholder{color:rgba(87,80,63,.55)}
+  .npills{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.2rem}
+  .npill{
+    font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+    padding:.55rem 1.1rem;border:1px solid var(--ink);border-radius:999px;
+    background:transparent;color:var(--ink);cursor:pointer;
+    transition:all .25s cubic-bezier(.2,.7,.2,1);
+  }
+  .npill:hover{transform:translateY(-1px)}
+  .npill.on{background:var(--ink);color:var(--paper)}
+  .notify-status{
+    font-family:var(--serif);font-style:italic;font-size:.95rem;
+    color:var(--terra);margin-top:.9rem;min-height:1.3em;
+  }
+  .applink{
+    display:inline-block;margin-top:1rem;background:none;border:none;cursor:pointer;
+    font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--terra);
+    border-bottom:1px dotted var(--terra);padding:0 0 .1rem;
+  }
+
+  /* post-yes popup */
+  .modal-veil{
+    position:fixed;inset:0;z-index:100;background:rgba(33,29,24,.45);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;padding:1.2rem;
+    opacity:0;pointer-events:none;transition:opacity .35s;
+  }
+  .modal-veil.open{opacity:1;pointer-events:auto}
+  .modal{
+    background:var(--paper);border:1px solid var(--ink);
+    max-width:420px;width:100%;padding:2rem 1.8rem 1.7rem;position:relative;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.5);
+    transform:translateY(16px) scale(.98);transition:transform .4s cubic-bezier(.2,.7,.2,1);
+    max-height:86svh;overflow-y:auto;
+  }
+  .modal-veil.open .modal{transform:none}
+  .modal .m-kicker{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--terra);margin-bottom:.7rem}
+  .modal h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;line-height:1.15;margin:0 0 .7rem}
+  .modal h3 em{font-style:italic}
+  .modal p{font-size:.9rem;color:var(--ink-soft);margin:0 0 1rem}
+  .modal ol{margin:0 0 1.2rem;padding-left:1.2rem}
+  .modal ol li{font-size:.9rem;color:var(--ink);padding:.25rem 0}
+  .modal ol li b{font-weight:600}
+  .modal .m-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.4rem}
+  .modal .m-close{
+    position:absolute;top:.9rem;right:1rem;background:none;border:none;cursor:pointer;
+    font-size:1.1rem;color:var(--ink-soft);padding:.3rem;
+  }
+  .modal .m-close:hover{color:var(--terra)}
+  .modal .m-note{font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--ink-soft);margin-top:1rem;margin-bottom:0}
+
   .tally{margin-top:1.6rem;border-top:1px dotted var(--line);padding-top:1.3rem}
   .tally-t{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.8rem}
   .tally-row{display:flex;flex-wrap:wrap;gap:.5rem}
@@ -556,6 +624,25 @@
       <button class="yn no" id="btnno">Sadly can't</button>
     </div>
     <div id="status"><span class="none">Waiting on you…</span></div>
+
+    <div class="notify" id="notifybox" hidden>
+      <div class="notify-t">Stay in the loop</div>
+      <p class="notify-p">New activities and info will appear on this page as the weekend takes shape. Leave a way to reach you and you'll get a heads-up when something new lands — or choose "no thanks" and just check back here.</p>
+      <div class="notify-fields">
+        <input type="email" id="nemail" placeholder="Your email" autocomplete="email">
+        <input type="tel" id="nphone" placeholder="Your mobile (with country code)" autocomplete="tel">
+      </div>
+      <div class="npills" id="npills">
+        <button class="npill" data-n="email">Email me</button>
+        <button class="npill" data-n="sms">Text me</button>
+        <button class="npill" data-n="both">Both</button>
+        <button class="npill" data-n="none">No thanks</button>
+      </div>
+      <button class="btn btn-primary" id="nsave">Save</button>
+      <div class="notify-status" id="nstatus"></div>
+      <button class="applink" id="applink">Or add this page as an app &amp; get push alerts →</button>
+    </div>
+
     <div class="tally">
       <div class="tally-t">The tally</div>
       <div class="tally-row" id="tally"></div>
@@ -681,6 +768,15 @@
 
 <div id="musicframe" aria-hidden="true"></div>
 
+<div class="modal-veil" id="appmodal" role="dialog" aria-modal="true" aria-labelledby="appmodal-title">
+  <div class="modal">
+    <button class="m-close" id="mclose" aria-label="Close">✕</button>
+    <div class="m-kicker">You're in 🥂</div>
+    <h3 id="appmodal-title">Keep Roma <em>in your pocket.</em></h3>
+    <div id="mbody"><!-- filled by script per device --></div>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -728,21 +824,24 @@
     rsvpWrap.scrollIntoView({ behavior:"smooth", block:"center" });
     statusEl.innerHTML = '<span class="none">Pick your name first.</span>';
   }
-  // Answers are emailed to Luca via formsubmit.co (free, no account for guests).
-  // Later, per-activity choices can ride along in this same payload.
-  function sendRSVP(){
-    if (!guest || !getAnswer()) return;
-    var payload = {
-      _subject: "Roma 2026 RSVP — " + guest,
-      name: guest,
-      answer: getAnswer() === "yes" ? "Yes, I'm in" : "Sadly can't",
-      _template: "table",
-      _captcha: "false"
-    };
-    fetch("https://formsubmit.co/ajax/714f48a1af866b17c9e4b723a5e13ba3", {
+  // Everything below posts to Luca's inbox via formsubmit.co (free, no account for guests).
+  var FS = "https://formsubmit.co/ajax/714f48a1af866b17c9e4b723a5e13ba3";
+  function postForm(payload){
+    payload._template = "table";
+    payload._captcha = "false";
+    return fetch(FS, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(payload)
+    });
+  }
+
+  function sendRSVP(){
+    if (!guest || !getAnswer()) return;
+    postForm({
+      _subject: "Roma 2026 RSVP — " + guest + ": " + (getAnswer() === "yes" ? "YES" : "NO"),
+      name: guest,
+      answer: getAnswer() === "yes" ? "Yes, I'm in" : "Sadly can't"
     }).then(function(r){
       if (!r.ok) throw new Error();
       statusEl.textContent += " — sent to Luca ✓";
@@ -753,7 +852,7 @@
 
   btnYes.addEventListener("click", function(){
     if (!guest) return needName();
-    setAnswer("yes"); render(); sendRSVP();
+    setAnswer("yes"); render(); sendRSVP(); maybeShowAppModal();
   });
   btnNo.addEventListener("click", function(){
     if (!guest) return needName();
@@ -789,6 +888,7 @@
       c.classList.toggle("on", c.textContent === guest);
     });
     renderTally();
+    renderNotify();
     var a = getAnswer();
     btnYes.classList.toggle("on", a === "yes");
     btnNo.classList.toggle("on", a === "no");
@@ -877,6 +977,167 @@
   }
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
+
+  /* ------- app install + push notifications ------- */
+  var VAPID = "BHS03bWYOl3hiJuQsChM2bKO-j3UV0Kbw9TmGY2v15Tosl_qpFTfaHwXseTagrF5NmiN-8XxyWnx9khhArrhMvQ";
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  }
+  var deferredPrompt = null;
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+  var isStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+  var isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  function urlB64(base64){
+    var pad = "=".repeat((4 - base64.length % 4) % 4);
+    var raw = atob((base64 + pad).replace(/-/g, "+").replace(/_/g, "/"));
+    var arr = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+    return arr;
+  }
+
+  function enablePush(done){
+    if (!("Notification" in window) || !("PushManager" in window)) return done("unsupported");
+    Notification.requestPermission().then(function(perm){
+      if (perm !== "granted") return done("denied");
+      navigator.serviceWorker.ready.then(function(reg){
+        reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlB64(VAPID) })
+          .then(function(sub){
+            postForm({
+              _subject: "Roma 2026 push sub — " + (guest || "unknown"),
+              name: guest || "unknown",
+              subscription: JSON.stringify(sub)
+            }).then(function(r){ done(r.ok ? "ok" : "err"); })
+              .catch(function(){ done("err"); });
+          })
+          .catch(function(){ done("err"); });
+      });
+    });
+  }
+
+  var appModal = document.getElementById("appmodal");
+  var mBody = document.getElementById("mbody");
+
+  function buildModalBody(){
+    if (isiOS && !isStandalone) {
+      mBody.innerHTML =
+        '<p>Two taps and this page lives on your Home Screen like an app — with a gentle ping when new plans land.</p>' +
+        '<ol><li>Tap <b>Share</b> below (the square with the arrow)</li>' +
+        '<li>Choose <b>Add to Home Screen</b></li>' +
+        '<li>Open <b>Roma 2026</b> from there once — it\'ll offer notifications</li></ol>' +
+        '<p class="m-note">iPhones only allow notifications for pages on the Home Screen — Apple\'s rule, not ours.</p>';
+      return;
+    }
+    var installBtn = (!isStandalone && deferredPrompt) ? '<button class="btn btn-ghost" id="minstall">Add the app</button>' : "";
+    mBody.innerHTML =
+      '<p>One tap and you\'ll get a gentle ping when new activities or info land here. Nothing else, no spam.</p>' +
+      '<div class="m-actions"><button class="btn btn-primary" id="mpush">Enable notifications</button>' + installBtn + '</div>' +
+      '<p class="m-note">Or just check back here — everything lands on this page first.</p>';
+    var pushBtn = document.getElementById("mpush");
+    pushBtn.addEventListener("click", function(){
+      pushBtn.textContent = "One moment…";
+      enablePush(function(state){
+        pushBtn.textContent =
+          state === "ok" ? "You're set ✓" :
+          state === "denied" ? "Blocked — allow in settings" :
+          state === "unsupported" ? "Not supported here" : "Didn't work — try later";
+      });
+    });
+    var inst = document.getElementById("minstall");
+    if (inst) inst.addEventListener("click", function(){
+      if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; inst.remove(); }
+    });
+  }
+
+  function openAppModal(){
+    buildModalBody();
+    appModal.classList.add("open");
+  }
+  function closeAppModal(){ appModal.classList.remove("open"); }
+  function maybeShowAppModal(){
+    var seen = null;
+    try { seen = localStorage.getItem("roma26.appmodal"); } catch(e){}
+    if (seen) return;
+    try { localStorage.setItem("roma26.appmodal", "1"); } catch(e){}
+    setTimeout(openAppModal, 600);
+  }
+  document.getElementById("mclose").addEventListener("click", closeAppModal);
+  appModal.addEventListener("click", function(e){ if (e.target === appModal) closeAppModal(); });
+  document.getElementById("applink").addEventListener("click", openAppModal);
+  // if opened as the installed app and not yet subscribed, offer notifications once
+  if (isStandalone) {
+    var asked = null;
+    try { asked = localStorage.getItem("roma26.standalone-asked"); } catch(e){}
+    if (!asked) {
+      try { localStorage.setItem("roma26.standalone-asked", "1"); } catch(e){}
+      setTimeout(openAppModal, 1200);
+    }
+  }
+
+  /* ------- contact & notification preferences ------- */
+  var notifyBox = document.getElementById("notifybox");
+  var nEmail = document.getElementById("nemail");
+  var nPhone = document.getElementById("nphone");
+  var nPillsEl = document.getElementById("npills");
+  var nStatus = document.getElementById("nstatus");
+  var nPref = null;
+  var prefilledFor = null;
+
+  function contactKey(name){ return "roma26.contact." + name; }
+  function getContact(name){
+    try { return JSON.parse(localStorage.getItem(contactKey(name)) || "null"); } catch(e){ return null; }
+  }
+
+  nPillsEl.addEventListener("click", function(e){
+    var b = e.target.closest(".npill");
+    if (!b) return;
+    nPref = b.getAttribute("data-n");
+    nPillsEl.querySelectorAll(".npill").forEach(function(p){ p.classList.toggle("on", p === b); });
+  });
+
+  document.getElementById("nsave").addEventListener("click", function(){
+    if (!guest) return needName();
+    var email = nEmail.value.trim();
+    var phone = nPhone.value.trim();
+    if (!nPref) { nStatus.textContent = "Pick how you'd like to hear from me."; return; }
+    if ((nPref === "email" || nPref === "both") && email.indexOf("@") === -1) {
+      nStatus.textContent = "That email doesn't look right."; return;
+    }
+    if ((nPref === "sms" || nPref === "both") && phone.replace(/\D/g, "").length < 8) {
+      nStatus.textContent = "That number doesn't look right."; return;
+    }
+    var data = { email: email, phone: phone, notify: nPref };
+    try { localStorage.setItem(contactKey(guest), JSON.stringify(data)); } catch(e){}
+    nStatus.textContent = "Saving…";
+    postForm({
+      _subject: "Roma 2026 contact — " + guest + " (" + nPref + ")",
+      name: guest, email: email || "—", phone: phone || "—", notifications: nPref
+    }).then(function(r){
+      if (!r.ok) throw new Error();
+      nStatus.textContent = nPref === "none" ? "Noted — no pings for you." : "Saved — you'll hear when something new lands. ✓";
+    }).catch(function(){
+      nStatus.textContent = "Saved here, but it didn't reach Luca — mention it to him.";
+    });
+  });
+
+  function renderNotify(){
+    var show = guest && getAnswer() === "yes";
+    notifyBox.hidden = !show;
+    if (show && prefilledFor !== guest) {
+      prefilledFor = guest;
+      var c = getContact(guest) || {};
+      nEmail.value = c.email || "";
+      nPhone.value = c.phone || "";
+      nPref = c.notify || null;
+      nPillsEl.querySelectorAll(".npill").forEach(function(p){
+        p.classList.toggle("on", p.getAttribute("data-n") === nPref);
+      });
+      nStatus.textContent = "";
+    }
+  }
 
   /* ------- music: hidden audio-only player, pre-loaded for instant start ------- */
   var musicBtn = document.getElementById("musicbtn");
