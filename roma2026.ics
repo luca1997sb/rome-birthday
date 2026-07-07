@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Roma 2026//EN
+BEGIN:VEVENT
+UID:roma2026-birthday@luca1997sb.github.io
+DTSTAMP:20260707T200000Z
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261130
+SUMMARY:Roma\, Luca's birthday weekend
+DESCRIPTION:Starts with a late lunch on Thursday. Details: https://luca1997sb.github.io/rome-birthday/
+LOCATION:Rome\, Italy
+URL:https://luca1997sb.github.io/rome-birthday/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:Roma in one week
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -524,6 +524,13 @@
   }
   footer .big{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,4vw,2.1rem);margin-bottom:.6rem}
   footer .small{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
+  .cal-row{margin-top:2rem;display:flex;flex-direction:column;align-items:center;gap:.7rem}
+  .cal-alt{
+    font-family:var(--serif);font-style:italic;font-size:.85rem;
+    color:var(--ink-soft);text-decoration:none;
+    border-bottom:1px dotted var(--ink-soft);padding-bottom:.1rem;
+  }
+  .cal-alt:hover{color:var(--terra);border-color:var(--terra)}
 
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -750,6 +757,10 @@
   </div>
   <div class="big">Ci vediamo a Roma.</div>
   <div class="small">S·P·Q·R &nbsp;·&nbsp; 26-29 November 2026</div>
+  <div class="cal-row">
+    <a class="btn btn-ghost" href="roma2026.ics" download="roma2026.ics">Add to calendar</a>
+    <a class="cal-alt" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Roma%2C%20Luca%27s%20birthday%20weekend&amp;dates=20261126/20261130&amp;details=https%3A%2F%2Fluca1997sb.github.io%2Frome-birthday%2F&amp;location=Rome%2C%20Italy" target="_blank" rel="noopener">or Google Calendar</a>
+  </div>
 </footer>
 
 <div id="musicframe" aria-hidden="true"></div>
