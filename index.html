@@ -80,11 +80,29 @@
   }
   .nav nav a:hover{color:var(--terra)}
   .nav nav a:hover::after{transform:scaleX(1);transform-origin:left}
-  @media(max-width:480px){
+  .nav nav a.cta{
+    border:1px solid var(--terra);color:var(--terra);
+    padding:.4rem .95rem;border-radius:999px;
+    transition:all .3s cubic-bezier(.2,.7,.2,1);
+  }
+  .nav nav a.cta::after{display:none}
+  .nav nav a.cta:hover{background:var(--terra);color:#fff;transform:translateY(-1px)}
+  .music-link{
+    background:none;border:none;cursor:pointer;
+    font-family:var(--sans);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-soft);padding:0;transition:color .25s;
+  }
+  .music-link:hover{color:var(--terra)}
+  .music-link.playing{color:var(--terra)}
+  .music-link.playing .note{display:inline-block;animation:bounce 1s ease-in-out infinite}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  @media(max-width:560px){
     .nav{padding:.75rem 1rem}
-    .nav nav{gap:.95rem}
-    .nav nav a{font-size:.62rem;letter-spacing:.16em}
-    .nav .brand{font-size:.95rem}
+    .nav nav{gap:.8rem;flex-wrap:wrap;justify-content:flex-end}
+    .nav nav a,.music-link{font-size:.6rem;letter-spacing:.14em}
+    .nav nav a.cta{padding:.32rem .7rem}
+    .nav .brand{font-size:.92rem}
+    .nav nav a[href="#info"],.nav nav a[href="#hotels"]{display:none}
   }
 
   /* ---------- hero ---------- */
@@ -111,7 +129,11 @@
   @keyframes archdrift{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(8px)}}
   .hero > *{position:relative;z-index:1}
   .hero > .hero-blob{position:absolute}
-  .laurel{display:block;margin:1.6rem auto 0;opacity:.65;animation:fadeIn 1.2s .95s both}
+  .hero-arches path,.hero-arches line{
+    stroke-dasharray:1;stroke-dashoffset:1;
+    animation:archdraw 1.8s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes archdraw{to{stroke-dashoffset:0}}
   .kicker{
     font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--terra);
     margin-bottom:1.4rem;
@@ -301,6 +323,27 @@
   .wx .n sup{font-size:1.1rem;color:var(--terra)}
   .wx .l{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-top:.4rem}
   .wx-note{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink-soft);margin-top:1.2rem}
+  .wx-live{margin-top:1.6rem;border-top:1px dotted var(--line);padding-top:1.2rem}
+  .wx-live-t{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.8rem}
+  .wx-strip{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.4rem;-webkit-overflow-scrolling:touch}
+  .wx-loading{font-family:var(--serif);font-style:italic;font-size:.88rem;color:var(--ink-soft)}
+  .wxd{
+    flex:0 0 auto;min-width:62px;text-align:center;
+    border:1px solid var(--line);padding:.6rem .45rem .55rem;
+    opacity:0;animation:fadeIn .6s ease forwards;
+  }
+  .wxd .d{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .wxd .g{font-size:1.15rem;color:var(--terra);margin:.25rem 0 .15rem;line-height:1}
+  .wxd .t{font-family:var(--serif);font-size:.95rem}
+  .wxd .t span{color:var(--ink-soft);font-size:.8rem}
+
+  /* ---------- gallery triptych ---------- */
+  .tri{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.4rem}
+  @media(min-width:760px){
+    .tri{grid-template-columns:repeat(3,1fr);align-items:start}
+    .tri .photo:nth-child(2){margin-top:2.2rem}
+  }
+  .tri .photo .ph{aspect-ratio:4/5}
   .bring{list-style:none;margin:0;padding:0}
   .bring li{
     display:flex;gap:.9rem;align-items:baseline;
@@ -328,35 +371,20 @@
     font-family:var(--serif);font-style:italic;font-size:.9rem;
     color:var(--ink-soft);padding:.7rem .2rem 0;
   }
-  .photo-duo{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.6rem}
-  @media(min-width:760px){.photo-duo{grid-template-columns:1fr 1fr}}
-  .interlude{max-width:1060px;margin:0 auto;padding:4rem 1.25rem 0}
-  .photo.kb .ph{aspect-ratio:21/9}
-  .photo.kb img{animation:kb 30s ease-in-out infinite alternate}
-  @keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
+  .mood{
+    height:52vh;min-height:320px;margin-top:5rem;
+    background:url("img/campagna.jpg") center 65%/cover no-repeat;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  @media(min-width:900px){.mood{background-attachment:fixed}}
 
   /* ---------- music ---------- */
-  .music-btn{
-    position:fixed;left:1.1rem;bottom:1.1rem;z-index:70;
-    width:54px;height:54px;border-radius:50%;
-    background:var(--paper);border:1px solid var(--ink);cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 12px 26px -14px rgba(33,29,24,.55);
-    transition:transform .3s cubic-bezier(.2,.7,.3,1.4),background .3s;
-  }
-  .music-btn:hover{transform:scale(1.1)}
-  .music-btn svg{animation:spin 5s linear infinite;animation-play-state:paused}
-  .music-btn.playing{background:var(--ink)}
-  .music-btn.playing svg{animation-play-state:running}
-  .music-btn.playing .vinyl-line{stroke:var(--paper)}
-  .music-btn.playing .vinyl-fill{fill:var(--paper)}
-  @keyframes spin{to{transform:rotate(360deg)}}
   .music-card{
-    position:fixed;left:1.1rem;bottom:calc(1.1rem + 66px);z-index:70;
-    width:min(330px,calc(100vw - 2.2rem));
+    position:fixed;right:1.1rem;top:4rem;z-index:70;
+    width:min(300px,calc(100vw - 2.2rem));
     background:var(--paper);border:1px solid var(--ink);padding:1rem;
     box-shadow:0 24px 50px -24px rgba(33,29,24,.55);
-    opacity:0;pointer-events:none;transform:translateY(12px);
+    opacity:0;pointer-events:none;transform:translateY(-10px);
     transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1);
   }
   .music-card.open{opacity:1;pointer-events:auto;transform:none}
@@ -454,59 +482,27 @@
     <a href="#program">Program</a>
     <a href="#hotels">Hotels</a>
     <a href="#info">Info</a>
-    <a href="#rsvp">RSVP</a>
+    <button class="music-link" id="musicbtn" aria-label="Play music — Sì, viaggiare by Lucio Battisti"><span class="note">♪</span> <span id="musiclabel">Play music</span></button>
+    <a class="cta" href="#rsvp">RSVP</a>
   </nav>
 </header>
 
 <div class="hero" id="top">
   <div class="hero-blob"></div>
   <div class="arch-par" id="archpar">
-  <svg class="hero-arches" viewBox="0 0 1200 300" fill="none" aria-hidden="true">
-    <g stroke="#a8502b" stroke-width="1.4" opacity=".6">
-      <!-- upper tier: small arches -->
-      <path d="M15 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M82 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M149 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M216 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M283 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M350 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M417 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M484 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M551 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M618 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M685 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M752 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M819 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M886 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M953 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M1020 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M1087 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <path d="M1154 118 V72 a26 30 0 0 1 52 0 V118"/>
-      <!-- water channel & cornices -->
-      <line x1="0" y1="42" x2="1200" y2="42"/>
-      <line x1="0" y1="30" x2="1200" y2="30"/>
-      <line x1="0" y1="118" x2="1200" y2="118"/>
-      <line x1="0" y1="130" x2="1200" y2="130"/>
-      <!-- lower tier: grand arches -->
-      <path d="M0 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M135 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M270 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M405 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M540 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M675 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M810 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M945 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <path d="M1080 300 V190 a60 66 0 0 1 120 0 V300"/>
-      <!-- keystones on the grand tier -->
-      <line x1="60" y1="124" x2="60" y2="136"/>
-      <line x1="195" y1="124" x2="195" y2="136"/>
-      <line x1="330" y1="124" x2="330" y2="136"/>
-      <line x1="465" y1="124" x2="465" y2="136"/>
-      <line x1="600" y1="124" x2="600" y2="136"/>
-      <line x1="735" y1="124" x2="735" y2="136"/>
-      <line x1="870" y1="124" x2="870" y2="136"/>
-      <line x1="1005" y1="124" x2="1005" y2="136"/>
-      <line x1="1140" y1="124" x2="1140" y2="136"/>
+  <svg class="hero-arches" viewBox="0 0 1200 260" fill="none" aria-hidden="true">
+    <g stroke="#a8502b" stroke-width="1.4" opacity=".55">
+      <path pathLength="1" style="animation-delay:.1s" d="M0 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:.25s" d="M135 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:.4s" d="M270 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:.55s" d="M405 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:.7s" d="M540 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:.85s" d="M675 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:1s" d="M810 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:1.15s" d="M945 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <path pathLength="1" style="animation-delay:1.3s" d="M1080 260 V150 a60 66 0 0 1 120 0 V260"/>
+      <line pathLength="1" style="animation-delay:1.5s" x1="0" y1="118" x2="1200" y2="118"/>
+      <line pathLength="1" style="animation-delay:1.7s" x1="0" y1="104" x2="1200" y2="104"/>
     </g>
   </svg>
   </div>
@@ -514,19 +510,6 @@
   <h1><span>R</span><span>O</span><span>M</span><span>A</span></h1>
   <div class="dates">Luca's birthday weekend</div>
   <div class="when">26 — 29 November 2026</div>
-  <svg class="laurel" width="140" height="34" viewBox="0 0 140 34" fill="none" aria-hidden="true">
-    <g stroke="#a8502b" stroke-width="1.1">
-      <path d="M8 17 Q40 4 62 15" fill="none"/>
-      <path d="M132 17 Q100 4 78 15" fill="none"/>
-      <path d="M16 14 q4 -8 10 -9 q-1 8 -10 9z" fill="#a8502b" opacity=".55"/>
-      <path d="M30 10 q5 -7 11 -7 q-2 8 -11 7z" fill="#a8502b" opacity=".55"/>
-      <path d="M46 9 q6 -6 12 -5 q-3 8 -12 5z" fill="#a8502b" opacity=".55"/>
-      <path d="M124 14 q-4 -8 -10 -9 q1 8 10 9z" fill="#a8502b" opacity=".55"/>
-      <path d="M110 10 q-5 -7 -11 -7 q2 8 11 7z" fill="#a8502b" opacity=".55"/>
-      <path d="M94 9 q-6 -6 -12 -5 q3 8 12 5z" fill="#a8502b" opacity=".55"/>
-      <circle cx="70" cy="17" r="2.4" fill="#a8502b" stroke="none"/>
-    </g>
-  </svg>
   <a class="scrollcue" href="#invito">Scroll</a>
 </div>
 
@@ -553,14 +536,38 @@
       </ul>
     </div>
   </div>
-  <div class="photo-duo">
+</section>
+
+<section id="rsvp">
+  <div class="sec-kicker reveal">RSVP</div>
+  <h2 class="sec-title reveal">Are you <em>in?</em></h2>
+  <div class="rsvp-wrap reveal">
+    <h3>First, who are you?</h3>
+    <p class="sub">Pick your name, then give me a yes or a no — your answer goes straight to Luca.</p>
+    <div class="chips" id="namechips"></div>
+    <div class="yesno">
+      <button class="yn yes" id="btnyes">Yes, I'm in</button>
+      <button class="yn no" id="btnno">Sadly can't</button>
+    </div>
+    <div id="status"><span class="none">Waiting on you…</span></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="sec-kicker reveal">Roma</div>
+  <h2 class="sec-title reveal">Three <em>reasons.</em></h2>
+  <div class="tri">
     <figure class="photo reveal">
-      <div class="ph"><img src="img/tiber.jpg" alt="The Tiber at blue hour with St Peter's dome behind" loading="lazy"></div>
-      <figcaption>Blue hour on the Tevere</figcaption>
+      <div class="ph"><img src="img/aranci.jpg" alt="Umbrella pines at the Giardino degli Aranci at sunset, St Peter's in the distance" loading="lazy"></div>
+      <figcaption>Golden hour at the Giardino degli Aranci</figcaption>
     </figure>
     <figure class="photo reveal d1">
-      <div class="ph"><img src="img/pantheon.jpg" alt="The oculus of the Pantheon seen from below" loading="lazy"></div>
-      <figcaption>The Pantheon, from below</figcaption>
+      <div class="ph"><img src="img/colosseo.jpg" alt="The Colosseum lit by a stormy sunset, framed by umbrella pines" loading="lazy"></div>
+      <figcaption>The Colosseum, after the rain</figcaption>
+    </figure>
+    <figure class="photo reveal d2">
+      <div class="ph"><img src="img/loggia.jpg" alt="A frescoed loggia lined with marble busts" loading="lazy"></div>
+      <figcaption>A quiet loggia, somewhere central</figcaption>
     </figure>
   </div>
 </section>
@@ -581,13 +588,6 @@
     </div>
   </div>
 </section>
-
-<div class="interlude">
-  <figure class="photo kb reveal">
-    <div class="ph"><img src="img/colosseum.jpg" alt="The Colosseum at dusk" loading="lazy"></div>
-    <figcaption>The Colosseum at dusk — worth the jet lag on its own</figcaption>
-  </figure>
-</div>
 
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
@@ -613,20 +613,7 @@
   </div>
 </section>
 
-<section id="rsvp">
-  <div class="sec-kicker reveal">RSVP</div>
-  <h2 class="sec-title reveal">Are you <em>in?</em></h2>
-  <div class="rsvp-wrap reveal">
-    <h3>First, who are you?</h3>
-    <p class="sub">Pick your name, then give me a yes or a no.</p>
-    <div class="chips" id="namechips"></div>
-    <div class="yesno">
-      <button class="yn yes" id="btnyes">Yes, I'm in</button>
-      <button class="yn no" id="btnno">Sadly can't</button>
-    </div>
-    <div id="status"><span class="none">Waiting on you…</span></div>
-  </div>
-</section>
+<div class="mood reveal" role="img" aria-label="Pines and green hills on the edge of Rome"></div>
 
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
@@ -634,13 +621,17 @@
   <div class="info-grid">
     <div class="info-card reveal">
       <h4>The weather</h4>
-      <p class="hint">Mild by day, crisp after dark — proper sweater weather.</p>
+      <p class="hint">What 26–29 November has looked like in Rome over the last ten years.</p>
       <div class="wx-row">
-        <div class="wx"><div class="n">15<sup>°</sup></div><div class="l">By day</div></div>
+        <div class="wx"><div class="n">14<sup>°</sup></div><div class="l">By day</div></div>
         <div class="wx"><div class="n">7<sup>°</sup></div><div class="l">At night</div></div>
         <div class="wx"><div class="n">16:40</div><div class="l">Sunset</div></div>
       </div>
-      <p class="wx-note">Expect bright, golden days with the odd shower — November is when Rome is at its quietest and most its own.</p>
+      <p class="wx-note">Mild days, crisp evenings — and some rain fell on these dates in nine of the last ten years, so pack accordingly.</p>
+      <div class="wx-live">
+        <div class="wx-live-t">Rome, the next 14 days</div>
+        <div class="wx-strip" id="wxstrip"><span class="wx-loading">Checking the sky over Rome…</span></div>
+      </div>
     </div>
     <div class="info-card reveal d1">
       <h4>What to bring</h4>
@@ -681,13 +672,6 @@
 <footer>
   <div class="big">Ci vediamo a Roma.</div>
   <div class="small">S·P·Q·R &nbsp;·&nbsp; 26 — 29 November 2026</div>
-  <div class="small" style="margin-top:.8rem;opacity:.6;letter-spacing:.12em;text-transform:none">
-    Photos:
-    <a href="https://commons.wikimedia.org/wiki/File:Ponte_Vittorio_Emanuele_II_San_Pietro,_Rome,_Italy.jpg" target="_blank" rel="noopener" style="color:inherit">Jebulon</a>,
-    <a href="https://commons.wikimedia.org/wiki/File:Interior_oculus_of_the_Rome_Pantheon.jpg" target="_blank" rel="noopener" style="color:inherit">T. Le Berre</a>,
-    <a href="https://commons.wikimedia.org/wiki/File:Colosseum_in_Rome,_Italy_-_April_2007.jpg" target="_blank" rel="noopener" style="color:inherit">Diliff</a>
-    · Wikimedia Commons · CC BY-SA
-  </div>
 </footer>
 
 <div class="music-card" id="musiccard" aria-hidden="true">
@@ -700,14 +684,6 @@
   </div>
   <div class="mc-frame" id="musicframe"></div>
 </div>
-<button class="music-btn" id="musicbtn" aria-label="Play the soundtrack — Sì, viaggiare by Lucio Battisti" title="La colonna sonora">
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <circle class="vinyl-line" cx="14" cy="14" r="11" stroke="#211d18" stroke-width="1.3"/>
-    <circle class="vinyl-line" cx="14" cy="14" r="7" stroke="#211d18" stroke-width=".8" opacity=".5"/>
-    <circle class="vinyl-line" cx="14" cy="14" r="9" stroke="#211d18" stroke-width=".8" opacity=".3"/>
-    <circle class="vinyl-fill" cx="14" cy="14" r="2.6" fill="#a8502b"/>
-  </svg>
-</button>
 
 <script>
 (function(){
@@ -756,14 +732,40 @@
     rsvpWrap.scrollIntoView({ behavior:"smooth", block:"center" });
     statusEl.innerHTML = '<span class="none">Pick your name first.</span>';
   }
-  btnYes.addEventListener("click", function(){ if(!guest) return needName(); setAnswer("yes"); render(); });
+  // Answers are emailed to Luca via formsubmit.co (free, no account for guests).
+  // Later, per-activity choices can ride along in this same payload.
+  function sendRSVP(){
+    if (!guest || !getAnswer()) return;
+    var payload = {
+      _subject: "Roma 2026 RSVP — " + guest,
+      name: guest,
+      answer: getAnswer() === "yes" ? "Yes, I'm in" : "Sadly can't",
+      _template: "table",
+      _captcha: "false"
+    };
+    fetch("https://formsubmit.co/ajax/luca.solari@decentriq.ch", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if (!r.ok) throw new Error();
+      statusEl.textContent += " — sent to Luca ✓";
+    }).catch(function(){
+      statusEl.textContent += " — saved here, but tell Luca directly too.";
+    });
+  }
+
+  btnYes.addEventListener("click", function(){
+    if (!guest) return needName();
+    setAnswer("yes"); render(); sendRSVP();
+  });
   btnNo.addEventListener("click", function(){
     if (!guest) return needName();
     if (CONFIRMED.indexOf(guest) !== -1) {
       statusEl.textContent = "Too late — you're already booked in.";
       return;
     }
-    setAnswer("no"); render();
+    setAnswer("no"); render(); sendRSVP();
   });
 
   /* ------- render ------- */
@@ -860,26 +862,60 @@
 
   /* ------- music ------- */
   var musicBtn = document.getElementById("musicbtn");
+  var musicLabel = document.getElementById("musiclabel");
   var musicCard = document.getElementById("musiccard");
   var musicFrame = document.getElementById("musicframe");
   var musicClose = document.getElementById("musicclose");
   function openMusic(){
     musicFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/U6NqD0P0eY8?autoplay=1" ' +
-      'title="Sì, viaggiare — Lucio Battisti" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+      'title="Sì, viaggiare — Lucio Battisti" allow="autoplay; encrypted-media"></iframe>';
     musicCard.classList.add("open");
     musicCard.setAttribute("aria-hidden","false");
     musicBtn.classList.add("playing");
+    musicLabel.textContent = "Stop music";
   }
   function closeMusic(){
     musicFrame.innerHTML = "";
     musicCard.classList.remove("open");
     musicCard.setAttribute("aria-hidden","true");
     musicBtn.classList.remove("playing");
+    musicLabel.textContent = "Play music";
   }
   musicBtn.addEventListener("click", function(){
     if (musicCard.classList.contains("open")) closeMusic(); else openMusic();
   });
   musicClose.addEventListener("click", closeMusic);
+
+  /* ------- live weather (Open-Meteo, free, no key) ------- */
+  function wxGlyph(c){
+    if (c === 0 || c === 1) return "☀";
+    if (c === 2) return "⛅";
+    if (c === 3 || (c >= 45 && c <= 48)) return "☁";
+    if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82)) return "☂";
+    if ((c >= 71 && c <= 77) || c === 85 || c === 86) return "❄";
+    if (c >= 95) return "⛈";
+    return "☁";
+  }
+  var wxStrip = document.getElementById("wxstrip");
+  fetch("https://api.open-meteo.com/v1/forecast?latitude=41.8967&longitude=12.4822&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FRome&forecast_days=14")
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var days = d.daily;
+      var names = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      var html = "";
+      for (var i = 0; i < days.time.length; i++) {
+        var dt = new Date(days.time[i] + "T12:00:00");
+        html += '<div class="wxd" style="animation-delay:' + (i * 0.06) + 's">' +
+          '<div class="d">' + names[dt.getDay()] + " " + dt.getDate() + '</div>' +
+          '<div class="g">' + wxGlyph(days.weather_code[i]) + '</div>' +
+          '<div class="t">' + Math.round(days.temperature_2m_max[i]) + '° <span>' + Math.round(days.temperature_2m_min[i]) + '°</span></div>' +
+        '</div>';
+      }
+      wxStrip.innerHTML = html;
+    })
+    .catch(function(){
+      wxStrip.innerHTML = '<span class="wx-loading">Forecast unavailable right now — the sky over Rome is keeping its secrets.</span>';
+    });
 
   /* ------- scroll reveal ------- */
   if ("IntersectionObserver" in window) {
