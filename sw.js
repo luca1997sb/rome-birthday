@@ -1,5 +1,5 @@
 /* Roma 2026 — service worker: offline cache + push notifications */
-var CACHE = "roma26-v2";
+var CACHE = "roma26-v3";
 
 self.addEventListener("install", function (e) {
   self.skipWaiting();
@@ -9,9 +9,25 @@ self.addEventListener("activate", function (e) {
   e.waitUntil(self.clients.claim());
 });
 
-// stale-while-revalidate for same-origin GETs
+// pages: network-first (always fresh content, cache only as offline fallback)
+// assets: stale-while-revalidate
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== self.location.origin) return;
+
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      caches.open(CACHE).then(function (cache) {
+        return fetch(e.request)
+          .then(function (resp) {
+            if (resp.ok) cache.put(e.request, resp.clone());
+            return resp;
+          })
+          .catch(function () { return cache.match(e.request); });
+      })
+    );
+    return;
+  }
+
   e.respondWith(
     caches.open(CACHE).then(function (cache) {
       return cache.match(e.request).then(function (cached) {

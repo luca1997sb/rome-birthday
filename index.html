@@ -299,6 +299,8 @@
     border:1.5px solid var(--terra);animation:mkhalo 2.6s ease-out infinite;
   }
   @keyframes mkhalo{0%{transform:scale(1);opacity:.7}80%{transform:scale(2.6);opacity:0}100%{transform:scale(2.6);opacity:0}}
+  .mk-house{display:block;filter:drop-shadow(0 2px 4px rgba(33,29,24,.35));transition:transform .25s cubic-bezier(.2,.7,.3,1.4)}
+  .mk-house:hover{transform:scale(1.15)}
   .leaflet-tooltip.mk-tip{
     background:var(--paper);border:1px solid var(--line);border-radius:0;
     box-shadow:0 8px 20px -12px rgba(33,29,24,.4);
@@ -888,7 +890,7 @@
   // When the program lands, add entries like:
   //   { name:"Dinner, night one", lat:41.889, lng:12.472, type:"activity", map:"Restaurant+Name+Rome" }
   var PLACES = [
-    { name:"Giulia & Nicola's", lat:41.9058, lng:12.4642, type:"activity", map:"Via+Crescenzio+42+Rome" },
+    { name:"Giulia & Nicola's", lat:41.9058, lng:12.4642, type:"house", map:"Via+Crescenzio+42+Rome" },
     { name:"St Peter's",        lat:41.9022, lng:12.4539, type:"landmark", map:"St+Peter's+Basilica+Rome" },
     { name:"Piazza del Popolo", lat:41.9109, lng:12.4763, type:"landmark", map:"Piazza+del+Popolo+Rome" },
     { name:"Villa Borghese",    lat:41.9128, lng:12.4853, type:"landmark", map:"Villa+Borghese+Rome" },
@@ -918,12 +920,25 @@
       maxZoom:19
     }).addTo(map);
     PLACES.forEach(function(p){
-      var act = p.type !== "landmark";
-      var icon = L.divIcon({
-        className:"",
-        html:'<span class="mk' + (act ? " act" : "") + '"></span>',
-        iconSize:[12,12], iconAnchor:[6,6]
-      });
+      var icon;
+      if (p.type === "house") {
+        icon = L.divIcon({
+          className:"",
+          html:'<span class="mk-house"><svg width="30" height="27" viewBox="0 0 30 27">' +
+            '<path d="M3 12 L15 3 L27 12" fill="none" stroke="#211d18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<rect x="5.5" y="12" width="19" height="13" fill="#f6f1e8" stroke="#211d18" stroke-width="1.4"/>' +
+            '<text x="15" y="21.5" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="8.5" fill="#a8502b">G&amp;N</text>' +
+            '</svg></span>',
+          iconSize:[30,27], iconAnchor:[15,25]
+        });
+      } else {
+        var act = p.type !== "landmark";
+        icon = L.divIcon({
+          className:"",
+          html:'<span class="mk' + (act ? " act" : "") + '"></span>',
+          iconSize:[12,12], iconAnchor:[6,6]
+        });
+      }
       L.marker([p.lat, p.lng], { icon:icon })
         .addTo(map)
         .bindTooltip(p.name, { className:"mk-tip", direction:"top", offset:[0,-8] })
@@ -965,8 +980,20 @@
     if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function(){});
   }
   clearBadge();
+  // refresh content when the app is reopened after a while (standard PWA practice:
+  // network-first HTML in the SW + reload on foreground if stale)
+  var STALE_AFTER = 15 * 60 * 1000; // 15 min
+  var hiddenAt = null;
   document.addEventListener("visibilitychange", function(){
-    if (document.visibilityState === "visible") clearBadge();
+    if (document.visibilityState === "hidden") { hiddenAt = Date.now(); return; }
+    clearBadge();
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistration().then(function(reg){ if (reg) reg.update(); });
+    }
+    if (hiddenAt && Date.now() - hiddenAt > STALE_AFTER) location.reload();
+  });
+  window.addEventListener("pageshow", function(e){
+    if (e.persisted) location.reload(); // restored from back/forward cache
   });
   var deferredPrompt = null;
   window.addEventListener("beforeinstallprompt", function(e){
