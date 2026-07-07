@@ -1064,6 +1064,8 @@
   var musicLabel = document.getElementById("musiclabel");
   var musicFrame = document.getElementById("musicframe");
   var ytPlayer = null, ytReady = false, musicOn = false;
+  var SONG_START = 1.5; // skip the quiet intro
+  var priming = false, primed = false;
 
   window.onYouTubeIframeAPIReady = function(){
     var host = document.createElement("div");
@@ -1074,8 +1076,21 @@
       videoId: "U6NqD0P0eY8",
       playerVars: { playsinline: 1 },
       events: {
-        onReady: function(){ ytReady = true; },
+        onReady: function(){
+          ytReady = true;
+          // pre-buffer silently so the button starts the song instantly
+          try { priming = true; ytPlayer.mute(); ytPlayer.playVideo(); } catch(e){ priming = false; }
+        },
         onStateChange: function(e){
+          if (priming) {
+            if (e.data === YT.PlayerState.PLAYING) {
+              ytPlayer.pauseVideo();
+              ytPlayer.seekTo(SONG_START, true);
+              ytPlayer.unMute();
+              priming = false; primed = true;
+            }
+            return;
+          }
           var playing = e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING;
           musicBtn.classList.toggle("playing", playing);
           musicLabel.textContent = playing ? "Stop music" : "Play music";
@@ -1087,7 +1102,11 @@
 
   musicBtn.addEventListener("click", function(){
     if (ytReady && ytPlayer) {
-      if (musicOn) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
+      priming = false;
+      if (musicOn) { ytPlayer.pauseVideo(); return; }
+      ytPlayer.unMute();
+      if (primed) ytPlayer.playVideo();
+      else ytPlayer.loadVideoById({ videoId: "U6NqD0P0eY8", startSeconds: SONG_START });
       return;
     }
     // fallback if the API script was blocked or is still loading
