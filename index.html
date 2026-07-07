@@ -14,7 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
-<style>*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,ul{margin:0;padding:0}</style>
+<style>*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}</style>
 </head>
 <body>
 <title>Roma · Luca's Birthday Weekend</title>
@@ -89,7 +89,7 @@
 
   /* ---------- hero ---------- */
   .hero{
-    position:relative;min-height:100svh;
+    position:relative;min-height:100svh;overflow:hidden;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;padding:6.5rem 1.25rem 4rem;
   }
@@ -100,16 +100,18 @@
       radial-gradient(36rem 26rem at 12% 82%, rgba(91,98,72,.10), transparent 60%);
   }
   .arch-par{
-    position:absolute;left:0;right:0;bottom:0;height:40%;
+    position:absolute !important;left:0;right:0;bottom:0;height:44%;
     pointer-events:none;z-index:0;will-change:transform;
   }
   .hero-arches{
     position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);
-    width:min(1200px,140%);opacity:.5;
+    width:min(1300px,150%);opacity:.6;
     animation:archdrift 14s ease-in-out infinite alternate;
   }
-  @keyframes archdrift{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(10px)}}
+  @keyframes archdrift{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(8px)}}
   .hero > *{position:relative;z-index:1}
+  .hero > .hero-blob{position:absolute}
+  .laurel{display:block;margin:1.6rem auto 0;opacity:.65;animation:fadeIn 1.2s .95s both}
   .kicker{
     font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--terra);
     margin-bottom:1.4rem;
@@ -238,46 +240,141 @@
   .map-title{font-family:var(--serif);font-weight:400;font-size:1.6rem}
   .map-title em{font-style:italic}
   .map-sub{font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
-  .rmap{display:block;width:100%;height:auto}
-  .rmap .frame{fill:none;stroke:var(--line);stroke-width:1}
-  .rmap .river{
-    fill:none;stroke:#aabdb6;stroke-width:15;stroke-linecap:round;
-    stroke-dasharray:1;stroke-dashoffset:1;
+  #leafmap{
+    height:440px;width:100%;background:var(--paper-2);
+    border:1px solid var(--line);position:relative;z-index:1;
   }
-  .reveal.in .river{animation:riverdraw 2.6s .3s cubic-bezier(.4,0,.2,1) forwards}
-  @keyframes riverdraw{to{stroke-dashoffset:0}}
-  .rmap .river-lbl{font-family:var(--serif);font-style:italic;font-size:15px;fill:#7f958e;letter-spacing:.12em}
-  .rmap .lm-lbl{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:var(--ink-soft);transition:fill .3s}
-  .rmap .area{font-family:var(--sans);font-size:11px;letter-spacing:.34em;fill:rgba(33,29,24,.34)}
-  .rmap .fade{opacity:0}
-  .reveal.in .fade{animation-name:fadeIn;animation-duration:.9s;animation-timing-function:ease;animation-fill-mode:forwards}
-  .rmap .compass{stroke:var(--ink-soft);fill:none;opacity:.55}
-  .rmap .compass-n{font-family:var(--serif);font-size:14px;fill:var(--ink-soft);opacity:.8}
-  .rmap .pin{cursor:pointer}
-  .rmap .pin .dot{
-    fill:var(--ink);transform-box:fill-box;transform-origin:center;
-    transition:transform .3s cubic-bezier(.2,.7,.3,1.4),fill .3s;
+  #leafmap .fallback{
+    display:flex;align-items:center;justify-content:center;height:100%;
+    font-family:var(--serif);font-style:italic;color:var(--ink-soft);
+    text-align:center;padding:2rem;
   }
-  .rmap .pin:hover .dot{transform:scale(1.6);fill:var(--terra)}
-  .rmap .pin:hover .lm-lbl{fill:var(--terra)}
-  .rmap .pin.act .dot{fill:var(--terra)}
-  .rmap .pin.act .lm-lbl{font-family:var(--sans);font-style:normal;font-weight:600;font-size:12px;letter-spacing:.12em;fill:var(--ink)}
-  .rmap .halo{
-    fill:none;stroke:var(--terra);stroke-width:1.5;opacity:0;
-    transform-box:fill-box;transform-origin:center;
+  /* warm the tiles to match the paper */
+  .leaflet-tile-pane{filter:sepia(.22) saturate(.82) brightness(1.02)}
+  .mk{
+    display:block;width:12px;height:12px;border-radius:50%;
+    background:var(--ink);border:2px solid var(--paper);
+    box-shadow:0 1px 6px rgba(33,29,24,.4);
+    transition:transform .25s cubic-bezier(.2,.7,.3,1.4);
   }
-  .reveal.in .halo{animation:halo 3.4s ease-out infinite}
-  @keyframes halo{0%{transform:scale(1);opacity:.6}70%{transform:scale(2.8);opacity:0}100%{transform:scale(2.8);opacity:0}}
-
-  /* map on small screens: bigger type & dots (user units scale down with viewBox) */
+  .mk:hover{transform:scale(1.4)}
+  .mk.act{background:var(--terra);position:relative}
+  .mk.act::after{
+    content:"";position:absolute;inset:-2px;border-radius:50%;
+    border:1.5px solid var(--terra);animation:mkhalo 2.6s ease-out infinite;
+  }
+  @keyframes mkhalo{0%{transform:scale(1);opacity:.7}80%{transform:scale(2.6);opacity:0}100%{transform:scale(2.6);opacity:0}}
+  .leaflet-tooltip.mk-tip{
+    background:var(--paper);border:1px solid var(--line);border-radius:0;
+    box-shadow:0 8px 20px -12px rgba(33,29,24,.4);
+    font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--ink);
+    padding:.3rem .7rem;
+  }
+  .leaflet-popup-content-wrapper{
+    background:var(--paper);border:1px solid var(--line);border-radius:0;
+    box-shadow:0 14px 30px -16px rgba(33,29,24,.45);
+  }
+  .leaflet-popup-content{font-family:var(--sans);color:var(--ink);margin:.9rem 1.1rem}
+  .leaflet-popup-content .pop-name{font-family:var(--serif);font-size:1.15rem;margin-bottom:.2rem}
+  .leaflet-popup-content a{color:var(--terra);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
+  .leaflet-popup-tip{background:var(--paper);border:1px solid var(--line)}
+  .leaflet-container{font-family:var(--sans)}
   @media(max-width:640px){
-    .rmap .lm-lbl{font-size:24px}
-    .rmap .pin.act .lm-lbl{font-size:19px}
-    .rmap .area{font-size:17px;letter-spacing:.28em}
-    .rmap .river-lbl{font-size:22px}
-    .rmap .pin .dot{r:7px}
-    .rmap .compass-n{font-size:20px}
+    #leafmap{height:340px}
     .map-card{padding:1rem 1rem .7rem}
+  }
+
+  /* ---------- weather & packing ---------- */
+  .info-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.4rem}
+  @media(min-width:820px){.info-grid{grid-template-columns:1fr 1fr}}
+  .info-card{
+    border:1px solid var(--line);background:rgba(255,255,255,.4);
+    padding:2rem 1.9rem;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
+  }
+  .info-card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(33,29,24,.35)}
+  .info-card h4{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:0 0 .3rem}
+  .info-card .hint{font-size:.85rem;color:var(--ink-soft);margin:0 0 1.4rem}
+  .wx-row{display:flex;gap:1.2rem;flex-wrap:wrap}
+  .wx{flex:1 1 100px;text-align:center;border:1px solid var(--line);padding:1.1rem .6rem}
+  .wx .n{font-family:var(--serif);font-size:2.2rem;line-height:1.1}
+  .wx .n sup{font-size:1.1rem;color:var(--terra)}
+  .wx .l{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-top:.4rem}
+  .wx-note{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink-soft);margin-top:1.2rem}
+  .bring{list-style:none;margin:0;padding:0}
+  .bring li{
+    display:flex;gap:.9rem;align-items:baseline;
+    padding:.75rem 0;border-bottom:1px dotted var(--line);
+  }
+  .bring li:last-child{border-bottom:none}
+  .bring .b-what{font-family:var(--serif);font-size:1.08rem;white-space:nowrap}
+  .bring .b-why{font-size:.85rem;color:var(--ink-soft)}
+
+  /* ---------- photos ---------- */
+  .photo{
+    border:1px solid var(--line);background:rgba(255,255,255,.5);
+    padding:.8rem;margin:0;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
+  }
+  .photo:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(33,29,24,.45)}
+  .photo .ph{overflow:hidden;aspect-ratio:16/10;background:var(--paper-2)}
+  .photo img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:sepia(.14) saturate(.88) contrast(.98);
+    transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .photo:hover img{transform:scale(1.05)}
+  .photo figcaption{
+    font-family:var(--serif);font-style:italic;font-size:.9rem;
+    color:var(--ink-soft);padding:.7rem .2rem 0;
+  }
+  .photo-duo{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.6rem}
+  @media(min-width:760px){.photo-duo{grid-template-columns:1fr 1fr}}
+  .interlude{max-width:1060px;margin:0 auto;padding:4rem 1.25rem 0}
+  .photo.kb .ph{aspect-ratio:21/9}
+  .photo.kb img{animation:kb 30s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
+
+  /* ---------- music ---------- */
+  .music-btn{
+    position:fixed;left:1.1rem;bottom:1.1rem;z-index:70;
+    width:54px;height:54px;border-radius:50%;
+    background:var(--paper);border:1px solid var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 12px 26px -14px rgba(33,29,24,.55);
+    transition:transform .3s cubic-bezier(.2,.7,.3,1.4),background .3s;
+  }
+  .music-btn:hover{transform:scale(1.1)}
+  .music-btn svg{animation:spin 5s linear infinite;animation-play-state:paused}
+  .music-btn.playing{background:var(--ink)}
+  .music-btn.playing svg{animation-play-state:running}
+  .music-btn.playing .vinyl-line{stroke:var(--paper)}
+  .music-btn.playing .vinyl-fill{fill:var(--paper)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .music-card{
+    position:fixed;left:1.1rem;bottom:calc(1.1rem + 66px);z-index:70;
+    width:min(330px,calc(100vw - 2.2rem));
+    background:var(--paper);border:1px solid var(--ink);padding:1rem;
+    box-shadow:0 24px 50px -24px rgba(33,29,24,.55);
+    opacity:0;pointer-events:none;transform:translateY(12px);
+    transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .music-card.open{opacity:1;pointer-events:auto;transform:none}
+  .music-card .mc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.7rem}
+  .music-card .mc-t{font-family:var(--serif);font-style:italic;font-size:1.02rem}
+  .music-card .mc-s{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .music-card .mc-close{
+    background:none;border:none;cursor:pointer;color:var(--ink-soft);
+    font-size:1rem;line-height:1;padding:.2rem;
+  }
+  .music-card .mc-close:hover{color:var(--terra)}
+  .music-card .mc-frame{aspect-ratio:16/9;background:var(--paper-2)}
+  .music-card iframe{width:100%;height:100%;border:0;display:block}
+
+  /* ---------- skyline ---------- */
+  .skyline{
+    display:block;width:100%;max-width:900px;margin:5rem auto -1px;
+    padding:0 1.25rem;opacity:.85;
   }
 
   /* ---------- rsvp ---------- */
@@ -333,7 +430,7 @@
 
   /* ---------- footer ---------- */
   footer{
-    margin-top:6rem;border-top:1px solid var(--line);
+    border-top:1px solid var(--line);
     padding:3rem 1.25rem 3.5rem;text-align:center;
   }
   footer .big{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,4vw,2.1rem);margin-bottom:.6rem}
@@ -345,6 +442,9 @@
   }
 </style>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
 <div class="grain" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
 
@@ -353,6 +453,7 @@
   <nav>
     <a href="#program">Program</a>
     <a href="#hotels">Hotels</a>
+    <a href="#info">Info</a>
     <a href="#rsvp">RSVP</a>
   </nav>
 </header>
@@ -360,19 +461,52 @@
 <div class="hero" id="top">
   <div class="hero-blob"></div>
   <div class="arch-par" id="archpar">
-  <svg class="hero-arches" viewBox="0 0 1200 260" fill="none" aria-hidden="true">
-    <g stroke="#a8502b" stroke-width="1.4" opacity=".55">
-      <path d="M0 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M135 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M270 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M405 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M540 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M675 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M810 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M945 260 V150 a60 66 0 0 1 120 0 V260"/>
-      <path d="M1080 260 V150 a60 66 0 0 1 120 0 V260"/>
+  <svg class="hero-arches" viewBox="0 0 1200 300" fill="none" aria-hidden="true">
+    <g stroke="#a8502b" stroke-width="1.4" opacity=".6">
+      <!-- upper tier: small arches -->
+      <path d="M15 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M82 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M149 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M216 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M283 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M350 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M417 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M484 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M551 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M618 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M685 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M752 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M819 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M886 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M953 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M1020 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M1087 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <path d="M1154 118 V72 a26 30 0 0 1 52 0 V118"/>
+      <!-- water channel & cornices -->
+      <line x1="0" y1="42" x2="1200" y2="42"/>
+      <line x1="0" y1="30" x2="1200" y2="30"/>
       <line x1="0" y1="118" x2="1200" y2="118"/>
-      <line x1="0" y1="104" x2="1200" y2="104"/>
+      <line x1="0" y1="130" x2="1200" y2="130"/>
+      <!-- lower tier: grand arches -->
+      <path d="M0 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M135 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M270 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M405 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M540 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M675 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M810 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M945 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <path d="M1080 300 V190 a60 66 0 0 1 120 0 V300"/>
+      <!-- keystones on the grand tier -->
+      <line x1="60" y1="124" x2="60" y2="136"/>
+      <line x1="195" y1="124" x2="195" y2="136"/>
+      <line x1="330" y1="124" x2="330" y2="136"/>
+      <line x1="465" y1="124" x2="465" y2="136"/>
+      <line x1="600" y1="124" x2="600" y2="136"/>
+      <line x1="735" y1="124" x2="735" y2="136"/>
+      <line x1="870" y1="124" x2="870" y2="136"/>
+      <line x1="1005" y1="124" x2="1005" y2="136"/>
+      <line x1="1140" y1="124" x2="1140" y2="136"/>
     </g>
   </svg>
   </div>
@@ -380,6 +514,19 @@
   <h1><span>R</span><span>O</span><span>M</span><span>A</span></h1>
   <div class="dates">Luca's birthday weekend</div>
   <div class="when">26 — 29 November 2026</div>
+  <svg class="laurel" width="140" height="34" viewBox="0 0 140 34" fill="none" aria-hidden="true">
+    <g stroke="#a8502b" stroke-width="1.1">
+      <path d="M8 17 Q40 4 62 15" fill="none"/>
+      <path d="M132 17 Q100 4 78 15" fill="none"/>
+      <path d="M16 14 q4 -8 10 -9 q-1 8 -10 9z" fill="#a8502b" opacity=".55"/>
+      <path d="M30 10 q5 -7 11 -7 q-2 8 -11 7z" fill="#a8502b" opacity=".55"/>
+      <path d="M46 9 q6 -6 12 -5 q-3 8 -12 5z" fill="#a8502b" opacity=".55"/>
+      <path d="M124 14 q-4 -8 -10 -9 q1 8 10 9z" fill="#a8502b" opacity=".55"/>
+      <path d="M110 10 q-5 -7 -11 -7 q2 8 11 7z" fill="#a8502b" opacity=".55"/>
+      <path d="M94 9 q-6 -6 -12 -5 q3 8 12 5z" fill="#a8502b" opacity=".55"/>
+      <circle cx="70" cy="17" r="2.4" fill="#a8502b" stroke="none"/>
+    </g>
+  </svg>
   <a class="scrollcue" href="#invito">Scroll</a>
 </div>
 
@@ -406,6 +553,16 @@
       </ul>
     </div>
   </div>
+  <div class="photo-duo">
+    <figure class="photo reveal">
+      <div class="ph"><img src="img/tiber.jpg" alt="The Tiber at blue hour with St Peter's dome behind" loading="lazy"></div>
+      <figcaption>Blue hour on the Tevere</figcaption>
+    </figure>
+    <figure class="photo reveal d1">
+      <div class="ph"><img src="img/pantheon.jpg" alt="The oculus of the Pantheon seen from below" loading="lazy"></div>
+      <figcaption>The Pantheon, from below</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section id="program">
@@ -425,6 +582,13 @@
   </div>
 </section>
 
+<div class="interlude">
+  <figure class="photo kb reveal">
+    <div class="ph"><img src="img/colosseum.jpg" alt="The Colosseum at dusk" loading="lazy"></div>
+    <figcaption>The Colosseum at dusk — worth the jet lag on its own</figcaption>
+  </figure>
+</div>
+
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels <em>to follow</em></h2>
@@ -443,33 +607,9 @@
         <div class="map-sub">Where the weekend will happen — activities and hotels get pinned in orange as they're announced. Tap a dot to open it in Maps.</div>
       </div>
     </div>
-    <svg class="rmap" viewBox="0 0 800 600" role="img" aria-label="Illustrated map of central Rome">
-      <rect class="frame" x="8" y="8" width="784" height="584"/>
-
-      <!-- Tiber -->
-      <path class="river" pathLength="1"
-        d="M356 20 C350 60 352 90 336 118 C318 150 278 158 272 192 C266 222 280 240 292 266 C308 300 356 314 386 330 C404 340 404 352 407 380 C412 424 398 470 396 592"/>
-      <text class="river-lbl fade" style="animation-delay:1.6s" transform="rotate(80 428 452)" x="428" y="452" text-anchor="middle">Tevere</text>
-
-      <!-- area labels -->
-      <g class="fade" style="animation-delay:1.9s">
-        <text class="area" x="505" y="82">VILLA BORGHESE</text>
-        <text class="area" x="572" y="264">MONTI</text>
-        <text class="area" x="212" y="408">TRASTEVERE</text>
-        <text class="area" x="340" y="508">TESTACCIO</text>
-      </g>
-
-      <!-- pins are rendered by script from the PLACES list -->
-      <g id="pins"></g>
-
-      <!-- compass -->
-      <g class="fade" style="animation-delay:2.2s">
-        <circle class="compass" cx="738" cy="62" r="20"/>
-        <line class="compass" x1="738" y1="74" x2="738" y2="54"/>
-        <path d="M738 46 l-4 9 h8 z" fill="#57503f" opacity=".7"/>
-        <text class="compass-n" x="733.5" y="100">N</text>
-      </g>
-    </svg>
+    <div id="leafmap">
+      <div class="fallback">The map loads on the live site — see you in Rome.</div>
+    </div>
   </div>
 </section>
 
@@ -478,23 +618,96 @@
   <h2 class="sec-title reveal">Are you <em>in?</em></h2>
   <div class="rsvp-wrap reveal">
     <h3>First, who are you?</h3>
-    <p class="sub">Pick your name, then give me a yes or a no. Your answer is saved on this device — copy the message and send it to Luca however you like.</p>
+    <p class="sub">Pick your name, then give me a yes or a no.</p>
     <div class="chips" id="namechips"></div>
     <div class="yesno">
       <button class="yn yes" id="btnyes">Yes, I'm in</button>
       <button class="yn no" id="btnno">Sadly can't</button>
     </div>
     <div id="status"><span class="none">Waiting on you…</span></div>
-    <div class="rsvp-actions">
-      <button class="btn btn-primary" id="copybtn">Copy message</button>
+  </div>
+</section>
+
+<section id="info">
+  <div class="sec-kicker reveal">Good to know</div>
+  <h2 class="sec-title reveal">Rome in <em>late November</em></h2>
+  <div class="info-grid">
+    <div class="info-card reveal">
+      <h4>The weather</h4>
+      <p class="hint">Mild by day, crisp after dark — proper sweater weather.</p>
+      <div class="wx-row">
+        <div class="wx"><div class="n">15<sup>°</sup></div><div class="l">By day</div></div>
+        <div class="wx"><div class="n">7<sup>°</sup></div><div class="l">At night</div></div>
+        <div class="wx"><div class="n">16:40</div><div class="l">Sunset</div></div>
+      </div>
+      <p class="wx-note">Expect bright, golden days with the odd shower — November is when Rome is at its quietest and most its own.</p>
+    </div>
+    <div class="info-card reveal d1">
+      <h4>What to bring</h4>
+      <p class="hint">The short list.</p>
+      <ul class="bring">
+        <li><span class="b-what">A proper coat</span><span class="b-why">evenings get cold, dinners run late</span></li>
+        <li><span class="b-what">Good walking shoes</span><span class="b-why">cobblestones win every argument with heels</span></li>
+        <li><span class="b-what">A small umbrella</span><span class="b-why">or trust your luck</span></li>
+        <li><span class="b-what">One nicer outfit</span><span class="b-why">there will be an evening worth it</span></li>
+        <li><span class="b-what">Room in the suitcase</span><span class="b-why">you won't leave empty-handed</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
+<svg class="skyline reveal" viewBox="0 0 900 120" fill="none" aria-hidden="true">
+  <g stroke="#57503f" stroke-width="1.2" opacity=".5">
+    <!-- umbrella pines -->
+    <path d="M80 118 V78 M80 78 C60 78 52 66 60 58 C50 56 54 44 68 46 C70 36 90 36 92 46 C106 44 110 56 100 58 C108 66 100 78 80 78z"/>
+    <path d="M150 118 V88 M150 88 C134 88 128 78 134 72 C126 70 130 60 141 62 C143 54 157 54 159 62 C170 60 174 70 166 72 C172 78 166 88 150 88z"/>
+    <!-- st peter's dome -->
+    <path d="M430 118 V86 H410 V80 H450 V86"/>
+    <path d="M410 80 h80"/>
+    <path d="M450 118 V86 H490 V80"/>
+    <path d="M414 80 C414 56 442 44 450 44 C458 44 486 56 486 80"/>
+    <path d="M450 44 V32 M444 36 h12"/>
+    <path d="M428 80 C428 62 446 52 450 52 M472 80 C472 62 454 52 450 52"/>
+    <!-- colonnade hint -->
+    <path d="M510 118 V96 M526 118 V96 M542 118 V96 M558 118 V96 M510 96 h48"/>
+    <!-- pines right -->
+    <path d="M700 118 V82 M700 82 C682 82 675 70 682 63 C673 61 677 50 689 52 C691 42 709 42 711 52 C723 50 727 61 718 63 C725 70 718 82 700 82z"/>
+    <path d="M790 118 V92 M790 92 C776 92 771 83 776 78 C769 76 772 67 782 69 C784 61 796 61 798 69 C808 67 811 76 804 78 C809 83 804 92 790 92z"/>
+    <!-- ground -->
+    <line x1="0" y1="118" x2="900" y2="118"/>
+  </g>
+</svg>
+
 <footer>
   <div class="big">Ci vediamo a Roma.</div>
-  <div class="small">26 — 29 November 2026</div>
+  <div class="small">S·P·Q·R &nbsp;·&nbsp; 26 — 29 November 2026</div>
+  <div class="small" style="margin-top:.8rem;opacity:.6;letter-spacing:.12em;text-transform:none">
+    Photos:
+    <a href="https://commons.wikimedia.org/wiki/File:Ponte_Vittorio_Emanuele_II_San_Pietro,_Rome,_Italy.jpg" target="_blank" rel="noopener" style="color:inherit">Jebulon</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Interior_oculus_of_the_Rome_Pantheon.jpg" target="_blank" rel="noopener" style="color:inherit">T. Le Berre</a>,
+    <a href="https://commons.wikimedia.org/wiki/File:Colosseum_in_Rome,_Italy_-_April_2007.jpg" target="_blank" rel="noopener" style="color:inherit">Diliff</a>
+    · Wikimedia Commons · CC BY-SA
+  </div>
 </footer>
+
+<div class="music-card" id="musiccard" aria-hidden="true">
+  <div class="mc-head">
+    <div>
+      <div class="mc-t">Sì, viaggiare</div>
+      <div class="mc-s">Lucio Battisti · 1977</div>
+    </div>
+    <button class="mc-close" id="musicclose" aria-label="Close player">✕</button>
+  </div>
+  <div class="mc-frame" id="musicframe"></div>
+</div>
+<button class="music-btn" id="musicbtn" aria-label="Play the soundtrack — Sì, viaggiare by Lucio Battisti" title="La colonna sonora">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <circle class="vinyl-line" cx="14" cy="14" r="11" stroke="#211d18" stroke-width="1.3"/>
+    <circle class="vinyl-line" cx="14" cy="14" r="7" stroke="#211d18" stroke-width=".8" opacity=".5"/>
+    <circle class="vinyl-line" cx="14" cy="14" r="9" stroke="#211d18" stroke-width=".8" opacity=".3"/>
+    <circle class="vinyl-fill" cx="14" cy="14" r="2.6" fill="#a8502b"/>
+  </svg>
+</button>
 
 <script>
 (function(){
@@ -556,13 +769,6 @@
   /* ------- render ------- */
   var statusEl = document.getElementById("status");
 
-  function buildMessage(){
-    var a = getAnswer();
-    if (a === "yes") return "Ciao Luca! It's " + guest + " — I'm in for Rome, 26–29 November. 🥂";
-    if (a === "no") return "Ciao Luca! It's " + guest + " — sadly I can't make Rome, 26–29 November. 💔";
-    return "Ciao Luca! It's " + (guest || "…") + " — about Rome, 26–29 November…";
-  }
-
   function render(){
     chipsEl.querySelectorAll(".chip").forEach(function(c){
       c.classList.toggle("on", c.textContent === guest);
@@ -585,79 +791,51 @@
     }
   }
 
-  var copyBtn = document.getElementById("copybtn");
-  copyBtn.addEventListener("click", function(){
-    if (!guest || !getAnswer()) return needName();
-    var msg = buildMessage();
-    function done(){ copyBtn.textContent = "Copied ✓"; setTimeout(function(){ copyBtn.textContent = "Copy message"; }, 1800); }
-    function fallback(){
-      var ta = document.createElement("textarea");
-      ta.value = msg; document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); done(); } catch(e){}
-      document.body.removeChild(ta);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(msg).then(done, fallback);
-    } else { fallback(); }
-  });
-
-  /* ------- map pins ------- */
-  // type "landmark" = ink dot; type "activity" or "hotel" = orange dot with pulse.
+  /* ------- real map (Leaflet) ------- */
+  // type "landmark" = ink dot; type "activity" or "hotel" = orange pulsing dot.
   // When the program lands, add entries like:
-  //   { name:"Dinner, night one", x:320, y:360, type:"activity", map:"Restaurant+Name+Rome" }
+  //   { name:"Dinner, night one", lat:41.889, lng:12.472, type:"activity", map:"Restaurant+Name+Rome" }
   var PLACES = [
-    { name:"St Peter's",        x:139, y:211, type:"landmark", map:"St+Peter's+Basilica+Rome" },
-    { name:"Piazza del Popolo", x:387, y:117, type:"landmark", map:"Piazza+del+Popolo+Rome" },
-    { name:"Spanish Steps",     x:453, y:170, type:"landmark", map:"Spanish+Steps+Rome" },
-    { name:"Trevi Fountain",    x:464, y:224, type:"landmark", map:"Trevi+Fountain+Rome" },
-    { name:"Termini",           x:660, y:224, type:"landmark", map:"Roma+Termini" },
-    { name:"Piazza Navona",     x:351, y:244, type:"landmark", map:"Piazza+Navona+Rome", anchor:"end" },
-    { name:"Pantheon",          x:392, y:258, type:"landmark", map:"Pantheon+Rome" },
-    { name:"Colosseum",         x:565, y:341, type:"landmark", map:"Colosseum+Rome" }
+    { name:"St Peter's",        lat:41.9022, lng:12.4539, type:"landmark", map:"St+Peter's+Basilica+Rome" },
+    { name:"Piazza del Popolo", lat:41.9109, lng:12.4763, type:"landmark", map:"Piazza+del+Popolo+Rome" },
+    { name:"Villa Borghese",    lat:41.9128, lng:12.4853, type:"landmark", map:"Villa+Borghese+Rome" },
+    { name:"Spanish Steps",     lat:41.9060, lng:12.4823, type:"landmark", map:"Spanish+Steps+Rome" },
+    { name:"Trevi Fountain",    lat:41.9009, lng:12.4833, type:"landmark", map:"Trevi+Fountain+Rome" },
+    { name:"Pantheon",          lat:41.8986, lng:12.4769, type:"landmark", map:"Pantheon+Rome" },
+    { name:"Piazza Navona",     lat:41.8992, lng:12.4731, type:"landmark", map:"Piazza+Navona+Rome" },
+    { name:"Campo de' Fiori",   lat:41.8956, lng:12.4723, type:"landmark", map:"Campo+de+Fiori+Rome" },
+    { name:"Roman Forum",       lat:41.8925, lng:12.4853, type:"landmark", map:"Roman+Forum" },
+    { name:"Colosseum",         lat:41.8902, lng:12.4922, type:"landmark", map:"Colosseum+Rome" },
+    { name:"Trastevere",        lat:41.8895, lng:12.4694, type:"landmark", map:"Trastevere+Rome" },
+    { name:"Termini",           lat:41.9009, lng:12.5010, type:"landmark", map:"Roma+Termini" }
   ];
 
-  var SVGNS = "http://www.w3.org/2000/svg";
-  var XLINK = "http://www.w3.org/1999/xlink";
-  var pinsEl = document.getElementById("pins");
-  PLACES.forEach(function(p, i){
-    var a = document.createElementNS(SVGNS, "a");
-    a.setAttribute("class", "pin fade" + (p.type !== "landmark" ? " act" : ""));
-    a.setAttribute("style", "animation-delay:" + (0.7 + i * 0.14).toFixed(2) + "s");
-    a.setAttribute("href", "https://maps.google.com/?q=" + p.map);
-    a.setAttributeNS(XLINK, "xlink:href", "https://maps.google.com/?q=" + p.map);
-    a.setAttribute("target", "_blank");
-    a.setAttribute("rel", "noopener");
-
-    // generous invisible hit area for thumbs
-    var hit = document.createElementNS(SVGNS, "circle");
-    hit.setAttribute("cx", p.x); hit.setAttribute("cy", p.y);
-    hit.setAttribute("r", 18); hit.setAttribute("fill", "transparent");
-    a.appendChild(hit);
-
-    if (p.type !== "landmark") {
-      var halo = document.createElementNS(SVGNS, "circle");
-      halo.setAttribute("class", "halo");
-      halo.setAttribute("cx", p.x); halo.setAttribute("cy", p.y); halo.setAttribute("r", 7);
-      a.appendChild(halo);
-    }
-
-    var dot = document.createElementNS(SVGNS, "circle");
-    dot.setAttribute("class", "dot");
-    dot.setAttribute("cx", p.x); dot.setAttribute("cy", p.y);
-    dot.setAttribute("r", p.type !== "landmark" ? 6 : 4);
-    a.appendChild(dot);
-
-    var t = document.createElementNS(SVGNS, "text");
-    t.setAttribute("class", "lm-lbl");
-    var end = p.anchor === "end";
-    t.setAttribute("x", end ? p.x - 13 : p.x + 13);
-    t.setAttribute("y", p.y + 5);
-    if (end) t.setAttribute("text-anchor", "end");
-    t.textContent = p.name;
-    a.appendChild(t);
-
-    pinsEl.appendChild(a);
-  });
+  function initMap(){
+    if (!window.L) return; // offline preview: keep the fallback note
+    var el = document.getElementById("leafmap");
+    el.innerHTML = "";
+    var map = L.map(el, { scrollWheelZoom:false, zoomControl:true })
+      .setView([41.8975, 12.4809], 14);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom:19
+    }).addTo(map);
+    PLACES.forEach(function(p){
+      var act = p.type !== "landmark";
+      var icon = L.divIcon({
+        className:"",
+        html:'<span class="mk' + (act ? " act" : "") + '"></span>',
+        iconSize:[12,12], iconAnchor:[6,6]
+      });
+      L.marker([p.lat, p.lng], { icon:icon })
+        .addTo(map)
+        .bindTooltip(p.name, { className:"mk-tip", direction:"top", offset:[0,-8] })
+        .bindPopup('<div class="pop-name">' + p.name + '</div>' +
+          '<a href="https://maps.google.com/?q=' + p.map + '" target="_blank" rel="noopener">Open in Maps →</a>');
+    });
+  }
+  if (document.readyState === "complete") initMap();
+  else window.addEventListener("load", initMap);
 
   /* ------- scroll progress + hero parallax ------- */
   var progressEl = document.getElementById("progress");
@@ -679,6 +857,29 @@
   }
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
+
+  /* ------- music ------- */
+  var musicBtn = document.getElementById("musicbtn");
+  var musicCard = document.getElementById("musiccard");
+  var musicFrame = document.getElementById("musicframe");
+  var musicClose = document.getElementById("musicclose");
+  function openMusic(){
+    musicFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/U6NqD0P0eY8?autoplay=1" ' +
+      'title="Sì, viaggiare — Lucio Battisti" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    musicCard.classList.add("open");
+    musicCard.setAttribute("aria-hidden","false");
+    musicBtn.classList.add("playing");
+  }
+  function closeMusic(){
+    musicFrame.innerHTML = "";
+    musicCard.classList.remove("open");
+    musicCard.setAttribute("aria-hidden","true");
+    musicBtn.classList.remove("playing");
+  }
+  musicBtn.addEventListener("click", function(){
+    if (musicCard.classList.contains("open")) closeMusic(); else openMusic();
+  });
+  musicClose.addEventListener("click", closeMusic);
 
   /* ------- scroll reveal ------- */
   if ("IntersectionObserver" in window) {
