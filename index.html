@@ -222,6 +222,13 @@
     font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--terra);
     border:1px solid rgba(168,80,43,.4);border-radius:999px;padding:.28rem .8rem;
   }
+  .teasers{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+  .teaser{
+    font-family:var(--serif);font-size:1rem;
+    padding:.4rem 1rem;border-radius:999px;
+    border:1px solid var(--ink);color:var(--ink);
+  }
+  .teaser.soon-tag{border-style:dashed;border-color:var(--line);color:var(--ink-soft);font-style:italic}
   .soon .badge.dot::before{
     content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
     background:var(--terra);margin-right:.5rem;vertical-align:1px;
@@ -346,17 +353,30 @@
   .bring .b-what{font-family:var(--serif);font-size:1.08rem;white-space:nowrap}
   .bring .b-why{font-size:.85rem;color:var(--ink-soft)}
 
-  /* ---------- mood bands ---------- */
-  .mood{
-    height:52vh;min-height:300px;margin-top:5rem;
-    background-size:cover;background-repeat:no-repeat;
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  /* ---------- photos ---------- */
+  .photo{
+    border:1px solid var(--line);background:rgba(255,255,255,.5);
+    padding:.8rem;margin:0;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
   }
-  .mood-colosseo{background-image:url("img/colosseo.jpg");background-position:center 42%}
-  .mood-campagna{background-image:url("img/campagna.jpg");background-position:center 65%}
-  .mood-aranci{background-image:url("img/aranci.jpg");background-position:center 58%}
-  @media(min-width:900px){.mood{background-attachment:fixed}}
-  @media(max-width:640px){.mood{height:40vh;min-height:240px;margin-top:3.5rem}}
+  .photo:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(33,29,24,.45)}
+  .photo .ph{overflow:hidden;aspect-ratio:4/5;background:var(--paper-2)}
+  .photo img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:sepia(.1) saturate(.92);
+    transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .photo:hover img{transform:scale(1.05)}
+  .photo-duo{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2.6rem}
+  @media(min-width:760px){
+    .photo-duo{grid-template-columns:1fr 1fr;align-items:start}
+    .photo-duo .photo:nth-child(2){margin-top:2.2rem}
+  }
+  .interlude{max-width:1060px;margin:0 auto;padding:4.5rem 1.25rem 0}
+  .photo.wide .ph{aspect-ratio:16/9}
+  @media(min-width:760px){.photo.wide .ph{aspect-ratio:21/9}}
+  .photo.kb img{animation:kb 30s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
 
   /* ---------- music (hidden audio-only player) ---------- */
   #musicframe{
@@ -408,9 +428,20 @@
 
   #status{
     font-family:var(--serif);font-style:italic;font-size:1.15rem;
-    margin:1.6rem 0 1.6rem;min-height:1.6em;color:var(--ink);
+    margin:1.6rem 0 0;min-height:1.6em;color:var(--ink);
   }
   #status .none{color:var(--ink-soft)}
+  .tally{margin-top:1.6rem;border-top:1px dotted var(--line);padding-top:1.3rem}
+  .tally-t{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.8rem}
+  .tally-row{display:flex;flex-wrap:wrap;gap:.5rem}
+  .tpill{
+    font-family:var(--serif);font-size:.95rem;
+    padding:.35rem .9rem;border-radius:999px;
+    border:1px dashed var(--line);color:var(--ink-soft);
+    transition:all .3s cubic-bezier(.2,.7,.2,1);
+  }
+  .tpill.yes{background:var(--terra);border:1px solid var(--terra);color:#fff}
+  .tpill.no{background:transparent;border:1px solid var(--ink);color:var(--ink);text-decoration:line-through;opacity:.6}
   .rsvp-actions{display:flex;flex-wrap:wrap;gap:.8rem}
   .btn{
     display:inline-block;font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;
@@ -502,6 +533,14 @@
       </ul>
     </div>
   </div>
+  <div class="photo-duo">
+    <figure class="photo reveal">
+      <div class="ph"><img src="img/aranci.jpg" alt="Umbrella pines at the Giardino degli Aranci at sunset, St Peter's in the distance" loading="lazy"></div>
+    </figure>
+    <figure class="photo reveal d1">
+      <div class="ph"><img src="img/loggia.jpg" alt="A frescoed loggia lined with marble busts" loading="lazy"></div>
+    </figure>
+  </div>
 </section>
 
 <section id="rsvp">
@@ -516,10 +555,13 @@
       <button class="yn no" id="btnno">Sadly can't</button>
     </div>
     <div id="status"><span class="none">Waiting on you…</span></div>
+    <div class="tally">
+      <div class="tally-t">The tally</div>
+      <div class="tally-row" id="tally"></div>
+    </div>
   </div>
 </section>
 
-<div class="mood mood-colosseo reveal" role="img" aria-label="The Colosseum lit by a stormy sunset, framed by umbrella pines"></div>
 
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
@@ -528,7 +570,13 @@
     <div class="soon reveal">
       <span class="badge dot">In the works</span>
       <h4>The program</h4>
-      <p>Dinners, activities and the birthday evening are being put together. The full schedule will appear right here once it's set — check back soon.</p>
+      <p>A few things are already certain — the rest of the schedule lands here once it's set.</p>
+      <div class="teasers">
+        <span class="teaser">Golf</span>
+        <span class="teaser">Padel</span>
+        <span class="teaser">Guided tours</span>
+        <span class="teaser soon-tag">more to follow…</span>
+      </div>
     </div>
     <div class="soon reveal d1">
       <span class="badge">Save the dates</span>
@@ -538,7 +586,11 @@
   </div>
 </section>
 
-<div class="mood mood-campagna reveal" role="img" aria-label="Pines and green hills on the edge of Rome"></div>
+<div class="interlude">
+  <figure class="photo wide kb reveal">
+    <div class="ph"><img src="img/colosseo.jpg" alt="The Colosseum lit by a stormy sunset, framed by umbrella pines" loading="lazy"></div>
+  </figure>
+</div>
 
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
@@ -564,7 +616,11 @@
   </div>
 </section>
 
-<div class="mood mood-aranci reveal" role="img" aria-label="Umbrella pines at the Giardino degli Aranci at sunset"></div>
+<div class="interlude">
+  <figure class="photo wide reveal">
+    <div class="ph"><img src="img/campagna.jpg" alt="Pines and green hills on the edge of Rome" loading="lazy"></div>
+  </figure>
+</div>
 
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
@@ -685,7 +741,7 @@
       _template: "table",
       _captcha: "false"
     };
-    fetch("https://formsubmit.co/ajax/luca.solari@decentriq.ch", {
+    fetch("https://formsubmit.co/ajax/714f48a1af866b17c9e4b723a5e13ba3", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(payload)
@@ -713,10 +769,28 @@
   /* ------- render ------- */
   var statusEl = document.getElementById("status");
 
+  function answerFor(name){
+    if (CONFIRMED.indexOf(name) !== -1) return "yes";
+    var a = null;
+    try { a = localStorage.getItem(ansKey(name)); } catch(e){}
+    return (a === "yes" || a === "no") ? a : null;
+  }
+
+  var tallyEl = document.getElementById("tally");
+  function renderTally(){
+    tallyEl.innerHTML = GUESTS.map(function(name){
+      var a = answerFor(name);
+      var cls = a === "yes" ? " yes" : a === "no" ? " no" : "";
+      var mark = a === "yes" ? " ✓" : "";
+      return '<span class="tpill' + cls + '">' + name + mark + '</span>';
+    }).join("");
+  }
+
   function render(){
     chipsEl.querySelectorAll(".chip").forEach(function(c){
       c.classList.toggle("on", c.textContent === guest);
     });
+    renderTally();
     var a = getAnswer();
     btnYes.classList.toggle("on", a === "yes");
     btnNo.classList.toggle("on", a === "no");
