@@ -1,0 +1,7 @@
+name = "roma-tally"
+main = "tally-worker.js"
+compatibility_date = "2026-07-01"
+
+[[kv_namespaces]]
+binding = "TALLY"
+id = "2542ee4428964cdeae40a99f6ce2c955"

@@ -826,7 +826,7 @@
 
   btnYes.addEventListener("click", function(){
     if (!guest) return needName();
-    setAnswer("yes"); render(); sendRSVP(); maybeShowAppModal();
+    setAnswer("yes"); render(); sendRSVP(); pushTally(); maybeShowAppModal();
   });
   var btnMb = document.getElementById("btnmb");
   btnMb.addEventListener("click", function(){
@@ -835,7 +835,7 @@
       statusEl.textContent = "Too late, you're already booked in.";
       return;
     }
-    setAnswer("maybe"); render(); sendRSVP();
+    setAnswer("maybe"); render(); sendRSVP(); pushTally();
   });
   btnNo.addEventListener("click", function(){
     if (!guest) return needName();
@@ -843,20 +843,37 @@
       statusEl.textContent = "Too late, you're already booked in.";
       return;
     }
-    setAnswer("no"); render(); sendRSVP();
+    setAnswer("no"); render(); sendRSVP(); pushTally();
   });
 
   /* ------- render ------- */
   var statusEl = document.getElementById("status");
 
-  // shared tally: tally.json in the repo is kept in sync with the RSVPs
-  // that reach Luca; local answers on this device take precedence for freshness
+  // shared tally: live via the Cloudflare worker, tally.json in the repo as fallback;
+  // local answers on this device take precedence for freshness
+  var TALLY_API = "https://roma-tally.solari-bozzi.workers.dev";
   var sharedTally = {};
+  function applyTally(t){
+    if (t && typeof t === "object") { sharedTally = t; renderTally(); }
+  }
   function loadTally(){
-    fetch("tally.json?v=" + Date.now(), { cache: "no-store" })
-      .then(function(r){ return r.json(); })
-      .then(function(t){ if (t && typeof t === "object") { sharedTally = t; renderTally(); } })
-      .catch(function(){});
+    fetch(TALLY_API, { cache: "no-store" })
+      .then(function(r){ if (!r.ok) throw new Error(); return r.json(); })
+      .then(applyTally)
+      .catch(function(){
+        fetch("tally.json?v=" + Date.now(), { cache: "no-store" })
+          .then(function(r){ return r.json(); })
+          .then(applyTally)
+          .catch(function(){});
+      });
+  }
+  function pushTally(){
+    if (!guest || !getAnswer()) return;
+    fetch(TALLY_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: guest, answer: getAnswer() })
+    }).then(function(){ loadTally(); }).catch(function(){});
   }
 
   function answerFor(name){
