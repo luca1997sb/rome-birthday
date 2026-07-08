@@ -311,10 +311,14 @@
   .tier-t{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--terra);margin-bottom:.5rem}
   .hrow{padding:.9rem 0;border-bottom:1px dotted var(--line)}
   .hrow:last-child{border-bottom:none}
-  .hrow-top{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;cursor:pointer;-webkit-user-select:none;user-select:none}
+  .hrow-top{
+    display:grid;grid-template-columns:minmax(0,1fr) auto auto;
+    column-gap:.6rem;align-items:center;
+    cursor:pointer;-webkit-user-select:none;user-select:none;
+  }
   .hrow-top::after{
     content:"+";font-family:var(--sans);font-size:.95rem;color:var(--ink-soft);
-    margin-left:.4rem;transition:transform .3s,color .3s;line-height:1;
+    grid-column:3;grid-row:1;transition:transform .3s,color .3s;line-height:1;
   }
   .hrow.open .hrow-top::after{content:"\2212";color:var(--terra)}
   .hrow .h-points,.hrow .h-photos,.hrow .h-book{display:none}
@@ -322,10 +326,10 @@
   .hrow.open .h-photos{display:flex}
   .hrow.open .h-book{display:inline-block}
   .h-tag{
-    display:inline-block;
+    grid-column:2;grid-row:1;justify-self:end;
     font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
     color:var(--terra);border:1px solid rgba(168,80,43,.45);border-radius:999px;
-    padding:.14rem .5rem;white-space:nowrap;position:relative;top:-2px;
+    padding:.16rem .55rem;white-space:nowrap;
   }
   .h-points{list-style:none;margin:.35rem 0 .55rem;padding:0}
   .h-points li{
@@ -334,11 +338,13 @@
   }
   .h-points li::before{content:"\00B7";position:absolute;left:.1rem;color:var(--terra);font-weight:700}
   .h-price{
-    font-family:var(--serif);font-style:italic;font-size:.88rem;color:var(--ink);
-    white-space:nowrap;opacity:0;transition:opacity .6s;margin-left:auto;
+    grid-column:1 / -1;grid-row:2;
+    font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--ink-soft);
+    white-space:nowrap;opacity:0;transition:opacity .6s;margin-top:.15rem;
   }
-  .h-price.in{opacity:1}
-  .h-name{font-family:var(--serif);font-size:1.12rem;display:block;line-height:1.25}
+  .h-price:empty{display:none}
+  .h-price.in{opacity:1;color:var(--ink)}
+  .h-name{grid-column:1;grid-row:1;font-family:var(--serif);font-size:1.12rem;display:block;line-height:1.25}
   .h-photos{
     display:flex;gap:.45rem;overflow-x:auto;margin:.6rem 0 .25rem;
     scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
@@ -348,7 +354,34 @@
   .h-photos img{
     height:104px;width:150px;object-fit:cover;flex:0 0 auto;
     scroll-snap-align:start;border:1px solid var(--line);
-    background:var(--paper-2);filter:saturate(.95);
+    background:var(--paper-2);filter:saturate(.95);cursor:zoom-in;
+  }
+
+  /* photo lightbox */
+  .lbx{
+    position:fixed;inset:0;z-index:400;display:none;
+    background:rgba(24,19,14,.94);
+    align-items:center;justify-content:center;
+  }
+  .lbx.on{display:flex}
+  .lbx img{
+    max-width:min(92vw,1100px);max-height:78vh;object-fit:contain;
+    border:1px solid rgba(244,239,230,.25);background:#111;
+  }
+  .lbx-x,.lbx-prev,.lbx-next{
+    position:absolute;border:0;background:none;cursor:pointer;
+    color:rgba(244,239,230,.85);font-family:var(--serif);line-height:1;
+    padding:.8rem;transition:color .25s;
+  }
+  .lbx-x:hover,.lbx-prev:hover,.lbx-next:hover{color:#fff}
+  .lbx-x{top:.7rem;right:1rem;font-size:1.6rem}
+  .lbx-prev,.lbx-next{top:50%;transform:translateY(-50%);font-size:2rem}
+  .lbx-prev{left:.4rem}
+  .lbx-next{right:.4rem}
+  .lbx-count{
+    position:absolute;bottom:1.1rem;left:0;right:0;text-align:center;
+    font-family:var(--sans);font-size:.62rem;letter-spacing:.25em;
+    color:rgba(244,239,230,.7);
   }
   .h-desc{font-size:.8rem;color:var(--ink-soft);display:block;margin:.25rem 0 .45rem}
   .h-book{
@@ -1004,6 +1037,14 @@
   </div>
 </div>
 
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lbx-x" aria-label="Close">✕</button>
+  <button class="lbx-prev" aria-label="Previous photo">&#8249;</button>
+  <img alt="">
+  <button class="lbx-next" aria-label="Next photo">&#8250;</button>
+  <div class="lbx-count"></div>
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -1637,6 +1678,54 @@
       t.closest(".hrow").classList.toggle("open");
     });
   });
+
+  /* ------- photo lightbox ------- */
+  (function(){
+    var lbx = document.getElementById("lbx");
+    if (!lbx) return;
+    var img = lbx.querySelector("img");
+    var count = lbx.querySelector(".lbx-count");
+    var list = [], idx = 0;
+    function show(i){
+      idx = (i + list.length) % list.length;
+      img.src = list[idx];
+      count.textContent = (idx + 1) + " / " + list.length;
+    }
+    function open(srcs, i){
+      list = srcs; show(i);
+      lbx.classList.add("on");
+      document.body.style.overflow = "hidden";
+    }
+    function close(){
+      lbx.classList.remove("on");
+      document.body.style.overflow = "";
+      img.removeAttribute("src");
+    }
+    document.addEventListener("click", function(e){
+      var t = e.target;
+      if (t.tagName === "IMG" && t.closest(".h-photos")) {
+        var imgs = [].slice.call(t.closest(".h-photos").querySelectorAll("img"));
+        open(imgs.map(function(x){ return x.src; }), imgs.indexOf(t));
+      }
+    });
+    lbx.querySelector(".lbx-x").addEventListener("click", close);
+    lbx.querySelector(".lbx-prev").addEventListener("click", function(e){ e.stopPropagation(); show(idx - 1); });
+    lbx.querySelector(".lbx-next").addEventListener("click", function(e){ e.stopPropagation(); show(idx + 1); });
+    lbx.addEventListener("click", function(e){ if (e.target === lbx) close(); });
+    document.addEventListener("keydown", function(e){
+      if (!lbx.classList.contains("on")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(idx - 1);
+      else if (e.key === "ArrowRight") show(idx + 1);
+    });
+    var sx = null;
+    lbx.addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; }, { passive: true });
+    lbx.addEventListener("touchend", function(e){
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 45) show(dx > 0 ? idx - 1 : idx + 1);
+    }, { passive: true });
+  })();
 
   render();
   loadTally();
