@@ -497,6 +497,15 @@
     padding:.75rem 0;border-bottom:1px dotted var(--line);
   }
   .bring li:last-child{border-bottom:none}
+  .flights{list-style:none;margin:.9rem 0;padding:0}
+  .flights li{
+    display:grid;grid-template-columns:min(9rem,40vw) 1fr;
+    column-gap:1rem;align-items:baseline;
+    padding:.55rem 0;border-bottom:1px dotted var(--line);
+  }
+  .flights li:last-child{border-bottom:none}
+  .flights .f-leg{font-family:var(--serif);font-size:1rem;line-height:1.3}
+  .flights .f-route{font-size:.85rem;color:var(--ink-soft);line-height:1.45}
   .bring .b-what{font-family:var(--serif);font-size:1.08rem;line-height:1.3}
   .bring .b-why{font-size:.85rem;color:var(--ink-soft);line-height:1.45}
 
@@ -832,7 +841,12 @@
     <div class="soon reveal d1">
       <span class="badge">Save the dates</span>
       <h4>Flights</h4>
-      <p>It all begins with a late lunch on Thursday 26 November. Aim to land by early afternoon. Fly home Sunday 29 November. Flight recommendations to follow.</p>
+      <p>It all begins with a late lunch on Thursday 26 November, so aim to land by early afternoon. Fly home Sunday 29 November. Justine and Luca are on:</p>
+      <ul class="flights">
+        <li><span class="f-leg">Thu 26 &middot; AZ 571</span><span class="f-route">Zurich 10:55 &rarr; Rome 12:25</span></li>
+        <li><span class="f-leg">Sun 29 &middot; AZ 574</span><span class="f-route">Rome 16:40 &rarr; Zurich 18:15</span></li>
+      </ul>
+      <p>ITA Airways, nonstop. Same flights very welcome.</p>
     </div>
   </div>
   <figure class="photo wide reveal" style="margin-top:1.2rem">
