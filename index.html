@@ -311,7 +311,16 @@
   .tier-t{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--terra);margin-bottom:.5rem}
   .hrow{padding:.9rem 0;border-bottom:1px dotted var(--line)}
   .hrow:last-child{border-bottom:none}
-  .hrow-top{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+  .hrow-top{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;cursor:pointer;-webkit-user-select:none;user-select:none}
+  .hrow-top::after{
+    content:"+";font-family:var(--sans);font-size:.95rem;color:var(--ink-soft);
+    margin-left:.4rem;transition:transform .3s,color .3s;line-height:1;
+  }
+  .hrow.open .hrow-top::after{content:"\2212";color:var(--terra)}
+  .hrow .h-points,.hrow .h-photos,.hrow .h-book{display:none}
+  .hrow.open .h-points{display:block}
+  .hrow.open .h-photos{display:flex}
+  .hrow.open .h-book{display:inline-block}
   .h-tag{
     display:inline-block;
     font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
@@ -794,7 +803,7 @@
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels, <em>three speeds.</em></h2>
-  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November, so you see live prices in one tap, and the small figure is today's cheapest rate for our nights (Google's live rates for our dates, refreshed every couple of days). Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
+  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November, Tap a hotel to open its photos and links; the figure is Google's live cheapest rate for our nights, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
 
   <div class="tiers">
     <div class="tier reveal">
@@ -1573,17 +1582,17 @@
           var ids = el.getAttribute("data-h").split(",");
           var vals = ids.map(function(i){ return d.prices[i]; }).filter(function(v){ return v > 0; });
           if (vals.length) {
-            el.textContent = "from \u20AC" + Math.min.apply(null, vals) + "/night";
+            el.textContent = "from CHF " + Math.min.apply(null, vals) + "/night";
             el.classList.add("in");
           }
           // photo strip: merge galleries for combined rows, cap at 8
           var row = el.closest(".hrow");
           if (row && !row.querySelector(".h-photos") && d.photos) {
             var pics = [];
-            for (var r = 0; pics.length < 8 && r < 8; r++) {
+            for (var r = 0; pics.length < 12 && r < 12; r++) {
               for (var gi = 0; gi < ids.length; gi++) {
                 var g = d.photos[ids[gi]] || [];
-                if (g[r] && pics.length < 8) pics.push(g[r]);
+                if (g[r] && pics.length < 12) pics.push(g[r]);
               }
             }
             if (pics.length) {
@@ -1600,6 +1609,13 @@
       })
       .catch(function(){});
   }
+
+  document.querySelectorAll(".hrow-top").forEach(function(t){
+    t.addEventListener("click", function(e){
+      if (e.target.closest("a")) return;
+      t.closest(".hrow").classList.toggle("open");
+    });
+  });
 
   render();
   loadTally();

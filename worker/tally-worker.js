@@ -51,7 +51,7 @@ async function fetchSerpHotel(env, id) {
   const url = "https://serpapi.com/search.json?engine=google_hotels" +
     "&q=" + encodeURIComponent(SERP_QUERIES[id]) +
     "&check_in_date=" + CHECKIN + "&check_out_date=" + CHECKOUT +
-    "&adults=2&currency=EUR&gl=it&hl=en&api_key=" + env.SERPAPI_KEY;
+    "&adults=2&currency=CHF&gl=it&hl=en&api_key=" + env.SERPAPI_KEY;
   const r = await fetch(url);
   if (!r.ok) return null;
   const d = await r.json();
@@ -62,7 +62,7 @@ async function fetchSerpHotel(env, id) {
   const price = prop.rate_per_night && prop.rate_per_night.extracted_lowest;
   const photos = (prop.images || [])
     .map(function (im) { return im.original_image || im.thumbnail; })
-    .filter(Boolean).slice(0, 8);
+    .filter(Boolean).slice(0, 12);
   let site = prop.link || null;
   if (site) site = site.split("?")[0];
   return { price: price > 0 ? price : null, photos: photos, site: site };
@@ -72,7 +72,7 @@ async function fetchXoteloPrice(id) {
   const key = XOTELO_KEYS[id];
   if (!key) return null;
   const url = "https://data.xotelo.com/api/rates?hotel_key=" + key +
-    "&chk_in=" + CHECKIN + "&chk_out=" + CHECKOUT + "&adults=2&currency=EUR";
+    "&chk_in=" + CHECKIN + "&chk_out=" + CHECKOUT + "&adults=2&currency=CHF";
   const r = await fetch(url, { headers: { "User-Agent": "roma2026-party-site" } });
   if (!r.ok) return null;
   const d = await r.json();
