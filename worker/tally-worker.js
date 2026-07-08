@@ -25,6 +25,8 @@ const HOTELS = {
   "santa-maria":    "g187791-d239263",
   "santa-chiara":   "g187791-d236146",
   "naman":          "g187791-d18941041",
+  "trame":          "g187791-d34127616",
+  "nomos":          "g187791-d33372468",
 };
 
 async function fetchHotelPrice(key) {

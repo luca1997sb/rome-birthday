@@ -313,10 +313,17 @@
   .hrow:last-child{border-bottom:none}
   .hrow-top{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
   .h-tag{
+    display:inline-block;margin:.35rem 0 .1rem;
     font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
     color:var(--terra);border:1px solid rgba(168,80,43,.45);border-radius:999px;
     padding:.16rem .55rem;white-space:nowrap;
   }
+  .h-points{list-style:none;margin:.35rem 0 .55rem;padding:0}
+  .h-points li{
+    font-size:.8rem;color:var(--ink-soft);
+    padding:.12rem 0 .12rem .85rem;position:relative;
+  }
+  .h-points li::before{content:"\00B7";position:absolute;left:.1rem;color:var(--terra);font-weight:700}
   .h-price{
     font-family:var(--serif);font-style:italic;font-size:.88rem;color:var(--ink);
     white-space:nowrap;opacity:0;transition:opacity .6s;margin-left:auto;
@@ -776,89 +783,109 @@
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels, <em>three speeds.</em></h2>
-  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November, so you see live prices in one tap, and the small figure is today's cheapest rate for our nights. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
+  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November, so you see live prices in one tap, and the small figure is today's cheapest rate for our nights (live from TripAdvisor's price comparison: Booking, Agoda, Trip.com and the hotels themselves, refreshed every few hours). Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
 
   <div class="tiers">
     <div class="tier reveal">
       <div class="tier-t">Luxus</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span></div>
-        <span class="h-desc">A Laura Gonzalez-designed jewel box on the edge of Monti, with a rooftop made for aperitivo.</span>
+        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-price" data-h="casa-monti"></span></div>
+        <span class="h-tag">rooftop aperitivo</span>
+        <ul class="h-points"><li>Laura Gonzalez interiors</li><li>Rooftop bar over the city</li><li>Edge of Monti</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-tag">quietly grand</span><span class="h-price" data-h="palazzo-talia"></span></div>
-        <span class="h-desc">A Renaissance schoolhouse reborn as the quietest grand design hotel, steps from the Trevi.</span>
+        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-price" data-h="palazzo-talia"></span></div>
+        <span class="h-tag">quietly grand</span>
+        <ul class="h-points"><li>Renaissance palazzo reborn</li><li>Cinematic cortile</li><li>Steps from the Trevi</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Talia%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">De la Ville · Hassler · De Russie</span><span class="h-tag">absolute classics</span><span class="h-price" data-h="de-la-ville,hassler,de-russie"></span></div>
-        <span class="h-desc">The grand classics around the Spanish Steps and Popolo. Any of the three is a safe splurge.</span>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20la%20Ville%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">De la Ville</a>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Hassler%20Roma&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Hassler</a>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20Russie%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">De Russie</a>
+        <div class="hrow-top"><span class="h-name">De la Ville · Hassler · De Russie</span><span class="h-price" data-h="de-la-ville,hassler,de-russie"></span></div>
+        <span class="h-tag">absolute classics</span>
+        <ul class="h-points"><li>The grand dames of Rome</li><li>Spanish Steps and Popolo</li><li>Pick any, sleep happy</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20la%20Ville%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">De la Ville</a><a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Hassler%20Roma&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Hassler</a><a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20Russie%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">De Russie</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-tag">polished retreat</span><span class="h-price" data-h="palazzo-ripetta"></span></div>
-        <span class="h-desc">Polished and art-filled, between Piazza del Popolo and the river.</span>
+        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-price" data-h="palazzo-ripetta"></span></div>
+        <span class="h-tag">polished retreat</span>
+        <ul class="h-points"><li>Art-filled and serene</li><li>Relais & Châteaux</li><li>Popolo at your door</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Ripetta%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
     </div>
-
     <div class="tier reveal d1">
       <div class="tier-t">Nice</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Locarno</span><span class="h-tag">art-deco icon</span><span class="h-price" data-h="locarno"></span></div>
-        <span class="h-desc">Art-deco legend of 1925 by Piazza del Popolo; the bar alone earns the stay.</span>
+        <div class="hrow-top"><span class="h-name">Hotel Trame</span><span class="h-price" data-h="trame"></span></div>
+        <span class="h-tag">minimalist chic</span>
+        <ul class="h-points"><li>Bright minimalist rooms</li><li>Corso Vittorio Emanuele</li><li>Four minutes to the Pantheon</li></ul>
+        <a class="h-book" href="https://www.booking.com/hotel/it/trame.html?checkin=2026-11-26&checkout=2026-11-29&group_adults=2&no_rooms=1" target="_blank" rel="noopener">Prices</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Hotel Locarno</span><span class="h-price" data-h="locarno"></span></div>
+        <span class="h-tag">art-deco icon</span>
+        <ul class="h-points"><li>Unchanged since 1925</li><li>Legendary bar</li><li>By Piazza del Popolo</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Locarno%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">G-Rough</span><span class="h-tag">very central</span><span class="h-price" data-h="g-rough"></span></div>
-        <span class="h-desc">Ten raw, gallery-like suites over Piazza di Pasquino, a step behind Navona.</span>
-        <a class="h-book" href="https://www.google.com/travel/search?q=G-Rough%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
+        <div class="hrow-top"><span class="h-name">Nomos Hotel</span><span class="h-price" data-h="nomos"></span></div>
+        <span class="h-tag">monastic calm</span>
+        <ul class="h-points"><li>Former Franciscan monastery</li><li>Spare, serene design</li><li>By Campo de' Fiori</li></ul>
+        <a class="h-book" href="https://www.booking.com/hotel/it/nomos.html?checkin=2026-11-26&checkout=2026-11-29&group_adults=2&no_rooms=1" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-tag">hidden gem</span><span class="h-price" data-h="mario-fiori"></span></div>
-        <span class="h-desc">Tiny, tailored hideaway in the shopping lanes below the Spanish Steps.</span>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Mario%20de%20Fiori%2037%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
-      </div>
-      <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Donna Camilla Savelli</span><span class="h-tag">lovely garden</span><span class="h-price" data-h="donna-camilla"></span></div>
-        <span class="h-desc">A Borromini-built convent on the calm slope of Trastevere.</span>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Donna%20Camilla%20Savelli%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
-      </div>
-    </div>
-
-    <div class="tier reveal d2">
-      <div class="tier-t">Affordable</div>
-      <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-tag">great value</span><span class="h-price" data-h="passepartout"></span></div>
-        <span class="h-desc">Simple, friendly and central; the smart-value pick.</span>
-        <a class="h-book" href="https://www.booking.com/hotel/it/passepartoutrome.en-gb.html?checkin=2026-11-26&checkout=2026-11-29&group_adults=2&no_rooms=1" target="_blank" rel="noopener">Prices</a>
-      </div>
-      <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-tag">very central</span><span class="h-price" data-h="teatro-pace"></span></div>
-        <span class="h-desc">Seventeenth-century charmer down a cobbled lane behind Piazza Navona.</span>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Teatro%20Pace%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
-      </div>
-      <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Santa Maria</span><span class="h-tag">garden courtyard</span><span class="h-price" data-h="santa-maria"></span></div>
-        <span class="h-desc">A cloister wrapped around an orange-tree courtyard, deep in Trastevere.</span>
+        <div class="hrow-top"><span class="h-name">Hotel Santa Maria</span><span class="h-price" data-h="santa-maria"></span></div>
+        <span class="h-tag">garden courtyard</span>
+        <ul class="h-points"><li>A 16th-century cloister</li><li>Orange-tree courtyard</li><li>Heart of Trastevere</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Santa%20Maria%20Trastevere&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Albergo Santa Chiara</span><span class="h-tag">very central</span><span class="h-price" data-h="santa-chiara"></span></div>
-        <span class="h-desc">Family-run since 1830, directly behind the Pantheon.</span>
+        <div class="hrow-top"><span class="h-name">Albergo Santa Chiara</span><span class="h-price" data-h="santa-chiara"></span></div>
+        <span class="h-tag">very central</span>
+        <ul class="h-points"><li>Family-run since 1830</li><li>Right behind the Pantheon</li><li>Quiet, classic rooms</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Albergo%20Santa%20Chiara%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-tag">smart budget</span><span class="h-price" data-h="naman"></span></div>
-        <span class="h-desc">Trim, well-kept guesthouse rooms in a handful of very central spots.</span>
+        <div class="hrow-top"><span class="h-name">Donna Camilla Savelli</span><span class="h-price" data-h="donna-camilla"></span></div>
+        <span class="h-tag">lovely garden</span>
+        <ul class="h-points"><li>Borromini-built convent</li><li>Peaceful gardens</li><li>Trastevere slope</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Donna%20Camilla%20Savelli%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">G-Rough</span><span class="h-price" data-h="g-rough"></span></div>
+        <span class="h-tag">very central</span>
+        <ul class="h-points"><li>Ten gallery-like suites</li><li>Raw vintage design</li><li>Over Piazza di Pasquino</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=G-Rough%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
+      </div>
+    </div>
+    <div class="tier reveal d2">
+      <div class="tier-t">Affordable</div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-price" data-h="passepartout"></span></div>
+        <span class="h-tag">great value</span>
+        <ul class="h-points"><li>Friendly little guesthouse</li><li>Honest prices</li><li>Navona district</li></ul>
+        <a class="h-book" href="https://www.booking.com/hotel/it/passepartoutrome.en-gb.html?checkin=2026-11-26&checkout=2026-11-29&group_adults=2&no_rooms=1" target="_blank" rel="noopener">Prices</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-price" data-h="mario-fiori"></span></div>
+        <span class="h-tag">hidden gem</span>
+        <ul class="h-points"><li>Tiny tailored guesthouse</li><li>Shopping lanes</li><li>Below the Spanish Steps</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Mario%20de%20Fiori%2037%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-price" data-h="naman"></span></div>
+        <span class="h-tag">smart budget</span>
+        <ul class="h-points"><li>Trim, well-kept rooms</li><li>Several central locations</li><li>Best-price basics</li></ul>
         <a class="h-book" href="https://www.booking.com/searchresults.html?city=-126693&highlighted_hotels=5160821&checkin=2026-11-26&checkout=2026-11-29&keep_landing=1&group_adults=2" target="_blank" rel="noopener">Prices</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-price" data-h="teatro-pace"></span></div>
+        <span class="h-tag">very central</span>
+        <ul class="h-points"><li>Seventeenth-century charmer</li><li>Cobbled lane</li><li>Behind Piazza Navona</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Teatro%20Pace%20Rome&checkin=2026-11-26&checkout=2026-11-29" target="_blank" rel="noopener">Prices</a>
       </div>
     </div>
   </div>
-
 
   <div class="map-card reveal">
     <div class="map-head">
@@ -1148,6 +1175,8 @@
     { name:"G-Rough",              lat:41.8979, lng:12.4718, type:"hotel", map:"G-Rough+Rome" },
     { name:"Mario De' Fiori 37",   lat:41.9051, lng:12.4809, type:"hotel", map:"Mario+de+Fiori+37+Rome" },
     { name:"Donna Camilla Savelli",lat:41.8887, lng:12.4665, type:"hotel", map:"Donna+Camilla+Savelli+Rome" },
+    { name:"Hotel Trame",          lat:41.8964, lng:12.4760, type:"hotel", map:"Hotel+Trame+Rome" },
+    { name:"Nomos Hotel",          lat:41.8930, lng:12.4737, type:"hotel", map:"Nomos+Hotel+Rome" },
     { name:"Hotel Teatro Pace",    lat:41.8990, lng:12.4714, type:"hotel", map:"Hotel+Teatro+Pace+Rome" },
     { name:"Hotel Santa Maria",    lat:41.8896, lng:12.4681, type:"hotel", map:"Hotel+Santa+Maria+Trastevere" },
     { name:"Albergo Santa Chiara", lat:41.8974, lng:12.4768, type:"hotel", map:"Albergo+Santa+Chiara+Rome" },
