@@ -1169,8 +1169,16 @@
   // local answers on this device take precedence for freshness
   var TALLY_API = "https://roma-tally.solari-bozzi.workers.dev";
   var sharedTally = {};
+  var healed = false;
   function applyTally(t){
-    if (t && typeof t === "object") { sharedTally = t; renderTally(); }
+    if (t && typeof t === "object") {
+      sharedTally = t;
+      renderTally();
+      // self-heal: if my saved answer never reached the shared tally
+      // (failed POST, old page version), push it now, once per load
+      var a = getAnswer();
+      if (!healed && guest && a && t[guest] !== a) { healed = true; pushTally(); }
+    }
   }
   function loadTally(){
     fetch(TALLY_API, { cache: "no-store" })
@@ -1403,6 +1411,15 @@
   var VAPID = "BHS03bWYOl3hiJuQsChM2bKO-j3UV0Kbw9TmGY2v15Tosl_qpFTfaHwXseTagrF5NmiN-8XxyWnx9khhArrhMvQ";
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(function(){});
+    // when a newer service worker takes over an already-open page, reload once
+    // so nobody keeps interacting with an outdated version
+    var hadController = !!navigator.serviceWorker.controller;
+    var swReloaded = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function(){
+      if (!hadController || swReloaded) return;
+      swReloaded = true;
+      location.reload();
+    });
   }
   // clear the app-icon badge whenever the app is opened or comes to the foreground
   function clearBadge(){
