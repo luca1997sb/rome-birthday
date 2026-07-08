@@ -4,7 +4,10 @@ const ANSWERS = ["yes", "no", "maybe"];
 const ORIGIN = "https://luca1997sb.github.io";
 const MAX_SUGGESTIONS = 100;
 
-// live weekend prices + photos + sites via SerpApi (Google Hotels), xotelo as price fallback
+// live weekend prices + photos + sites via SerpApi (Google Hotels).
+// Prices are restricted to trusted sellers: Booking.com, Expedia, Hotels.com, or the
+// hotel's official site. That per-seller breakdown only comes from the property-details
+// endpoint, so each hotel is fetched by its stable property_token (one search/hotel/refresh).
 const CHECKIN = "2026-11-26";
 const CHECKOUT = "2026-11-29";
 const PRICE_TTL_MS = 72 * 60 * 60 * 1000; // 72h: ~10 refreshes/month x 17 queries fits the 250 free searches
@@ -22,64 +25,79 @@ const SERP_QUERIES = {
   "santa-chiara":   "Albergo Santa Chiara Rome",
   "donna-camilla":  "Donna Camilla Savelli Rome",
   "g-rough":        "G-Rough Rome",
-  "passepartout":   "Passepartout guest house Rome",
+  "passepartout":   "Passepartout Via del Governo Vecchio 118 Roma",
   "mario-fiori":    "Mario de Fiori 37 Rome",
   "naman":          "Naman Hotellerie Rome",
   "teatro-pace":    "Hotel Teatro Pace Rome",
 };
-const XOTELO_KEYS = {
-  "casa-monti":     "g187791-d27719211",
-  "palazzo-talia":  "g187791-d27413711",
-  "de-la-ville":    "g187791-d17399393",
-  "hassler":        "g187791-d191332",
-  "de-russie":      "g187791-d232851",
-  "palazzo-ripetta":"g187791-d239502",
-  "locarno":        "g187791-d198734",
-  "g-rough":        "g187791-d7395306",
-  "mario-fiori":    "g187791-d1235138",
-  "donna-camilla":  "g187791-d1024807",
-  "passepartout":   "g187791-d25256717",
-  "teatro-pace":    "g187791-d504558",
-  "santa-maria":    "g187791-d239263",
-  "santa-chiara":   "g187791-d236146",
-  "naman":          "g187791-d18941041",
-  "trame":          "g187791-d34127616",
-  "nomos":          "g187791-d33372468",
+// Google property tokens, discovered 2026-07-08 and verified against each hotel's address.
+// Used directly; the SERP_QUERIES search only runs again if a token ever goes stale.
+const PROPERTY_TOKENS = {
+  "casa-monti":     "ChkIteie566HsasSGg0vZy8xMXZiamIxOWRwEAE",
+  "palazzo-talia":  "ChkI75Xcpc3-rYAtGg0vZy8xMWxkOHhxYnlqEAE",
+  "de-la-ville":    "ChoIwuWG__7WyMPHARoNL2cvMTFmZ2hwbjVmOBAB",
+  "hassler":        "ChkI5cbRtOSptqqKARoML2cvMTFyOTNweW52EAE",
+  "de-russie":      "ChgI3tK41OfV-8LqARoLL2cvMXc2d3JfejkQAQ",
+  "palazzo-ripetta":"ChoIhK7F4KqX66qBARoNL2cvMTF0MTd2Z2Q1dhAB",
+  "trame":          "ChgIo6Gx-az1zWUaDS9nLzExeHZ6Ml8wN3oQAQ",
+  "locarno":        "ChcIsfiF7P-C2vcUGgsvZy8xdGY1Z3dzdhAB",
+  "nomos":          "ChoIocSE8eDFwImHARoNL2cvMTF5NjRnOWMybRAB",
+  "santa-maria":    "ChgIoeSxhZq3-8isARoLL2cvMXRkMjJjeHgQAQ",
+  "santa-chiara":   "ChkImIv1q_69utzsARoML2cvMWhjNGYxY3IxEAE",
+  "donna-camilla":  "ChgInOOk9fDFvJLfARoLL2cvMXRkaGhzOHMQAQ",
+  "g-rough":        "ChkIiODg78L37911Gg0vZy8xMWI3YzFfNHBiEAE",
+  "passepartout":   "ChoI65b9yL30vNrlARoNL2cvMTFzNDVjbGtsYxAB",
+  "mario-fiori":    "ChcIoZK47OvGiqkFGgsvZy8xdGQ4ZjBjbRAB",
+  "naman":          "ChkIzP60hfODq7l1Gg0vZy8xMWZtemdyMW5fEAE",
+  "teatro-pace":    "ChgIndn4-YCYz7WbARoLL2cvMXRna3F4c2QQAQ",
 };
 
-async function fetchSerpHotel(env, id) {
-  const url = "https://serpapi.com/search.json?engine=google_hotels" +
-    "&q=" + encodeURIComponent(SERP_QUERIES[id]) +
+// exact seller names only: "BusinessHotels.com" and friends must NOT slip through substring matches
+function allowedSource(entry) {
+  if (entry.official === true) return true;
+  const s = (entry.source || "").trim().toLowerCase();
+  return s === "booking.com" || s === "hotels.com" || s === "expedia.com" || s === "expedia";
+}
+
+function buildHotel(d, token) {
+  const entries = (d.featured_prices || []).concat(d.prices || []);
+  let price = null, src = null;
+  for (const e of entries) {
+    if (!allowedSource(e)) continue;
+    const v = e.rate_per_night && e.rate_per_night.extracted_lowest;
+    if (v > 0 && (price === null || v < price)) { price = v; src = e.source; }
+  }
+  const photos = (d.images || [])
+    .map(function (im) { return im.original_image || im.thumbnail; })
+    .filter(Boolean).slice(0, 12);
+  let site = d.link || null;
+  if (site) site = site.split("?")[0];
+  return { price: price, src: src, photos: photos, site: site, token: token || d.property_token || null };
+}
+
+async function serpFetch(env, extra) {
+  const url = "https://serpapi.com/search.json?engine=google_hotels" + extra +
     "&check_in_date=" + CHECKIN + "&check_out_date=" + CHECKOUT +
     "&adults=2&currency=CHF&gl=it&hl=en&api_key=" + env.SERPAPI_KEY;
   const r = await fetch(url);
   if (!r.ok) return null;
-  const d = await r.json();
-  let prop = null;
-  if (d.name && (d.rate_per_night || d.images)) prop = d; // direct property match
-  else if (Array.isArray(d.properties) && d.properties.length) prop = d.properties[0];
-  if (!prop) return null;
-  const price = prop.rate_per_night && prop.rate_per_night.extracted_lowest;
-  const photos = (prop.images || [])
-    .map(function (im) { return im.original_image || im.thumbnail; })
-    .filter(Boolean).slice(0, 12);
-  let site = prop.link || null;
-  if (site) site = site.split("?")[0];
-  return { price: price > 0 ? price : null, photos: photos, site: site };
+  return r.json();
 }
 
-async function fetchXoteloPrice(id) {
-  const key = XOTELO_KEYS[id];
-  if (!key) return null;
-  const url = "https://data.xotelo.com/api/rates?hotel_key=" + key +
-    "&chk_in=" + CHECKIN + "&chk_out=" + CHECKOUT + "&adults=2&currency=CHF";
-  const r = await fetch(url, { headers: { "User-Agent": "roma2026-party-site" } });
-  if (!r.ok) return null;
-  const d = await r.json();
-  const rates = d && d.result && d.result.rates;
-  if (!Array.isArray(rates) || !rates.length) return null;
-  const vals = rates.map(function (x) { return x.rate; }).filter(function (v) { return v > 0; });
-  return vals.length ? Math.min.apply(null, vals) : null;
+async function fetchSerpHotel(env, id, prevToken) {
+  const q = "&q=" + encodeURIComponent(SERP_QUERIES[id]);
+  let token = prevToken || PROPERTY_TOKENS[id] || null;
+  let d = token ? await serpFetch(env, q + "&property_token=" + encodeURIComponent(token)) : null;
+  if (!d || !d.name) {
+    // token stale or missing: rediscover via search, then retry details
+    const s = await serpFetch(env, q);
+    if (s && s.name && s.property_token) token = s.property_token;
+    else if (s && Array.isArray(s.properties) && s.properties.length) token = s.properties[0].property_token;
+    else return null;
+    d = await serpFetch(env, q + "&property_token=" + encodeURIComponent(token));
+    if (!d || !d.name) return null;
+  }
+  return buildHotel(d, token);
 }
 
 async function refreshPrices(env) {
@@ -88,11 +106,8 @@ async function refreshPrices(env) {
   const hotels = {};
   for (const id of Object.keys(SERP_QUERIES)) {
     let h = null;
-    try { h = await fetchSerpHotel(env, id); } catch (e) {}
-    if (!h) h = prev[id] || { price: null, photos: [], site: null };
-    if (!h.price) {
-      try { h.price = await fetchXoteloPrice(id); } catch (e) {}
-    }
+    try { h = await fetchSerpHotel(env, id, prev[id] && prev[id].token); } catch (e) {}
+    if (!h) h = prev[id] || { price: null, src: null, photos: [], site: null, token: null };
     if ((!h.photos || !h.photos.length) && prev[id]) h.photos = prev[id].photos || [];
     if (!h.site && prev[id]) h.site = prev[id].site || null;
     hotels[id] = h;
@@ -103,13 +118,14 @@ async function refreshPrices(env) {
 }
 
 function pricesResponse(doc) {
-  const prices = {}, photos = {}, sites = {};
+  const prices = {}, photos = {}, sites = {}, srcs = {};
   for (const id of Object.keys(doc.hotels || {})) {
     prices[id] = doc.hotels[id].price || null;
     photos[id] = doc.hotels[id].photos || [];
     sites[id] = doc.hotels[id].site || null;
+    srcs[id] = doc.hotels[id].src || null;
   }
-  return { ts: doc.ts, prices: prices, photos: photos, sites: sites };
+  return { ts: doc.ts, prices: prices, photos: photos, sites: sites, srcs: srcs };
 }
 
 function json(data, cors, status) {
