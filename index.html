@@ -19,7 +19,7 @@
 <meta name="apple-mobile-web-app-title" content="Roma 2026">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23f6f1e8'/%3E%3Cpath d='M20 27 C11 21 17 8 30 11 C33 3 50 4 53 14 C62 16 61 28 51 30 C53 37 42 41 35 37 C26 42 15 38 17 30 C18 29 19 28 20 27 z' fill='%23a8502b'/%3E%3Cpath d='M33 57 C34 45 35 37 38 28 M37 42 C42 38 45 35 46 31 M36 46 C31 43 28 40 27 36' stroke='%23211d18' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}</style>
 </head>
 <body>
@@ -135,6 +135,14 @@
   @keyframes archdrift{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(8px)}}
   .hero > *{position:relative;z-index:1}
   .hero > .hero-blob{position:absolute}
+  .pine{
+    position:absolute;bottom:-2px;pointer-events:none;
+    transform-origin:bottom center;
+    animation:fadeIn 1.6s 1s both, sway 9s 2s ease-in-out infinite alternate;
+  }
+  .pine-r{right:2%;width:clamp(92px,14vw,170px)}
+  .pine-l{left:1.5%;width:clamp(58px,9vw,105px);animation-duration:1.6s,12s;animation-delay:1.25s,2.6s}
+  @keyframes sway{from{transform:rotate(-.7deg)}to{transform:rotate(.9deg)}}
   .hero-arches path,.hero-arches line{
     stroke-dasharray:1;stroke-dashoffset:1;
     animation:archdraw 1.8s cubic-bezier(.4,0,.2,1) forwards;
@@ -228,6 +236,44 @@
     font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--terra);
     border:1px solid rgba(168,80,43,.4);border-radius:999px;padding:.28rem .8rem;
   }
+  /* program suggestions */
+  .suggest-box{
+    border:1px solid var(--line);background:rgba(255,255,255,.4);
+    padding:1.7rem 1.7rem 1.4rem;margin-top:1.2rem;
+  }
+  .sugg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+  .sugg-t{font-family:var(--serif);font-size:1.35rem}
+  .sugg-s{font-size:.82rem;color:var(--ink-soft);margin-top:.2rem}
+  .sugg-plus{
+    flex:0 0 auto;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--ink);background:transparent;color:var(--ink);
+    font-size:1.5rem;line-height:1;cursor:pointer;
+    transition:all .3s cubic-bezier(.2,.7,.3,1.4);
+  }
+  .sugg-plus:hover{background:var(--terra);border-color:var(--terra);color:#fff;transform:rotate(90deg) scale(1.08)}
+  .sugg-plus.open{background:var(--ink);color:var(--paper);transform:rotate(45deg)}
+  .sugg-list{margin-top:1rem}
+  .sugg-list:empty{margin-top:0}
+  .sug{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    padding:.65rem 0;border-bottom:1px dotted var(--line);
+    opacity:0;animation:fadeIn .5s ease forwards;
+  }
+  .sug:last-child{border-bottom:none}
+  .sug-t{font-family:var(--serif);font-style:italic;font-size:1.02rem}
+  .sug-n{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--terra);white-space:nowrap}
+  .sugg-form{display:flex;gap:.6rem;margin-top:1.1rem}
+  .sugg-form input{
+    flex:1;background:rgba(255,255,255,.5);border:1px solid var(--ink);border-radius:0;
+    padding:.75rem .9rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);min-width:0;
+  }
+  .sugg-form input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 1px var(--terra)}
+  .sugg-form .btn{padding:.75rem 1.4rem}
+  .sugg-status{
+    font-family:var(--serif);font-style:italic;font-size:.9rem;
+    color:var(--terra);margin-top:.7rem;min-height:1.2em;
+  }
+
   .teasers{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
   .teaser{
     font-family:var(--serif);font-size:1rem;
@@ -574,6 +620,27 @@
       <line pathLength="1" style="animation-delay:1.7s" x1="0" y1="104" x2="1200" y2="104"/>
     </g>
   </svg>
+  <svg class="pine pine-r" viewBox="0 0 160 220" fill="none" aria-hidden="true">
+    <g stroke="#a8502b" stroke-width="1.4" opacity=".55">
+      <path d="M70 220 C74 190 78 160 92 128"/>
+      <path d="M82 220 C82 195 86 165 98 132"/>
+      <path d="M88 150 C74 142 62 132 58 120"/>
+      <path d="M96 140 C110 132 120 124 124 114"/>
+      <path d="M30 116 C16 104 26 84 46 86 C48 68 74 60 90 68 C100 52 130 56 136 72 C152 76 152 96 138 102 C142 114 126 124 112 118 C102 130 76 132 64 122 C50 128 36 126 30 116 z"/>
+      <path d="M60 100 C70 92 84 90 96 94"/>
+      <path d="M84 78 C96 74 108 76 116 84"/>
+    </g>
+  </svg>
+  <svg class="pine pine-l" viewBox="0 0 130 170" fill="none" aria-hidden="true">
+    <g stroke="#a8502b" stroke-width="1.3" opacity=".5">
+      <path d="M74 170 C70 148 66 124 54 100"/>
+      <path d="M64 170 C64 150 60 126 49 103"/>
+      <path d="M58 118 C70 112 80 104 84 94"/>
+      <path d="M52 110 C40 104 32 96 30 88"/>
+      <path d="M104 90 C116 80 108 62 92 64 C90 48 68 42 54 50 C44 38 20 42 16 56 C4 60 4 76 16 81 C13 92 26 100 38 95 C46 106 68 107 78 98 C90 103 100 99 104 90 z"/>
+      <path d="M42 72 C52 66 64 66 74 72"/>
+    </g>
+  </svg>
   </div>
   <div class="kicker">You are warmly invited to</div>
   <h1><span>R</span><span>O</span><span>M</span><span>A</span></h1>
@@ -660,6 +727,21 @@
       <h4>Flights</h4>
       <p>It all begins with a late lunch on Thursday 26 November. Aim to land by early afternoon. Fly home Sunday 29 November. Flight recommendations to follow.</p>
     </div>
+  </div>
+  <div class="suggest-box reveal">
+    <div class="sugg-head">
+      <div>
+        <div class="sugg-t">Ideas from the group</div>
+        <div class="sugg-s">Something we should do, eat or see? Add it, everyone sees it here.</div>
+      </div>
+      <button class="sugg-plus" id="suggplus" aria-label="Add a suggestion">+</button>
+    </div>
+    <div class="sugg-list" id="sugglist"></div>
+    <div class="sugg-form" id="suggform" hidden>
+      <input type="text" id="sugginput" maxlength="140" placeholder="Your idea…" autocomplete="off">
+      <button class="btn btn-primary" id="suggsend">Add</button>
+    </div>
+    <div class="sugg-status" id="suggstatus"></div>
   </div>
   <figure class="photo wide reveal" style="margin-top:1.2rem">
     <div class="ph"><img src="img/campagna.jpg" alt="Pines and greens at a golf club on the edge of Rome" loading="lazy"></div>
@@ -1041,6 +1123,62 @@
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 
+  /* ------- program suggestions (same worker as the tally) ------- */
+  var suggPlus = document.getElementById("suggplus");
+  var suggForm = document.getElementById("suggform");
+  var suggInput = document.getElementById("sugginput");
+  var suggList = document.getElementById("sugglist");
+  var suggStatus = document.getElementById("suggstatus");
+
+  function escapeHtml(s){
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function loadSuggestions(){
+    fetch(TALLY_API + "/suggestions", { cache: "no-store" })
+      .then(function(r){ if (!r.ok) throw new Error(); return r.json(); })
+      .then(function(items){
+        if (!Array.isArray(items)) return;
+        suggList.innerHTML = items.map(function(it, i){
+          return '<div class="sug" style="animation-delay:' + (i * 0.07) + 's">' +
+            '<span class="sug-t">&ldquo;' + escapeHtml(it.text) + '&rdquo;</span>' +
+            '<span class="sug-n">' + escapeHtml(it.name) + '</span></div>';
+        }).join("");
+      })
+      .catch(function(){});
+  }
+
+  suggPlus.addEventListener("click", function(){
+    if (!guest) { suggStatus.textContent = "Pick your name in the RSVP first."; return needName(); }
+    var open = suggForm.hidden;
+    suggForm.hidden = !open;
+    suggPlus.classList.toggle("open", open);
+    suggStatus.textContent = "";
+    if (open) suggInput.focus();
+  });
+
+  function sendSuggestion(){
+    var text = suggInput.value.trim();
+    if (text.length < 2) { suggStatus.textContent = "A few more letters, dai."; return; }
+    suggStatus.textContent = "Adding…";
+    fetch(TALLY_API + "/suggest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: guest, text: text })
+    }).then(function(r){
+      if (!r.ok) throw new Error();
+      suggInput.value = "";
+      suggForm.hidden = true;
+      suggPlus.classList.remove("open");
+      suggStatus.textContent = "Added, everyone can see it now.";
+      loadSuggestions();
+      postForm({ _subject: "Roma 2026 suggestion: " + guest, name: guest, suggestion: text });
+    }).catch(function(){
+      suggStatus.textContent = "Didn't go through, try again in a moment.";
+    });
+  }
+  document.getElementById("suggsend").addEventListener("click", sendSuggestion);
+  suggInput.addEventListener("keydown", function(e){ if (e.key === "Enter") sendSuggestion(); });
+
   /* ------- app install + push notifications ------- */
   var VAPID = "BHS03bWYOl3hiJuQsChM2bKO-j3UV0Kbw9TmGY2v15Tosl_qpFTfaHwXseTagrF5NmiN-8XxyWnx9khhArrhMvQ";
   if ("serviceWorker" in navigator) {
@@ -1292,8 +1430,9 @@
 
   render();
   loadTally();
+  loadSuggestions();
   document.addEventListener("visibilitychange", function(){
-    if (document.visibilityState === "visible") loadTally();
+    if (document.visibilityState === "visible") { loadTally(); loadSuggestions(); }
   });
 })();
 </script>
