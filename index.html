@@ -492,12 +492,13 @@
 
   .bring{list-style:none;margin:0;padding:0}
   .bring li{
-    display:flex;gap:.9rem;align-items:baseline;
+    display:grid;grid-template-columns:min(11rem,44vw) 1fr;
+    column-gap:1rem;align-items:baseline;
     padding:.75rem 0;border-bottom:1px dotted var(--line);
   }
   .bring li:last-child{border-bottom:none}
-  .bring .b-what{font-family:var(--serif);font-size:1.08rem;white-space:nowrap}
-  .bring .b-why{font-size:.85rem;color:var(--ink-soft)}
+  .bring .b-what{font-family:var(--serif);font-size:1.08rem;line-height:1.3}
+  .bring .b-why{font-size:.85rem;color:var(--ink-soft);line-height:1.45}
 
   /* ---------- photos ---------- */
   .photo{
@@ -848,30 +849,30 @@
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels, <em>three speeds.</em></h2>
-  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November. Tap a hotel to open its photos and links; the figure is Google's live cheapest rate for our nights, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
+  <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November. Tap a hotel to open its photos and links; the figure is the live cheapest rate for our nights from Booking, Expedia, Hotels.com or the hotel itself, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
 
   <div class="tiers">
     <div class="tier reveal">
-      <div class="tier-t">Luxus</div>
+      <div class="tier-t">Affordable</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span></div>
-        <ul class="h-points"><li>Laura Gonzalez interiors and a rooftop bar, on the edge of Monti</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.casamontiroma.com/" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-tag">great value</span><span class="h-price" data-h="passepartout"></span></div>
+        <ul class="h-points"><li>Friendly little guesthouse in the Navona district</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Passepartout%20guest%20house%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.passepartoutrome.it/en/index" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-tag">quietly grand</span><span class="h-price" data-h="palazzo-talia"></span></div>
-        <ul class="h-points"><li>A Renaissance palazzo reborn, steps from the Trevi</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Talia%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzotalia.com/en/" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-tag">hidden gem</span><span class="h-price" data-h="mario-fiori"></span></div>
+        <ul class="h-points"><li>Tiny tailored hideaway below the Spanish Steps</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Mario%20de%20Fiori%2037%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.romeluxurysuites.com/mario-de-fiori" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">De la Ville · Hassler · De Russie</span><span class="h-tag">absolute classics</span><span class="h-price" data-h="de-la-ville,hassler,de-russie"></span></div>
-        <ul class="h-points"><li>The grand dames around the Spanish Steps and Popolo</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20la%20Ville%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">De la Ville</a><a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Hassler%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Hassler</a><a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20Russie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">De Russie</a>
+        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-tag">smart budget</span><span class="h-price" data-h="naman"></span></div>
+        <ul class="h-points"><li>Trim, well-kept rooms across several very central spots</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Naman%20Hotellerie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://namanhotellerie.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-tag">polished retreat</span><span class="h-price" data-h="palazzo-ripetta"></span></div>
-        <ul class="h-points"><li>Art-filled Relais & Ch&acirc;teaux calm by Piazza del Popolo</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Ripetta%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzoripetta.com/en/" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-tag">very central</span><span class="h-price" data-h="teatro-pace"></span></div>
+        <ul class="h-points"><li>A 17th-century charmer down a cobbled lane behind Navona</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Teatro%20Pace%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a>
       </div>
     </div>
     <div class="tier reveal d1">
@@ -913,26 +914,36 @@
       </div>
     </div>
     <div class="tier reveal d2">
-      <div class="tier-t">Affordable</div>
+      <div class="tier-t">Luxury</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-tag">great value</span><span class="h-price" data-h="passepartout"></span></div>
-        <ul class="h-points"><li>Friendly little guesthouse in the Navona district</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Passepartout%20guest%20house%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.passepartoutrome.it/en/index" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span></div>
+        <ul class="h-points"><li>Laura Gonzalez interiors and a rooftop bar, on the edge of Monti</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.casamontiroma.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-tag">hidden gem</span><span class="h-price" data-h="mario-fiori"></span></div>
-        <ul class="h-points"><li>Tiny tailored hideaway below the Spanish Steps</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Mario%20de%20Fiori%2037%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.romeluxurysuites.com/mario-de-fiori" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-tag">quietly grand</span><span class="h-price" data-h="palazzo-talia"></span></div>
+        <ul class="h-points"><li>A Renaissance palazzo reborn, steps from the Trevi</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Talia%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzotalia.com/en/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-tag">smart budget</span><span class="h-price" data-h="naman"></span></div>
-        <ul class="h-points"><li>Trim, well-kept rooms across several very central spots</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Naman%20Hotellerie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://namanhotellerie.com/" target="_blank" rel="noopener">Site</a>
+        <div class="hrow-top"><span class="h-name">Hotel de la Ville</span><span class="h-tag">grand terraces</span><span class="h-price" data-h="de-la-ville"></span></div>
+        <ul class="h-points"><li>Rocco Forte grandeur with rooftop terraces at the top of the Spanish Steps</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20la%20Ville%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-la-ville/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-tag">very central</span><span class="h-price" data-h="teatro-pace"></span></div>
-        <ul class="h-points"><li>A 17th-century charmer down a cobbled lane behind Navona</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Teatro%20Pace%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a>
+        <div class="hrow-top"><span class="h-name">Hotel Hassler</span><span class="h-tag">roman classic</span><span class="h-price" data-h="hassler"></span></div>
+        <ul class="h-points"><li>The storied grande dame perched above the Spanish Steps</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Hassler%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.hotelhasslerroma.com/" target="_blank" rel="noopener">Site</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Hotel de Russie</span><span class="h-tag">secret garden</span><span class="h-price" data-h="de-russie"></span></div>
+        <ul class="h-points"><li>Rocco Forte calm around a terraced garden, just off Piazza del Popolo</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20Russie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-russie/" target="_blank" rel="noopener">Site</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-tag">polished retreat</span><span class="h-price" data-h="palazzo-ripetta"></span></div>
+        <ul class="h-points"><li>Art-filled Relais & Ch&acirc;teaux calm by Piazza del Popolo</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Ripetta%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzoripetta.com/en/" target="_blank" rel="noopener">Site</a>
       </div>
     </div>
   </div>
@@ -1235,7 +1246,8 @@
     { name:"Giulia & Nicola's", lat:41.9058, lng:12.4642, type:"house", map:"Via+Crescenzio+42+Rome" },
     { name:"Casa Monti",           lat:41.8973, lng:12.4905, type:"hotel", map:"Casa+Monti+Roma" },
     { name:"Palazzo Talìa",        lat:41.9021, lng:12.4832, type:"hotel", map:"Palazzo+Talia+Rome" },
-    { name:"Hassler / De la Ville",lat:41.9058, lng:12.4842, type:"hotel", map:"Hotel+Hassler+Roma" },
+    { name:"Hotel Hassler",        lat:41.9061, lng:12.4839, type:"hotel", map:"Hotel+Hassler+Roma" },
+    { name:"Hotel de la Ville",    lat:41.9053, lng:12.4836, type:"hotel", map:"Hotel+de+la+Ville+Rome" },
     { name:"Hotel de Russie",      lat:41.9101, lng:12.4770, type:"hotel", map:"Hotel+de+Russie+Rome" },
     { name:"Palazzo Ripetta",      lat:41.9077, lng:12.4757, type:"hotel", map:"Palazzo+Ripetta+Rome" },
     { name:"Hotel Locarno",        lat:41.9096, lng:12.4757, type:"hotel", map:"Hotel+Locarno+Rome" },

@@ -1,45 +1,31 @@
-/* Roma 2026 — service worker: offline cache + push notifications */
-var CACHE = "roma26-v3";
+/* Roma 2026 — service worker: push notifications + offline-only fallback cache.
+   Everything is fetched fresh from the network on every load ({cache:"no-store"}
+   also bypasses the browser HTTP cache, which GitHub Pages sets to 10 min);
+   the cache is used ONLY when the network is unreachable. */
+var CACHE = "roma26-v4";
 
 self.addEventListener("install", function (e) {
   self.skipWaiting();
 });
 
 self.addEventListener("activate", function (e) {
-  e.waitUntil(self.clients.claim());
+  e.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    }).then(function () { return self.clients.claim(); })
+  );
 });
 
-// pages: network-first (always fresh content, cache only as offline fallback)
-// assets: stale-while-revalidate
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== self.location.origin) return;
-  if (e.request.url.indexOf("tally.json") !== -1) return; // always live, never cached
-
-  if (e.request.mode === "navigate") {
-    e.respondWith(
-      caches.open(CACHE).then(function (cache) {
-        return fetch(e.request)
-          .then(function (resp) {
-            if (resp.ok) cache.put(e.request, resp.clone());
-            return resp;
-          })
-          .catch(function () { return cache.match(e.request); });
-      })
-    );
-    return;
-  }
-
   e.respondWith(
     caches.open(CACHE).then(function (cache) {
-      return cache.match(e.request).then(function (cached) {
-        var fresh = fetch(e.request)
-          .then(function (resp) {
-            if (resp.ok) cache.put(e.request, resp.clone());
-            return resp;
-          })
-          .catch(function () { return cached; });
-        return cached || fresh;
-      });
+      return fetch(e.request.url, { cache: "no-store", credentials: "same-origin" })
+        .then(function (resp) {
+          if (resp.ok) cache.put(e.request.url, resp.clone());
+          return resp;
+        })
+        .catch(function () { return cache.match(e.request.url); });
     })
   );
 });
