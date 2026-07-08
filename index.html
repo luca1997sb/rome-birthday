@@ -1424,6 +1424,10 @@
   document.addEventListener("visibilitychange", function(){
     if (document.visibilityState === "visible") { loadTally(); loadSuggestions(); }
   });
+  // keep tally and ideas fresh while the page stays open
+  setInterval(function(){
+    if (document.visibilityState === "visible") { loadTally(); loadSuggestions(); }
+  }, 60000);
 })();
 </script>
 </body>
