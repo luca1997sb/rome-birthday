@@ -78,7 +78,7 @@ function buildHotel(d, token) {
 async function serpFetch(env, extra) {
   const url = "https://serpapi.com/search.json?engine=google_hotels" + extra +
     "&check_in_date=" + CHECKIN + "&check_out_date=" + CHECKOUT +
-    "&adults=2&currency=CHF&gl=it&hl=en&api_key=" + env.SERPAPI_KEY;
+    "&adults=2&currency=CHF&gl=ch&hl=en&api_key=" + env.SERPAPI_KEY;
   const r = await fetch(url);
   if (!r.ok) return null;
   return r.json();
