@@ -4,12 +4,30 @@ const ANSWERS = ["yes", "no", "maybe"];
 const ORIGIN = "https://luca1997sb.github.io";
 const MAX_SUGGESTIONS = 100;
 
-// live weekend prices via xotelo.com (free TripAdvisor rates API)
+// live weekend prices + photos + sites via SerpApi (Google Hotels), xotelo as price fallback
 const CHECKIN = "2026-11-26";
 const CHECKOUT = "2026-11-29";
-const PRICE_TTL_MS = 6 * 60 * 60 * 1000; // refresh every 6h
-// TripAdvisor hotel keys
-const HOTELS = {
+const PRICE_TTL_MS = 72 * 60 * 60 * 1000; // 72h: ~10 refreshes/month x 17 queries fits the 250 free searches
+const SERP_QUERIES = {
+  "casa-monti":     "Casa Monti Roma",
+  "palazzo-talia":  "Palazzo Talia Rome",
+  "de-la-ville":    "Hotel de la Ville Rome",
+  "hassler":        "Hotel Hassler Roma",
+  "de-russie":      "Hotel de Russie Rome",
+  "palazzo-ripetta":"Palazzo Ripetta Rome",
+  "trame":          "Hotel Trame Rome",
+  "locarno":        "Hotel Locarno Rome",
+  "nomos":          "Nomos Hotel Rome",
+  "santa-maria":    "Hotel Santa Maria Trastevere Rome",
+  "santa-chiara":   "Albergo Santa Chiara Rome",
+  "donna-camilla":  "Donna Camilla Savelli Rome",
+  "g-rough":        "G-Rough Rome",
+  "passepartout":   "Passepartout guest house Rome",
+  "mario-fiori":    "Mario de Fiori 37 Rome",
+  "naman":          "Naman Hotellerie Rome",
+  "teatro-pace":    "Hotel Teatro Pace Rome",
+};
+const XOTELO_KEYS = {
   "casa-monti":     "g187791-d27719211",
   "palazzo-talia":  "g187791-d27413711",
   "de-la-ville":    "g187791-d17399393",
@@ -29,7 +47,30 @@ const HOTELS = {
   "nomos":          "g187791-d33372468",
 };
 
-async function fetchHotelPrice(key) {
+async function fetchSerpHotel(env, id) {
+  const url = "https://serpapi.com/search.json?engine=google_hotels" +
+    "&q=" + encodeURIComponent(SERP_QUERIES[id]) +
+    "&check_in_date=" + CHECKIN + "&check_out_date=" + CHECKOUT +
+    "&adults=2&currency=EUR&gl=it&hl=en&api_key=" + env.SERPAPI_KEY;
+  const r = await fetch(url);
+  if (!r.ok) return null;
+  const d = await r.json();
+  let prop = null;
+  if (d.name && (d.rate_per_night || d.images)) prop = d; // direct property match
+  else if (Array.isArray(d.properties) && d.properties.length) prop = d.properties[0];
+  if (!prop) return null;
+  const price = prop.rate_per_night && prop.rate_per_night.extracted_lowest;
+  const photos = (prop.images || [])
+    .map(function (im) { return im.original_image || im.thumbnail; })
+    .filter(Boolean).slice(0, 8);
+  let site = prop.link || null;
+  if (site) site = site.split("?")[0];
+  return { price: price > 0 ? price : null, photos: photos, site: site };
+}
+
+async function fetchXoteloPrice(id) {
+  const key = XOTELO_KEYS[id];
+  if (!key) return null;
   const url = "https://data.xotelo.com/api/rates?hotel_key=" + key +
     "&chk_in=" + CHECKIN + "&chk_out=" + CHECKOUT + "&adults=2&currency=EUR";
   const r = await fetch(url, { headers: { "User-Agent": "roma2026-party-site" } });
@@ -38,18 +79,37 @@ async function fetchHotelPrice(key) {
   const rates = d && d.result && d.result.rates;
   if (!Array.isArray(rates) || !rates.length) return null;
   const vals = rates.map(function (x) { return x.rate; }).filter(function (v) { return v > 0; });
-  if (!vals.length) return null;
-  return Math.min.apply(null, vals);
+  return vals.length ? Math.min.apply(null, vals) : null;
 }
 
 async function refreshPrices(env) {
-  const out = {};
-  for (const id of Object.keys(HOTELS)) {
-    try { out[id] = await fetchHotelPrice(HOTELS[id]); } catch (e) { out[id] = null; }
+  let prev = {};
+  try { prev = (JSON.parse(await env.TALLY.get("serpcache")) || {}).hotels || {}; } catch (e) {}
+  const hotels = {};
+  for (const id of Object.keys(SERP_QUERIES)) {
+    let h = null;
+    try { h = await fetchSerpHotel(env, id); } catch (e) {}
+    if (!h) h = prev[id] || { price: null, photos: [], site: null };
+    if (!h.price) {
+      try { h.price = await fetchXoteloPrice(id); } catch (e) {}
+    }
+    if ((!h.photos || !h.photos.length) && prev[id]) h.photos = prev[id].photos || [];
+    if (!h.site && prev[id]) h.site = prev[id].site || null;
+    hotels[id] = h;
   }
-  const doc = { ts: Date.now(), prices: out };
-  await env.TALLY.put("pricecache", JSON.stringify(doc));
+  const doc = { ts: Date.now(), hotels: hotels };
+  await env.TALLY.put("serpcache", JSON.stringify(doc));
   return doc;
+}
+
+function pricesResponse(doc) {
+  const prices = {}, photos = {}, sites = {};
+  for (const id of Object.keys(doc.hotels || {})) {
+    prices[id] = doc.hotels[id].price || null;
+    photos[id] = doc.hotels[id].photos || [];
+    sites[id] = doc.hotels[id].site || null;
+  }
+  return { ts: doc.ts, prices: prices, photos: photos, sites: sites };
 }
 
 function json(data, cors, status) {
@@ -69,16 +129,16 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
     const path = new URL(req.url).pathname;
 
-    // ---- hotel prices (cached, stale-while-revalidate) ----
+    // ---- hotel prices + photos + sites (cached, stale-while-revalidate) ----
     if (path === "/prices" && req.method === "GET") {
       let doc = null;
-      try { doc = JSON.parse(await env.TALLY.get("pricecache")); } catch (e) {}
-      if (!doc) {
+      try { doc = JSON.parse(await env.TALLY.get("serpcache")); } catch (e) {}
+      if (!doc || !doc.hotels) {
         doc = await refreshPrices(env);
       } else if (Date.now() - doc.ts > PRICE_TTL_MS && ctx && ctx.waitUntil) {
         ctx.waitUntil(refreshPrices(env));
       }
-      return json(doc, cors);
+      return json(pricesResponse(doc), cors);
     }
 
     // ---- suggestions ----
