@@ -1,8 +1,54 @@
-// Roma 2026 RSVP tally + program suggestions. KV binding: TALLY
+// Roma 2026 RSVP tally + program suggestions + hotel prices. KV binding: TALLY
 const GUESTS = ["Justine", "Moritz", "Georgina", "Nikos", "Paulina", "Giulia", "Nicola", "Luca"];
 const ANSWERS = ["yes", "no", "maybe"];
 const ORIGIN = "https://luca1997sb.github.io";
 const MAX_SUGGESTIONS = 100;
+
+// live weekend prices via xotelo.com (free TripAdvisor rates API)
+const CHECKIN = "2026-11-26";
+const CHECKOUT = "2026-11-29";
+const PRICE_TTL_MS = 6 * 60 * 60 * 1000; // refresh every 6h
+// TripAdvisor hotel keys
+const HOTELS = {
+  "casa-monti":     "g187791-d27719211",
+  "palazzo-talia":  "g187791-d27413711",
+  "de-la-ville":    "g187791-d17399393",
+  "hassler":        "g187791-d191332",
+  "de-russie":      "g187791-d232851",
+  "palazzo-ripetta":"g187791-d239502",
+  "locarno":        "g187791-d198734",
+  "g-rough":        "g187791-d7395306",
+  "mario-fiori":    "g187791-d1235138",
+  "donna-camilla":  "g187791-d1024807",
+  "passepartout":   "g187791-d25256717",
+  "teatro-pace":    "g187791-d504558",
+  "santa-maria":    "g187791-d239263",
+  "santa-chiara":   "g187791-d236146",
+  "naman":          "g187791-d18941041",
+};
+
+async function fetchHotelPrice(key) {
+  const url = "https://data.xotelo.com/api/rates?hotel_key=" + key +
+    "&chk_in=" + CHECKIN + "&chk_out=" + CHECKOUT + "&adults=2&currency=EUR";
+  const r = await fetch(url, { headers: { "User-Agent": "roma2026-party-site" } });
+  if (!r.ok) return null;
+  const d = await r.json();
+  const rates = d && d.result && d.result.rates;
+  if (!Array.isArray(rates) || !rates.length) return null;
+  const vals = rates.map(function (x) { return x.rate; }).filter(function (v) { return v > 0; });
+  if (!vals.length) return null;
+  return Math.min.apply(null, vals);
+}
+
+async function refreshPrices(env) {
+  const out = {};
+  for (const id of Object.keys(HOTELS)) {
+    try { out[id] = await fetchHotelPrice(HOTELS[id]); } catch (e) { out[id] = null; }
+  }
+  const doc = { ts: Date.now(), prices: out };
+  await env.TALLY.put("pricecache", JSON.stringify(doc));
+  return doc;
+}
 
 function json(data, cors, status) {
   return new Response(JSON.stringify(data), {
@@ -12,7 +58,7 @@ function json(data, cors, status) {
 }
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const cors = {
       "Access-Control-Allow-Origin": ORIGIN,
       "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
@@ -20,6 +66,18 @@ export default {
     };
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
     const path = new URL(req.url).pathname;
+
+    // ---- hotel prices (cached, stale-while-revalidate) ----
+    if (path === "/prices" && req.method === "GET") {
+      let doc = null;
+      try { doc = JSON.parse(await env.TALLY.get("pricecache")); } catch (e) {}
+      if (!doc) {
+        doc = await refreshPrices(env);
+      } else if (Date.now() - doc.ts > PRICE_TTL_MS && ctx && ctx.waitUntil) {
+        ctx.waitUntil(refreshPrices(env));
+      }
+      return json(doc, cors);
+    }
 
     // ---- suggestions ----
     if (path === "/suggestions" && req.method === "GET") {
