@@ -497,6 +497,9 @@
     padding:.75rem 0;border-bottom:1px dotted var(--line);
   }
   .bring li:last-child{border-bottom:none}
+  .f-notes{list-style:none;margin:0 0 1rem;padding:0}
+  .f-notes li{position:relative;padding:.26rem 0 .26rem 1.05rem}
+  .f-notes li::before{content:"\00B7";position:absolute;left:.15rem;color:var(--terra);font-weight:700}
   .flights{list-style:none;margin:.9rem 0;padding:0}
   .flights li{
     display:grid;grid-template-columns:min(9rem,40vw) 1fr;
@@ -841,13 +844,17 @@
     <div class="soon reveal d1">
       <span class="badge">Save the dates</span>
       <h4>Flights</h4>
-      <p>It all begins with a late lunch on Thursday 26 November, so aim to land by early afternoon. Fly home Sunday 29 November. Justine and Luca are on:</p>
+      <ul class="f-notes">
+        <li>It all begins with a late lunch on Thursday 26 November</li>
+        <li>Aim to land by early afternoon</li>
+        <li>Fly home Sunday 29 November</li>
+      </ul>
+      <p>Justine and Luca are on:</p>
       <ul class="flights">
         <li><span class="f-leg">Thu 26 &middot; AZ 571</span><span class="f-route">Zurich 10:55 &rarr; Rome 12:25</span></li>
         <li><span class="f-leg">Sun 29 &middot; AZ 574</span><span class="f-route">Rome 16:40 &rarr; Zurich 18:15</span></li>
       </ul>
-      <p>ITA Airways, nonstop. Same flights very welcome.</p>
-      <a class="h-book" href="https://www.google.com/travel/flights?q=Flights%20from%20ZRH%20to%20FCO%20on%202026-11-26%20returning%202026-11-29&curr=CHF&hl=en" target="_blank" rel="noopener">Book the same flights</a>
+      <a class="h-book" href="https://www.google.com/travel/flights/booking?tfs=CBwQAho_EgoyMDI2LTExLTI2Ih8KA1pSSBIKMjAyNi0xMS0yNhoDRkNPKgJBWjIDNTcxagcIARIDWlJIcgcIARIDRkNPGj8SCjIwMjYtMTEtMjkiHwoDRkNPEgoyMDI2LTExLTI5GgNaUkgqAkFaMgM1NzRqBwgBEgNGQ09yBwgBEgNaUkhAAUgBcAGCAQsI____________AZgBAQ&hl=en&curr=CHF" target="_blank" rel="noopener">Book the same flights</a>
     </div>
   </div>
   <figure class="photo wide reveal" style="margin-top:1.2rem">
