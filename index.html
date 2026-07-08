@@ -1170,7 +1170,10 @@
       suggForm.hidden = true;
       suggPlus.classList.remove("open");
       suggStatus.textContent = "Added, everyone can see it now.";
-      loadSuggestions();
+      // show it immediately; the shared list catches up within a minute
+      suggList.innerHTML += '<div class="sug"><span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span>' +
+        '<span class="sug-n">' + escapeHtml(guest) + '</span></div>';
+      setTimeout(loadSuggestions, 60000);
       postForm({ _subject: "Roma 2026 suggestion: " + guest, name: guest, suggestion: text });
     }).catch(function(){
       suggStatus.textContent = "Didn't go through, try again in a moment.";
