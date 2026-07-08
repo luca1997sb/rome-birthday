@@ -73,9 +73,9 @@
     text-transform:uppercase;text-decoration:none;color:var(--ink);
   }
   .nav .brand em{font-style:italic;color:var(--terra)}
-  .nav nav{display:flex;gap:1.4rem}
+  .nav nav{display:flex;gap:1.4rem;align-items:center}
   .nav nav a{
-    position:relative;
+    position:relative;line-height:1;
     font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
     text-decoration:none;color:var(--ink-soft);transition:color .25s;
   }
@@ -94,7 +94,7 @@
   .nav nav a.cta::after{display:none}
   .nav nav a.cta:hover{background:var(--terra);color:#fff;transform:translateY(-1px)}
   .music-link{
-    background:none;border:none;cursor:pointer;
+    background:none;border:none;cursor:pointer;line-height:1;
     font-family:var(--sans);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
     color:var(--ink-soft);padding:0;transition:color .25s;
   }
@@ -236,42 +236,33 @@
     font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--terra);
     border:1px solid rgba(168,80,43,.4);border-radius:999px;padding:.28rem .8rem;
   }
-  /* program suggestions */
-  .suggest-box{
-    border:1px solid var(--line);background:rgba(255,255,255,.4);
-    padding:1.7rem 1.7rem 1.4rem;margin-top:1.2rem;
-  }
-  .sugg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-  .sugg-t{font-family:var(--serif);font-size:1.35rem}
-  .sugg-s{font-size:.82rem;color:var(--ink-soft);margin-top:.2rem}
-  .sugg-plus{
-    flex:0 0 auto;width:44px;height:44px;border-radius:50%;
-    border:1px solid var(--ink);background:transparent;color:var(--ink);
-    font-size:1.5rem;line-height:1;cursor:pointer;
-    transition:all .3s cubic-bezier(.2,.7,.3,1.4);
-  }
-  .sugg-plus:hover{background:var(--terra);border-color:var(--terra);color:#fff;transform:rotate(90deg) scale(1.08)}
-  .sugg-plus.open{background:var(--ink);color:var(--paper);transform:rotate(45deg)}
-  .sugg-list{margin-top:1rem}
-  .sugg-list:empty{margin-top:0}
+  /* program suggestions, compact, inside the program card */
+  .sugg{margin-top:1.4rem;border-top:1px dotted var(--line);padding-top:1.1rem}
+  .sugg-t{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--terra);margin-bottom:.3rem}
   .sug{
     display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:.65rem 0;border-bottom:1px dotted var(--line);
+    padding:.45rem 0;border-bottom:1px dotted var(--line);
     opacity:0;animation:fadeIn .5s ease forwards;
   }
   .sug:last-child{border-bottom:none}
-  .sug-t{font-family:var(--serif);font-style:italic;font-size:1.02rem}
-  .sug-n{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--terra);white-space:nowrap}
-  .sugg-form{display:flex;gap:.6rem;margin-top:1.1rem}
+  .sug-t{font-family:var(--serif);font-style:italic;font-size:.95rem}
+  .sug-n{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);white-space:nowrap}
+  .sugg-add{
+    background:none;border:none;cursor:pointer;padding:0;margin-top:.5rem;
+    font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--terra);
+    border-bottom:1px dotted var(--terra);
+  }
+  .sugg-add:hover{opacity:.7}
+  .sugg-form{display:flex;gap:.6rem;margin-top:.8rem}
   .sugg-form input{
     flex:1;background:rgba(255,255,255,.5);border:1px solid var(--ink);border-radius:0;
-    padding:.75rem .9rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);min-width:0;
+    padding:.65rem .8rem;font-family:var(--sans);font-size:.88rem;color:var(--ink);min-width:0;
   }
   .sugg-form input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 1px var(--terra)}
-  .sugg-form .btn{padding:.75rem 1.4rem}
+  .sugg-form .btn{padding:.65rem 1.2rem}
   .sugg-status{
-    font-family:var(--serif);font-style:italic;font-size:.9rem;
-    color:var(--terra);margin-top:.7rem;min-height:1.2em;
+    font-family:var(--serif);font-style:italic;font-size:.85rem;
+    color:var(--terra);margin-top:.5rem;min-height:1.2em;
   }
 
   .teasers{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
@@ -721,27 +712,22 @@
         <span class="teaser soon-tag">more to follow…</span>
       </div>
       <a class="maplist" href="https://maps.app.goo.gl/4nWDv4162wB9Ud7KA" target="_blank" rel="noopener">Here's a list of places to get inspired &rarr;</a>
+      <div class="sugg">
+        <div class="sugg-t">Ideas from the group</div>
+        <div class="sugg-list" id="sugglist"></div>
+        <button class="sugg-add" id="suggplus">+ add an idea</button>
+        <div class="sugg-form" id="suggform" hidden>
+          <input type="text" id="sugginput" maxlength="140" placeholder="Your idea…" autocomplete="off">
+          <button class="btn btn-primary" id="suggsend">Add</button>
+        </div>
+        <div class="sugg-status" id="suggstatus"></div>
+      </div>
     </div>
     <div class="soon reveal d1">
       <span class="badge">Save the dates</span>
       <h4>Flights</h4>
       <p>It all begins with a late lunch on Thursday 26 November. Aim to land by early afternoon. Fly home Sunday 29 November. Flight recommendations to follow.</p>
     </div>
-  </div>
-  <div class="suggest-box reveal">
-    <div class="sugg-head">
-      <div>
-        <div class="sugg-t">Ideas from the group</div>
-        <div class="sugg-s">Something we should do, eat or see? Add it, everyone sees it here.</div>
-      </div>
-      <button class="sugg-plus" id="suggplus" aria-label="Add a suggestion">+</button>
-    </div>
-    <div class="sugg-list" id="sugglist"></div>
-    <div class="sugg-form" id="suggform" hidden>
-      <input type="text" id="sugginput" maxlength="140" placeholder="Your idea…" autocomplete="off">
-      <button class="btn btn-primary" id="suggsend">Add</button>
-    </div>
-    <div class="sugg-status" id="suggstatus"></div>
   </div>
   <figure class="photo wide reveal" style="margin-top:1.2rem">
     <div class="ph"><img src="img/campagna.jpg" alt="Pines and greens at a golf club on the edge of Rome" loading="lazy"></div>
@@ -1149,11 +1135,11 @@
 
   suggPlus.addEventListener("click", function(){
     if (!guest) { suggStatus.textContent = "Pick your name in the RSVP first."; return needName(); }
-    var open = suggForm.hidden;
-    suggForm.hidden = !open;
-    suggPlus.classList.toggle("open", open);
+    var opening = suggForm.hidden;
+    suggForm.hidden = !opening;
+    suggPlus.textContent = opening ? "cancel" : "+ add an idea";
     suggStatus.textContent = "";
-    if (open) suggInput.focus();
+    if (opening) suggInput.focus();
   });
 
   function sendSuggestion(){
@@ -1168,7 +1154,7 @@
       if (!r.ok) throw new Error();
       suggInput.value = "";
       suggForm.hidden = true;
-      suggPlus.classList.remove("open");
+      suggPlus.textContent = "+ add an idea";
       suggStatus.textContent = "Added, everyone can see it now.";
       // show it immediately; the shared list catches up within a minute
       suggList.innerHTML += '<div class="sug"><span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span>' +
