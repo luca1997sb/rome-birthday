@@ -10,7 +10,7 @@ const MAX_SUGGESTIONS = 100;
 // endpoint, so each hotel is fetched by its stable property_token (one search/hotel/refresh).
 const CHECKIN = "2026-11-26";
 const CHECKOUT = "2026-11-29";
-const PRICE_TTL_MS = 72 * 60 * 60 * 1000; // 72h: ~10 refreshes/month x 17 queries fits the 250 free searches
+const PRICE_TTL_MS = 72 * 60 * 60 * 1000; // 72h: ~10 refreshes/month x 18 queries fits the 250 free searches
 const SERP_QUERIES = {
   "casa-monti":     "Casa Monti Roma",
   "palazzo-talia":  "Palazzo Talia Rome",
@@ -29,6 +29,7 @@ const SERP_QUERIES = {
   "mario-fiori":    "Mario de Fiori 37 Rome",
   "naman":          "Naman Hotellerie Rome",
   "teatro-pace":    "Hotel Teatro Pace Rome",
+  "aldrovandi":     "Aldrovandi Residence City Suites Rome",
 };
 // Google property tokens, discovered 2026-07-08 and verified against each hotel's address.
 // Used directly; the SERP_QUERIES search only runs again if a token ever goes stale.
@@ -50,6 +51,7 @@ const PROPERTY_TOKENS = {
   "mario-fiori":    "ChcIoZK47OvGiqkFGgsvZy8xdGQ4ZjBjbRAB",
   "naman":          "ChkIzP60hfODq7l1Gg0vZy8xMWZtemdyMW5fEAE",
   "teatro-pace":    "ChgIndn4-YCYz7WbARoLL2cvMXRna3F4c2QQAQ",
+  "aldrovandi":     "ChcIz9OxtbyhrrBCGgsvZy8xdGZ5NHoychAB",
 };
 
 // exact seller names only: "BusinessHotels.com" and friends must NOT slip through substring matches
