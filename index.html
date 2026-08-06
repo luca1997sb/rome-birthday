@@ -266,6 +266,37 @@
     color:var(--terra);margin-top:.5rem;min-height:1.2em;
   }
 
+  /* ---------- day-by-day program ---------- */
+  .days{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.8rem}
+  @media(max-width:760px){.days{grid-template-columns:1fr}}
+  .day{border:1px solid var(--line);background:var(--paper-2);padding:1.25rem 1.35rem}
+  .day-t{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--terra);margin-bottom:.45rem}
+  .prog{list-style:none;margin:0;padding:0}
+  .prog li{
+    display:grid;grid-template-columns:3.3rem minmax(0,1fr) auto;
+    column-gap:.85rem;align-items:center;
+    padding:.62rem 0;border-bottom:1px dotted var(--line);
+  }
+  .prog li:last-child{border-bottom:none}
+  .p-time{font-family:var(--sans);font-size:.66rem;letter-spacing:.05em;color:var(--ink-soft);white-space:nowrap}
+  .p-main{min-width:0}
+  .p-what{font-family:var(--serif);font-size:1.02rem;line-height:1.3;color:var(--ink);text-decoration:none}
+  a.p-what{border-bottom:1px solid rgba(168,80,43,.35);transition:color .25s}
+  a.p-what:hover{color:var(--terra)}
+  .p-meta{display:block;margin-top:.18rem}
+  .p-where{font-size:.72rem;font-style:italic;font-family:var(--serif);color:var(--ink-soft);margin-right:.45rem}
+  .p-tag{
+    display:inline-block;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:.13rem .5rem;
+    color:var(--ink-soft);margin-right:.3rem;white-space:nowrap;vertical-align:.1em;
+  }
+  .p-tag.ok{color:var(--terra);border-color:rgba(168,80,43,.45)}
+  .p-tag.gf svg{vertical-align:-1px;margin-right:.22em}
+  .p-img{
+    width:3.4rem;height:3.4rem;object-fit:cover;justify-self:end;
+    border:1px solid var(--line);background:#e8e2d6;cursor:zoom-in;
+  }
+
   .teasers{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
   .teaser{
     font-family:var(--serif);font-size:1rem;
@@ -404,6 +435,14 @@
   .map-title{font-family:var(--serif);font-weight:400;font-size:1.6rem}
   .map-title em{font-style:italic}
   .map-sub{font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
+  .map-filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 .9rem}
+  .mf{
+    font-family:var(--sans);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:999px;
+    padding:.3rem .7rem;cursor:pointer;transition:color .25s,border-color .25s;
+  }
+  .mf:hover{color:var(--terra)}
+  .mf.on{color:var(--terra);border-color:rgba(168,80,43,.55)}
   .maplist{
     display:inline-block;margin-top:.7rem;
     font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
@@ -431,6 +470,7 @@
   }
   .mk:hover{transform:scale(1.4)}
   .mk.htl{background:var(--terra)}
+  .mk.food{background:var(--paper);border-color:var(--terra)}
   .mk.act{background:var(--terra);position:relative}
   .mk.act::after{
     content:"";position:absolute;inset:-2px;border-radius:50%;
@@ -568,6 +608,8 @@
   }
   .rsvp-wrap h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:0 0 .3rem}
   .rsvp-wrap .sub{color:var(--ink-soft);font-size:.9rem;margin:0 0 1.2rem}
+  .rsvp-done{padding:1.3rem 1.5rem;margin-top:1.6rem}
+  .rsvp-done .sub{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--ink);margin:0 0 .8rem}
   .chips{display:flex;flex-wrap:wrap;gap:.55rem}
   .chip{
     font-family:var(--serif);font-size:1rem;letter-spacing:.02em;
@@ -793,45 +835,69 @@
 
 <section id="rsvp">
   <div class="sec-kicker reveal">RSVP</div>
-  <h2 class="sec-title reveal">Are you <em>in?</em></h2>
-  <div class="rsvp-wrap reveal">
-    <h3>First, who are you?</h3>
-    <p class="sub">Pick your name, then give me a yes or a no. Your answer goes straight to Luca.</p>
-    <div class="chips" id="namechips"></div>
-    <div class="yesno">
+  <h2 class="sec-title reveal">Everyone's <em>in.</em></h2>
+  <div class="rsvp-wrap rsvp-done reveal">
+    <p class="sub">All eight said yes. Happy you're all coming.</p>
+    <div class="chips" id="namechips" hidden></div>
+    <div class="yesno" hidden>
       <button class="yn yes" id="btnyes">Yes, I'm in</button>
       <button class="yn mb" id="btnmb">Maybe</button>
       <button class="yn no" id="btnno">Sadly can't</button>
     </div>
-    <div id="status"><span class="none">Waiting on you…</span></div>
+    <div id="status" hidden></div>
     <button class="applink" id="applink" hidden>Get a ping when new plans land. Add the app →</button>
-
-    <div class="tally">
-      <div class="tally-t">The tally</div>
-      <div class="tally-row" id="tally"></div>
-    </div>
+    <div class="tally-row" id="tally"></div>
   </div>
 </section>
 
 
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
-  <h2 class="sec-title reveal">Program <em>to follow</em></h2>
+  <h2 class="sec-title reveal">The plan, <em>day by day.</em></h2>
+  <p class="hotels-note reveal">Eight of us, one gluten-free. Times are approximate. Tap any place to open it in Maps, tap a photo to see it big. Kitchens that confirm gluten-free get the tag.</p>
+  <div class="days">
+    <div class="day reveal">
+      <div class="day-t">Thursday 26</div>
+      <ul class="prog">
+        <li><span class="p-time">12:25</span><div class="p-main"><span class="p-what">Land at Fiumicino, head for the center</span></div></li>
+        <li><span class="p-time">~14:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Trattoria+Ai+Villini+Via+Marcantonio+Colonna+46+Roma" target="_blank" rel="noopener">Lunch &middot; Ai Villini</a><span class="p-meta"><span class="p-where">Prati</span><span class="p-tag">opens later</span></span></div><img class="p-img" src="img/program/ai-villini.jpg" alt="Ai Villini" loading="lazy"></li>
+        <li><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=St+Peter's+Basilica+Rome" target="_blank" rel="noopener">St. Peter's Basilica</a><span class="p-meta"><span class="p-where">ten minutes from lunch</span></span></div><img class="p-img" src="img/program/san-pietro.jpg" alt="St. Peter's Basilica" loading="lazy"></li>
+        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Piperno+Ristorante+Roma" target="_blank" rel="noopener">Dinner &middot; Piperno</a><span class="p-meta"><span class="p-where">Ghetto</span><span class="p-tag">asked</span></span></div><img class="p-img" src="img/program/piperno.jpg" alt="Piperno" loading="lazy"></li>
+      </ul>
+    </div>
+    <div class="day reveal d1">
+      <div class="day-t">Friday 27</div>
+      <ul class="prog">
+        <li><span class="p-time">10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Colonna+Piazza+SS+Apostoli+66+Roma" target="_blank" rel="noopener">Palazzo Colonna, guided tour</a><span class="p-meta"><span class="p-where">Piazza SS. Apostoli</span><span class="p-tag ok">confirmed</span></span></div><img class="p-img" src="img/program/colonna.jpg" alt="Palazzo Colonna" loading="lazy"></li>
+        <li><span class="p-time">~13:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Checco+er+Carettiere+Roma" target="_blank" rel="noopener">Lunch &middot; Checco er Carettiere</a><span class="p-meta"><span class="p-where">Trastevere</span><span class="p-tag">asked</span></span></div><img class="p-img" src="img/program/checco.jpg" alt="Checco er Carettiere" loading="lazy"></li>
+        <li><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+San+Calisto+Roma" target="_blank" rel="noopener">Trastevere, drinks at Bar San Calisto</a><span class="p-meta"><span class="p-where">Trastevere</span></span></div><img class="p-img" src="img/program/san-calisto.jpg" alt="Bar San Calisto" loading="lazy"></li>
+        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Rocco+Ristorante+Via+Giovanni+Lanza+93+Roma" target="_blank" rel="noopener">Dinner &middot; Rocco</a><span class="p-meta"><span class="p-where">central</span><span class="p-tag">to call</span></span></div></li>
+      </ul>
+    </div>
+    <div class="day reveal">
+      <div class="day-t">Saturday 28</div>
+      <ul class="prog">
+        <li><span class="p-time">~10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Doria+Pamphilj+Roma" target="_blank" rel="noopener">Doria Pamphilj, gallery + secret apartments</a><span class="p-meta"><span class="p-where">Via del Corso</span><span class="p-tag">asked</span></span></div><img class="p-img" src="img/program/doria.jpg" alt="Doria Pamphilj" loading="lazy"></li>
+        <li><span class="p-time">~14:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Armando+al+Pantheon+Roma" target="_blank" rel="noopener">Lunch &middot; Armando al Pantheon</a><span class="p-meta"><span class="p-where">Pantheon</span><span class="p-tag">asked</span></span></div><img class="p-img" src="img/program/armando.jpg" alt="Armando al Pantheon" loading="lazy"></li>
+        <li><span class="p-time">aft.</span><div class="p-main"><span class="p-what">Shopping, or nothing at all</span></div></li>
+        <li><span class="p-time">aper.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+della+Musa+Largo+del+Nazareno+25+Roma" target="_blank" rel="noopener">Aperitivo &middot; Bar della Musa</a><span class="p-meta"><span class="p-where">inside Palazzo Talia, by the Trevi</span></span></div><img class="p-img" src="img/program/della-musa.jpg" alt="Bar della Musa" loading="lazy"></li>
+        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Al+Moro+Roma" target="_blank" rel="noopener">Dinner &middot; Al Moro</a><span class="p-meta"><span class="p-where">by the Trevi</span><span class="p-tag">opens later</span></span></div><img class="p-img" src="img/program/al-moro.jpg" alt="Al Moro" loading="lazy"></li>
+      </ul>
+    </div>
+    <div class="day reveal d1">
+      <div class="day-t">Sunday 29</div>
+      <ul class="prog">
+        <li><span class="p-time">12:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+La+Campana+Roma" target="_blank" rel="noopener">Lunch &middot; La Campana</a><span class="p-meta"><span class="p-where">by Piazza Navona</span><span class="p-tag ok">confirmed</span><span class="p-tag ok gf"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M6 1.4V10.6M6 4.8C4.7 4.8 3.9 4 3.9 2.6 5.2 2.6 6 3.4 6 4.8ZM6 4.8C7.3 4.8 8.1 4 8.1 2.6 6.8 2.6 6 3.4 6 4.8ZM6 7.6C4.7 7.6 3.9 6.8 3.9 5.4 5.2 5.4 6 6.2 6 7.6ZM6 7.6C7.3 7.6 8.1 6.8 8.1 5.4 6.8 5.4 6 6.2 6 7.6Z" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round"/><path d="M2.2 10.4 9.8 1.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>gluten-free</span></span></div><img class="p-img" src="img/program/la-campana.jpg" alt="La Campana" loading="lazy"></li>
+        <li><span class="p-time">~14:00</span><div class="p-main"><span class="p-what">Leave the center for Fiumicino</span></div></li>
+        <li><span class="p-time">16:40</span><div class="p-main"><span class="p-what">AZ 574 to Zurich, lands 18:15</span></div></li>
+      </ul>
+    </div>
+  </div>
   <div class="soon-grid">
     <div class="soon reveal">
-      <span class="badge dot">In the works</span>
-      <h4>The program</h4>
-      <p>A few things are already certain. The rest of the schedule lands here once it's set.</p>
-      <div class="teasers">
-        <span class="teaser">Golf</span>
-        <span class="teaser">Padel</span>
-        <span class="teaser">Guided tours</span>
-        <span class="teaser">Shopping</span>
-        <span class="teaser soon-tag">more to follow…</span>
-      </div>
-      <a class="maplist" href="https://maps.app.goo.gl/4nWDv4162wB9Ud7KA" target="_blank" rel="noopener">Here's a list of places to get inspired &rarr;</a>
+      <span class="badge dot">Open list</span>
+      <h4>Ideas from the group</h4>
       <div class="sugg">
-        <div class="sugg-t">Ideas from the group</div>
         <div class="sugg-list" id="sugglist"></div>
         <button class="sugg-add" id="suggplus">+ add an idea</button>
         <div class="sugg-form" id="suggform" hidden>
@@ -979,8 +1045,18 @@
     <div class="map-head">
       <div>
         <div class="map-title">Rome, <em>roughly</em></div>
-        <div class="map-sub">Where the weekend will happen. Terracotta dots are the recommended hotels, ink dots the landmarks; activities join as they're announced. Tap any dot to open it in Maps.</div>
+        <div class="map-sub">Where the weekend will happen. Terracotta dots are the hotels, hollow ones food and drinks, ink dots the sights, pulsing ones the tours. Tap any dot to open it in Maps.</div>
       </div>
+    </div>
+    <div class="map-filters" id="mapfilters">
+      <button class="mf on" data-f="all">All</button>
+      <button class="mf" data-f="hotel">Hotels</button>
+      <button class="mf" data-f="food">Food &amp; drinks</button>
+      <button class="mf" data-f="activity">Tours &amp; sights</button>
+      <button class="mf" data-f="thu">Thu</button>
+      <button class="mf" data-f="fri">Fri</button>
+      <button class="mf" data-f="sat">Sat</button>
+      <button class="mf" data-f="sun">Sun</button>
     </div>
     <div id="leafmap">
       <div class="fallback">The map loads on the live site. See you in Rome.</div>
@@ -1297,7 +1373,18 @@
     { name:"Aldrovandi Residence", lat:41.9182, lng:12.4843, type:"hotel", map:"Aldrovandi+Residence+City+Suites+Roma" },
     { name:"Hotel Santa Maria",    lat:41.8896, lng:12.4681, type:"hotel", map:"Hotel+Santa+Maria+Trastevere" },
     { name:"Albergo Santa Chiara", lat:41.8974, lng:12.4768, type:"hotel", map:"Albergo+Santa+Chiara+Rome" },
-    { name:"St Peter's",        lat:41.9022, lng:12.4539, type:"landmark", map:"St+Peter's+Basilica+Rome" },
+    { name:"Ai Villini",            lat:41.9098,  lng:12.46697, type:"food", day:"thu", map:"Trattoria+Ai+Villini+Via+Marcantonio+Colonna+46+Roma" },
+    { name:"Piperno",               lat:41.89232, lng:12.47609, type:"food", day:"thu", map:"Ristorante+Piperno+Roma" },
+    { name:"Palazzo Colonna",       lat:41.89745, lng:12.48484, type:"activity", day:"fri", map:"Galleria+Colonna+Roma" },
+    { name:"Checco er Carettiere",  lat:41.89159, lng:12.46938, type:"food", day:"fri", map:"Checco+er+Carettiere+Roma" },
+    { name:"Bar San Calisto",       lat:41.88905, lng:12.47074, type:"food", day:"fri", map:"Bar+San+Calisto+Roma" },
+    { name:"Rocco",                 lat:41.89506, lng:12.49587, type:"food", day:"fri", map:"Rocco+Ristorante+Via+Giovanni+Lanza+93+Roma" },
+    { name:"Doria Pamphilj",        lat:41.89782, lng:12.48156, type:"activity", day:"sat", map:"Galleria+Doria+Pamphilj+Roma" },
+    { name:"Armando al Pantheon",   lat:41.89903, lng:12.47624, type:"food", day:"sat", map:"Armando+al+Pantheon+Roma" },
+    { name:"Bar della Musa",        lat:41.90286, lng:12.48357, type:"food", day:"sat", map:"Bar+della+Musa+Largo+del+Nazareno+25+Roma" },
+    { name:"Al Moro",               lat:41.90059, lng:12.48256, type:"food", day:"sat", map:"Trattoria+Al+Moro+Roma" },
+    { name:"La Campana",            lat:41.90265, lng:12.47456, type:"food", day:"sun", map:"Ristorante+La+Campana+Vicolo+della+Campana+Roma" },
+    { name:"St Peter's",        lat:41.9022, lng:12.4539, type:"landmark", day:"thu", map:"St+Peter's+Basilica+Rome" },
     { name:"Piazza del Popolo", lat:41.9109, lng:12.4763, type:"landmark", map:"Piazza+del+Popolo+Rome" },
     { name:"Villa Borghese",    lat:41.9128, lng:12.4853, type:"landmark", map:"Villa+Borghese+Rome" },
     { name:"Spanish Steps",     lat:41.9060, lng:12.4823, type:"landmark", map:"Spanish+Steps+Rome" },
@@ -1325,6 +1412,7 @@
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom:19
     }).addTo(map);
+    var mapMarkers = [];
     PLACES.forEach(function(p){
       var icon;
       if (p.type === "house") {
@@ -1338,18 +1426,33 @@
           iconSize:[30,27], iconAnchor:[15,25]
         });
       } else {
-        var cls = p.type === "activity" ? " act" : p.type === "hotel" ? " htl" : "";
+        var cls = p.type === "activity" ? " act" : p.type === "hotel" ? " htl" : p.type === "food" ? " food" : "";
         icon = L.divIcon({
           className:"",
           html:'<span class="mk' + cls + '"></span>',
           iconSize:[12,12], iconAnchor:[6,6]
         });
       }
-      L.marker([p.lat, p.lng], { icon:icon })
+      var m = L.marker([p.lat, p.lng], { icon:icon })
         .addTo(map)
         .bindTooltip(p.name, { className:"mk-tip", direction:"top", offset:[0,-8] })
         .bindPopup('<div class="pop-name">' + p.name + '</div>' +
           '<a href="https://maps.google.com/?q=' + p.map + '" target="_blank" rel="noopener">Open in Maps →</a>');
+      mapMarkers.push({ m:m, type:p.type, day:p.day || null });
+    });
+    var mfWrap = document.getElementById("mapfilters");
+    if (mfWrap) mfWrap.addEventListener("click", function(e){
+      var b = e.target.closest(".mf");
+      if (!b) return;
+      mfWrap.querySelectorAll(".mf").forEach(function(x){ x.classList.toggle("on", x === b); });
+      var f = b.getAttribute("data-f");
+      mapMarkers.forEach(function(x){
+        var show = f === "all" || x.type === "house" ||
+          (f === "thu" || f === "fri" || f === "sat" || f === "sun" ? x.day === f :
+           f === "activity" ? (x.type === "activity" || x.type === "landmark") :
+           x.type === f);
+        if (show) x.m.addTo(map); else map.removeLayer(x.m);
+      });
     });
   }
   if (document.readyState === "complete") initMap();
@@ -1748,7 +1851,9 @@
     function show(i){
       idx = (i + list.length) % list.length;
       img.src = list[idx];
-      count.textContent = (idx + 1) + " / " + list.length;
+      count.textContent = list.length > 1 ? (idx + 1) + " / " + list.length : "";
+      lbx.querySelector(".lbx-prev").style.display = list.length > 1 ? "" : "none";
+      lbx.querySelector(".lbx-next").style.display = list.length > 1 ? "" : "none";
     }
     function open(srcs, i){
       list = srcs; show(i);
@@ -1765,6 +1870,8 @@
       if (t.tagName === "IMG" && t.closest(".h-photos")) {
         var imgs = [].slice.call(t.closest(".h-photos").querySelectorAll("img"));
         open(imgs.map(function(x){ return x.src; }), imgs.indexOf(t));
+      } else if (t.classList && t.classList.contains("p-img")) {
+        open([t.src], 0);
       }
     });
     lbx.querySelector(".lbx-x").addEventListener("click", close);
