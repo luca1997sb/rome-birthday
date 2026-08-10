@@ -294,7 +294,11 @@
   .p-tag.gf svg{vertical-align:-1px;margin-right:.22em}
   .p-tag.cat{border-color:transparent;background:rgba(33,29,24,.07)}
   .p-tags{display:block;margin-top:.32rem}
-  .prog-gallery{margin-top:1.2rem;border:1px solid var(--line);background:var(--paper-2);padding:1.15rem 1.35rem 1rem}
+  .prog li.px{cursor:pointer;-webkit-user-select:none;user-select:none}
+  .prog li.px::after{content:"+";grid-column:3;grid-row:1;justify-self:end;font-family:var(--sans);font-size:.95rem;color:var(--ink-soft);transition:color .3s;line-height:1}
+  .prog li.px.open::after{content:"\2212";color:var(--terra)}
+  .prog li .h-photos{display:none;grid-column:1/-1}
+  .prog li.open .h-photos{display:flex}
   .p-img{
     width:3.4rem;height:3.4rem;object-fit:cover;justify-self:end;
     border:1px solid var(--line);background:#e8e2d6;cursor:zoom-in;
@@ -827,62 +831,50 @@
       </ul>
     </div>
   </div>
-  <div class="photo-duo">
-    <figure class="photo reveal">
-      <div class="ph"><img src="img/aranci.jpg" alt="Umbrella pines at the Giardino degli Aranci at sunset, St Peter's in the distance" loading="lazy"></div>
-    </figure>
-    <figure class="photo reveal d1">
-      <div class="ph"><img src="img/loggia.jpg" alt="A frescoed loggia lined with marble busts" loading="lazy"></div>
-    </figure>
-  </div>
 </section>
 
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
   <h2 class="sec-title reveal">The plan, <em>day by day.</em></h2>
-  <p class="hotels-note reveal">Eight of us, one gluten-free. Times are approximate. Tap any place to open it in Maps; the photos wait at the end. Kitchens that confirm gluten-free get the tag.</p>
+  <p class="hotels-note reveal">Eight of us, one gluten-free. Times are approximate. Tap a row for photos, tap a photo to see it big, tap the name for Maps. Kitchens that confirm gluten-free get the tag.</p>
   <div class="days">
     <div class="day reveal">
       <div class="day-t">Thursday 26</div>
       <ul class="prog">
         <li><span class="p-time">12:25</span><div class="p-main"><span class="p-what">Land at Fiumicino, head for the center</span></div></li>
-        <li><span class="p-time">~14:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Trattoria+Ai+Villini+Via+Marcantonio+Colonna+46+Roma" target="_blank" rel="noopener">Lunch &middot; Ai Villini</a><span class="p-meta"><span class="p-where">Prati</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">not taking reservations yet</span></span></div></li>
-        <li><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=St+Peter's+Basilica+Rome" target="_blank" rel="noopener">St. Peter's Basilica</a><span class="p-meta"><span class="p-where">ten minutes from lunch</span></span><span class="p-tags"><span class="p-tag cat">culture</span></span></div></li>
-        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Piperno+Roma" target="_blank" rel="noopener">Dinner &middot; Piperno</a><span class="p-meta"><span class="p-where">Ghetto</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman-jewish</span><span class="p-tag">reached out</span></span></div></li>
+        <li class="px"><span class="p-time">~14:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Trattoria+Ai+Villini+Via+Marcantonio+Colonna+46+Roma" target="_blank" rel="noopener">Lunch &middot; Ai Villini</a><span class="p-meta"><span class="p-where">Prati</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">not taking reservations yet</span></span></div><div class="h-photos"><img src="img/program/ai-villini.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-1.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-2.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-3.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-4.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-5.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-6.jpg" alt="Ai Villini" loading="lazy"><img src="img/program/ai-villini-7.jpg" alt="Ai Villini" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=St+Peter's+Basilica+Rome" target="_blank" rel="noopener">St. Peter's Basilica</a><span class="p-meta"><span class="p-where">ten minutes from lunch</span></span><span class="p-tags"><span class="p-tag cat">culture</span></span></div><div class="h-photos"><img src="img/program/san-pietro.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-1.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-2.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-3.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-4.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-5.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-6.jpg" alt="St. Peter's" loading="lazy"><img src="img/program/san-pietro-7.jpg" alt="St. Peter's" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Piperno+Roma" target="_blank" rel="noopener">Dinner &middot; Piperno</a><span class="p-meta"><span class="p-where">Ghetto</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman-jewish</span><span class="p-tag">reached out</span></span></div><div class="h-photos"><img src="img/program/piperno.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-1.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-2.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-3.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-4.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-5.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-6.jpg" alt="Piperno" loading="lazy"><img src="img/program/piperno-7.jpg" alt="Piperno" loading="lazy"></div></li>
       </ul>
     </div>
     <div class="day reveal d1">
       <div class="day-t">Friday 27</div>
       <ul class="prog">
-        <li><span class="p-time">10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Colonna+Roma" target="_blank" rel="noopener">Palazzo Colonna, guided tour</a><span class="p-meta"><span class="p-where">Piazza SS. Apostoli</span></span><span class="p-tags"><span class="p-tag cat">culture</span><span class="p-tag ok">confirmed</span></span></div></li>
-        <li><span class="p-time">~13:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Checco+er+Carettiere+Roma" target="_blank" rel="noopener">Lunch &middot; Checco er Carettiere</a><span class="p-meta"><span class="p-where">Trastevere</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag ok">confirmed</span><span class="p-tag ok gf"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M6 1.4V10.6M6 4.8C4.7 4.8 3.9 4 3.9 2.6 5.2 2.6 6 3.4 6 4.8ZM6 4.8C7.3 4.8 8.1 4 8.1 2.6 6.8 2.6 6 3.4 6 4.8ZM6 7.6C4.7 7.6 3.9 6.8 3.9 5.4 5.2 5.4 6 6.2 6 7.6ZM6 7.6C7.3 7.6 8.1 6.8 8.1 5.4 6.8 5.4 6 6.2 6 7.6Z" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round"/><path d="M2.2 10.4 9.8 1.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>gluten-free</span></span></div></li>
-        <li><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+San+Calisto+Roma" target="_blank" rel="noopener">Trastevere, drinks at Bar San Calisto</a><span class="p-meta"><span class="p-where">Trastevere</span></span><span class="p-tags"><span class="p-tag cat">bar</span></span></div></li>
-        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Rocco+Ristorante+Via+Giovanni+Lanza+93+Roma" target="_blank" rel="noopener">Dinner &middot; Rocco</a><span class="p-meta"><span class="p-where">central</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag">to call</span></span></div></li>
+        <li class="px"><span class="p-time">10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Colonna+Roma" target="_blank" rel="noopener">Palazzo Colonna, guided tour</a><span class="p-meta"><span class="p-where">Piazza SS. Apostoli</span></span><span class="p-tags"><span class="p-tag cat">culture</span><span class="p-tag ok">confirmed</span></span></div><div class="h-photos"><img src="img/program/colonna.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-1.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-2.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-3.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-4.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-5.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-6.jpg" alt="Palazzo Colonna" loading="lazy"><img src="img/program/colonna-7.jpg" alt="Palazzo Colonna" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~13:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Checco+er+Carettiere+Roma" target="_blank" rel="noopener">Lunch &middot; Checco er Carettiere</a><span class="p-meta"><span class="p-where">Trastevere</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag ok">confirmed</span><span class="p-tag ok gf"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M6 1.4V10.6M6 4.8C4.7 4.8 3.9 4 3.9 2.6 5.2 2.6 6 3.4 6 4.8ZM6 4.8C7.3 4.8 8.1 4 8.1 2.6 6.8 2.6 6 3.4 6 4.8ZM6 7.6C4.7 7.6 3.9 6.8 3.9 5.4 5.2 5.4 6 6.2 6 7.6ZM6 7.6C7.3 7.6 8.1 6.8 8.1 5.4 6.8 5.4 6 6.2 6 7.6Z" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round"/><path d="M2.2 10.4 9.8 1.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>gluten-free</span></span></div><div class="h-photos"><img src="img/program/checco.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-1.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-2.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-3.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-4.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-5.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-6.jpg" alt="Checco er Carettiere" loading="lazy"><img src="img/program/checco-7.jpg" alt="Checco er Carettiere" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">aft.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+San+Calisto+Roma" target="_blank" rel="noopener">Trastevere, drinks at Bar San Calisto</a><span class="p-meta"><span class="p-where">Trastevere</span></span><span class="p-tags"><span class="p-tag cat">bar</span></span></div><div class="h-photos"><img src="img/program/san-calisto.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-1.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-2.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-3.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-4.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-5.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-6.jpg" alt="Bar San Calisto" loading="lazy"><img src="img/program/san-calisto-7.jpg" alt="Bar San Calisto" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Rocco+Ristorante+Via+Giovanni+Lanza+93+Roma" target="_blank" rel="noopener">Dinner &middot; Rocco</a><span class="p-meta"><span class="p-where">central</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag">to call</span></span></div><div class="h-photos"><img src="img/program/rocco-1.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-2.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-3.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-4.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-5.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-6.jpg" alt="Rocco" loading="lazy"><img src="img/program/rocco-7.jpg" alt="Rocco" loading="lazy"></div></li>
       </ul>
     </div>
     <div class="day reveal">
       <div class="day-t">Saturday 28</div>
       <ul class="prog">
-        <li><span class="p-time">~10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Doria+Pamphilj+Roma" target="_blank" rel="noopener">Doria Pamphilj, gallery + secret apartments</a><span class="p-meta"><span class="p-where">Via del Corso</span></span><span class="p-tags"><span class="p-tag cat">culture</span><span class="p-tag ok">no booking needed</span></span></div></li>
-        <li><span class="p-time">~14:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Armando+al+Pantheon+Roma" target="_blank" rel="noopener">Lunch &middot; Armando al Pantheon</a><span class="p-meta"><span class="p-where">Pantheon</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">reached out</span></span></div></li>
-        <li><span class="p-time">~13:15</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Nino+Via+Borgognona+11+Roma" target="_blank" rel="noopener">or Nino</a><span class="p-meta"><span class="p-where">Via Borgognona, by the Spanish Steps</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">tuscan</span><span class="p-tag">reached out</span></span></div></li>
+        <li class="px"><span class="p-time">~10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Doria+Pamphilj+Roma" target="_blank" rel="noopener">Doria Pamphilj, gallery + secret apartments</a><span class="p-meta"><span class="p-where">Via del Corso</span></span><span class="p-tags"><span class="p-tag cat">culture</span><span class="p-tag ok">no booking needed</span></span></div><div class="h-photos"><img src="img/program/doria.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-1.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-2.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-3.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-4.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-5.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-6.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-7.jpg" alt="Doria Pamphilj" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~14:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Armando+al+Pantheon+Roma" target="_blank" rel="noopener">Lunch &middot; Armando al Pantheon</a><span class="p-meta"><span class="p-where">Pantheon</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">reached out</span></span></div><div class="h-photos"><img src="img/program/armando.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-1.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-2.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-3.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-4.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-5.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-6.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-7.jpg" alt="Armando al Pantheon" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~13:15</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Nino+Via+Borgognona+11+Roma" target="_blank" rel="noopener">or Nino</a><span class="p-meta"><span class="p-where">Via Borgognona, by the Spanish Steps</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">tuscan</span><span class="p-tag">reached out</span></span></div><div class="h-photos"><img src="img/program/nino.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-1.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-2.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-3.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-4.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-5.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-6.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-7.jpg" alt="Nino" loading="lazy"></div></li>
         <li><span class="p-time">aft.</span><div class="p-main"><span class="p-what">Shopping, or nothing at all</span></div></li>
-        <li><span class="p-time">aper.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+della+Musa+Largo+del+Nazareno+25+Roma" target="_blank" rel="noopener">Aperitivo &middot; Bar della Musa</a><span class="p-meta"><span class="p-where">inside Palazzo Talia, by the Trevi</span></span><span class="p-tags"><span class="p-tag cat">bar</span></span></div></li>
-        <li><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Al+Moro+Roma" target="_blank" rel="noopener">Dinner &middot; Al Moro</a><span class="p-meta"><span class="p-where">by the Trevi</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">not taking reservations yet</span></span></div></li>
+        <li class="px"><span class="p-time">aper.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+della+Musa+Largo+del+Nazareno+25+Roma" target="_blank" rel="noopener">Aperitivo &middot; Bar della Musa</a><span class="p-meta"><span class="p-where">inside Palazzo Talia, by the Trevi</span></span><span class="p-tags"><span class="p-tag cat">bar</span></span></div><div class="h-photos"><img src="img/program/della-musa.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-1.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-2.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-3.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-4.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-5.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-6.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-7.jpg" alt="Bar della Musa" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~20:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Al+Moro+Roma" target="_blank" rel="noopener">Dinner &middot; Al Moro</a><span class="p-meta"><span class="p-where">by the Trevi</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">not taking reservations yet</span></span></div><div class="h-photos"><img src="img/program/al-moro.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-1.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-2.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-3.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-4.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-5.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-6.jpg" alt="Al Moro" loading="lazy"><img src="img/program/al-moro-7.jpg" alt="Al Moro" loading="lazy"></div></li>
       </ul>
     </div>
     <div class="day reveal d1">
       <div class="day-t">Sunday 29</div>
       <ul class="prog">
-        <li><span class="p-time">12:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+La+Campana+Vicolo+della+Campana+Roma" target="_blank" rel="noopener">Lunch &middot; La Campana</a><span class="p-meta"><span class="p-where">by Piazza Navona</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag ok">confirmed</span><span class="p-tag ok gf"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M6 1.4V10.6M6 4.8C4.7 4.8 3.9 4 3.9 2.6 5.2 2.6 6 3.4 6 4.8ZM6 4.8C7.3 4.8 8.1 4 8.1 2.6 6.8 2.6 6 3.4 6 4.8ZM6 7.6C4.7 7.6 3.9 6.8 3.9 5.4 5.2 5.4 6 6.2 6 7.6ZM6 7.6C7.3 7.6 8.1 6.8 8.1 5.4 6.8 5.4 6 6.2 6 7.6Z" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round"/><path d="M2.2 10.4 9.8 1.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>gluten-free</span></span></div></li>
+        <li class="px"><span class="p-time">12:30</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+La+Campana+Vicolo+della+Campana+Roma" target="_blank" rel="noopener">Lunch &middot; La Campana</a><span class="p-meta"><span class="p-where">by Piazza Navona</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag ok">confirmed</span><span class="p-tag ok gf"><svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true"><path d="M6 1.4V10.6M6 4.8C4.7 4.8 3.9 4 3.9 2.6 5.2 2.6 6 3.4 6 4.8ZM6 4.8C7.3 4.8 8.1 4 8.1 2.6 6.8 2.6 6 3.4 6 4.8ZM6 7.6C4.7 7.6 3.9 6.8 3.9 5.4 5.2 5.4 6 6.2 6 7.6ZM6 7.6C7.3 7.6 8.1 6.8 8.1 5.4 6.8 5.4 6 6.2 6 7.6Z" fill="none" stroke="currentColor" stroke-width=".9" stroke-linejoin="round"/><path d="M2.2 10.4 9.8 1.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>gluten-free</span></span></div><div class="h-photos"><img src="img/program/la-campana.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-1.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-2.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-3.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-4.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-5.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-6.jpg" alt="La Campana" loading="lazy"><img src="img/program/la-campana-7.jpg" alt="La Campana" loading="lazy"></div></li>
         <li><span class="p-time">~14:00</span><div class="p-main"><span class="p-what">Leave the center for Fiumicino</span></div></li>
         <li><span class="p-time">16:40</span><div class="p-main"><span class="p-what">AZ 574 to Zurich, lands 18:15</span></div></li>
       </ul>
     </div>
-  </div>
-  <div class="prog-gallery reveal">
-    <div class="day-t">The places</div>
-    <div class="h-photos"><img src="img/program/ai-villini.jpg" alt="Ai Villini" title="Ai Villini" loading="lazy"><img src="img/program/san-pietro.jpg" alt="St. Peter's" title="St. Peter's" loading="lazy"><img src="img/program/piperno.jpg" alt="Piperno" title="Piperno" loading="lazy"><img src="img/program/colonna.jpg" alt="Palazzo Colonna" title="Palazzo Colonna" loading="lazy"><img src="img/program/checco.jpg" alt="Checco er Carettiere" title="Checco er Carettiere" loading="lazy"><img src="img/program/san-calisto.jpg" alt="Bar San Calisto" title="Bar San Calisto" loading="lazy"><img src="img/program/doria.jpg" alt="Doria Pamphilj" title="Doria Pamphilj" loading="lazy"><img src="img/program/armando.jpg" alt="Armando al Pantheon" title="Armando al Pantheon" loading="lazy"><img src="img/program/nino.jpg" alt="Nino" title="Nino" loading="lazy"><img src="img/program/della-musa.jpg" alt="Bar della Musa" title="Bar della Musa" loading="lazy"><img src="img/program/al-moro.jpg" alt="Al Moro" title="Al Moro" loading="lazy"><img src="img/program/la-campana.jpg" alt="La Campana" title="La Campana" loading="lazy"></div>
   </div>
   <div class="soon-grid">
     <div class="soon reveal">
@@ -914,9 +906,6 @@
       <a class="h-book" href="https://www.google.com/travel/flights/booking?tfs=CBwQAho_EgoyMDI2LTExLTI2Ih8KA1pSSBIKMjAyNi0xMS0yNhoDRkNPKgJBWjIDNTcxagcIARIDWlJIcgcIARIDRkNPGj8SCjIwMjYtMTEtMjkiHwoDRkNPEgoyMDI2LTExLTI5GgNaUkgqAkFaMgM1NzRqBwgBEgNGQ09yBwgBEgNaUkhAAUgBcAGCAQsI____________AZgBAQ&hl=en&curr=CHF" target="_blank" rel="noopener">Book the same flights</a>
     </div>
   </div>
-  <figure class="photo wide reveal" style="margin-top:1.2rem">
-    <div class="ph"><img src="img/campagna.jpg" alt="Pines and greens at a golf club on the edge of Rome" loading="lazy"></div>
-  </figure>
 </section>
 
 
@@ -937,9 +926,6 @@
   </div>
 </section>
 
-<div class="interlude">
-  <figure class="photo wide kb reveal">
-    <div class="ph"><img src="img/colosseo.jpg" alt="The Colosseum lit by a stormy sunset, framed by umbrella pines" loading="lazy"></div>
   </figure>
 </div>
 
@@ -1135,6 +1121,24 @@
     <line x1="0" y1="118" x2="900" y2="118"/>
   </g>
 </svg>
+
+<section id="postcards">
+  <div class="sec-kicker reveal">Roma</div>
+  <div class="photo-duo">
+    <figure class="photo reveal">
+      <div class="ph"><img src="img/aranci.jpg" alt="Umbrella pines at the Giardino degli Aranci at sunset, St Peter's in the distance" loading="lazy"></div>
+    </figure>
+    <figure class="photo reveal d1">
+      <div class="ph"><img src="img/loggia.jpg" alt="A frescoed loggia lined with marble busts" loading="lazy"></div>
+    </figure>
+  </div>
+<div class="interlude">
+  <figure class="photo wide kb reveal">
+    <div class="ph"><img src="img/colosseo.jpg" alt="The Colosseum lit by a stormy sunset, framed by umbrella pines" loading="lazy"></div>
+  <figure class="photo wide reveal" style="margin-top:1.2rem">
+    <div class="ph"><img src="img/campagna.jpg" alt="Pines and greens at a golf club on the edge of Rome" loading="lazy"></div>
+  </figure>
+</section>
 
 <footer>
   <div class="countdown reveal" id="countdown" hidden>
@@ -1844,6 +1848,12 @@
       .catch(function(){});
   }
 
+  document.querySelectorAll(".prog li.px").forEach(function(li){
+    li.addEventListener("click", function(e){
+      if (e.target.closest("a") || e.target.tagName === "IMG") return;
+      li.classList.toggle("open");
+    });
+  });
   document.querySelectorAll(".hrow-top").forEach(function(t){
     t.addEventListener("click", function(e){
       if (e.target.closest("a")) return;
