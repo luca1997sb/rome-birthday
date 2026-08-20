@@ -1512,8 +1512,7 @@
         if (!Array.isArray(items)) return;
         suggList.innerHTML = items.map(function(it, i){
           return '<div class="sug" style="animation-delay:' + (i * 0.07) + 's">' +
-            '<span class="sug-t">&ldquo;' + escapeHtml(it.text) + '&rdquo;</span>' +
-            '<span class="sug-n">' + escapeHtml(it.name) + '</span></div>';
+            '<span class="sug-t">&ldquo;' + escapeHtml(it.text) + '&rdquo;</span></div>';
         }).join("");
       })
       .catch(function(){});
@@ -1531,11 +1530,10 @@
     var text = suggInput.value.trim();
     if (text.length < 2) { suggStatus.textContent = "A few more letters, dai."; return; }
     suggStatus.textContent = "Adding…";
-    var who = guest || "Someone";
     fetch(TALLY_API + "/suggest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: who, text: text })
+      body: JSON.stringify({ name: "Someone", text: text })
     }).then(function(r){
       if (!r.ok) throw new Error();
       suggInput.value = "";
@@ -1543,10 +1541,9 @@
       suggPlus.textContent = "+ add an idea";
       suggStatus.textContent = "Added, everyone can see it now.";
       // show it immediately; the shared list catches up within a minute
-      suggList.innerHTML += '<div class="sug"><span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span>' +
-        '<span class="sug-n">' + escapeHtml(who) + '</span></div>';
+      suggList.innerHTML += '<div class="sug"><span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span></div>';
       setTimeout(loadSuggestions, 60000);
-      postForm({ _subject: "Roma 2026 suggestion: " + who, name: who, suggestion: text });
+      postForm({ _subject: "Roma 2026 suggestion", suggestion: text });
     }).catch(function(){
       suggStatus.textContent = "Didn't go through, try again in a moment.";
     });
