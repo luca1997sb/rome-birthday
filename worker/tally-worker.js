@@ -174,10 +174,11 @@ export default {
     if (path === "/suggest" && req.method === "POST") {
       let body;
       try { body = await req.json(); } catch (e) { return json({ error: "bad json" }, cors, 400); }
-      const name = body && body.name;
+      let name = body && body.name;
       let text = body && typeof body.text === "string" ? body.text : "";
       text = text.replace(/[<>\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim();
-      if (!GUESTS.includes(name) || text.length < 2 || text.length > 140) {
+      if (!GUESTS.includes(name)) name = "Someone";
+      if (text.length < 2 || text.length > 140) {
         return json({ error: "invalid" }, cors, 400);
       }
       const existing = await env.TALLY.list({ prefix: "sugg:" });
