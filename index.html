@@ -13,8 +13,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f6f1e8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16130e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f1e8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Roma 2026">
@@ -39,39 +38,6 @@
     --nav-bg:rgba(246,241,232,.82);
     --serif:"Didot","Bodoni 72","Playfair Display",Georgia,"Times New Roman",serif;
     --sans:ui-sans-serif,-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  }
-  :root[data-theme="dark"]{
-    --paper:#16130e;
-    --paper-2:#1d1913;
-    --ink:#eae2d3;
-    --ink-soft:#a49879;
-    --terra:#c97a4d;
-    --terra-deep:#b0603a;
-    --line:rgba(234,226,211,.17);
-    --wash:rgba(234,226,211,.07);
-    --nav-bg:rgba(22,19,14,.78);
-  }
-  :root[data-theme="dark"] .ph img,:root[data-theme="dark"] .h-photos img{filter:brightness(.88) saturate(.95)}
-  :root[data-theme="dark"] .lbx img{filter:none}
-  :root[data-theme="dark"] .p-tag.cat{background:rgba(234,226,211,.1)}
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --paper:#16130e;
-      --paper-2:#1d1913;
-      --ink:#eae2d3;
-      --ink-soft:#a49879;
-      --terra:#c97a4d;
-      --terra-deep:#b0603a;
-      --line:rgba(234,226,211,.17);
-      --wash:rgba(234,226,211,.07);
-      --nav-bg:rgba(22,19,14,.78);
-    }
-    :root:not([data-theme="light"]) .ph img,:root:not([data-theme="light"]) .h-photos img{filter:brightness(.88) saturate(.95)}
-    :root:not([data-theme="light"]) .lbx img{filter:none}
-    :root:not([data-theme="light"]) .p-tag.cat{background:rgba(234,226,211,.1)}
-  }
-  body,.day,.rsvp-wrap,.soon,.info-card,.map-card,.tier,.hrow,.prog li,.p-tag,.h-tag,.mf,.sug-like,.sug,.chip,.tpill{
-    transition:background-color .6s ease,color .6s ease,border-color .6s ease;
   }
   html{scroll-behavior:smooth}
   body{
@@ -103,7 +69,10 @@
     background:var(--nav-bg);
     backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid var(--line);
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease;
   }
+  .nav.away{transform:translateY(-110%)}
+  .nav.deep{box-shadow:0 8px 28px rgba(33,29,24,.09)}
   .nav .brand{
     font-family:var(--serif);font-size:1.05rem;letter-spacing:.14em;
     text-transform:uppercase;text-decoration:none;color:var(--ink);
@@ -231,6 +200,30 @@
   .reveal.in{opacity:1;transform:none}
   .sec-title.reveal{filter:blur(8px)}
   .sec-title.reveal.in{filter:blur(0)}
+  @media (prefers-reduced-motion: no-preference){
+    .tier.reveal .hrow,.day.reveal .prog li{opacity:0;transform:translateY(16px)}
+    .tier.reveal.in .hrow,.day.reveal.in .prog li{
+      opacity:1;transform:none;
+      transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+    .tier.reveal.in .hrow:nth-of-type(2),.day.reveal.in .prog li:nth-child(2){transition-delay:.07s}
+    .tier.reveal.in .hrow:nth-of-type(3),.day.reveal.in .prog li:nth-child(3){transition-delay:.14s}
+    .tier.reveal.in .hrow:nth-of-type(4),.day.reveal.in .prog li:nth-child(4){transition-delay:.21s}
+    .tier.reveal.in .hrow:nth-of-type(5),.day.reveal.in .prog li:nth-child(5){transition-delay:.28s}
+    .tier.reveal.in .hrow:nth-of-type(6),.day.reveal.in .prog li:nth-child(6){transition-delay:.35s}
+    .tier.reveal.in .hrow:nth-of-type(7){transition-delay:.42s}
+    .hrow.open .h-photos img,.prog li.open .h-photos img{animation:stripIn .55s cubic-bezier(.2,.7,.2,1) both}
+    .h-photos img:nth-child(2){animation-delay:.05s}
+    .h-photos img:nth-child(3){animation-delay:.1s}
+    .h-photos img:nth-child(4){animation-delay:.15s}
+    .h-photos img:nth-child(5){animation-delay:.2s}
+    .h-photos img:nth-child(6){animation-delay:.25s}
+    .h-photos img:nth-child(7){animation-delay:.3s}
+    .h-photos img:nth-child(8){animation-delay:.35s}
+    .lbx.on img{animation:lbxIn .4s cubic-bezier(.2,.7,.2,1)}
+  }
+  @keyframes stripIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+  @keyframes lbxIn{from{opacity:0;transform:scale(.965)}to{opacity:1;transform:none}}
   .reveal.d1{transition-delay:.12s}
   .reveal.d2{transition-delay:.24s}
   .reveal.d3{transition-delay:.36s}
@@ -323,8 +316,13 @@
   .p-time{font-family:var(--sans);font-size:.66rem;letter-spacing:.05em;color:var(--ink-soft);white-space:nowrap}
   .p-main{min-width:0}
   .p-what{font-family:var(--serif);font-size:1.02rem;line-height:1.3;color:var(--ink);text-decoration:none}
-  a.p-what{border-bottom:1px solid rgba(168,80,43,.35);transition:color .25s}
-  a.p-what:hover{color:var(--terra)}
+  a.p-what{
+    background-image:linear-gradient(var(--terra),var(--terra)),linear-gradient(rgba(168,80,43,.35),rgba(168,80,43,.35));
+    background-size:0% 1px,100% 1px;background-position:0 100%,0 100%;background-repeat:no-repeat;
+    padding-bottom:.1em;
+    transition:background-size .5s cubic-bezier(.2,.7,.2,1),color .25s;
+  }
+  a.p-what:hover{background-size:100% 1px,100% 1px;color:var(--terra)}
   .p-meta{display:block;margin-top:.18rem}
   .p-where{font-size:.72rem;font-style:italic;font-family:var(--serif);color:var(--ink-soft);margin-right:.45rem}
   .p-tag{
@@ -435,7 +433,7 @@
   }
   .h-price:empty{display:none}
   .hrow{position:relative}
-  .hrow.rec{border-left:2px solid rgba(168,80,43,.55);padding-left:.85rem}
+  .hrow.rec{border-left:2px solid rgba(168,80,43,.55);padding-left:.85rem;margin-left:calc(-.85rem - 2px)}
   .h-rec{
     position:absolute;top:.28rem;right:0;cursor:help;
     font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);
@@ -811,14 +809,6 @@
 <div class="grain" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
 
-<script>
-(function(){
-  try {
-    var t = localStorage.getItem("roma26.theme");
-    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
-  } catch(e){}
-})();
-</script>
 <header class="nav">
   <a class="brand" href="#top">Roma <em>2026</em></a>
   <nav>
@@ -826,7 +816,6 @@
     <a href="#hotels">Hotels</a>
     <a href="#info">Info</a>
     <button class="music-link" id="musicbtn" aria-label="Play music: Sì, viaggiare by Lucio Battisti"><span class="note">♪</span> <span id="musiclabel">Play music</span></button>
-    <button class="cta" id="duskbtn" aria-label="Switch between day and dusk">&#9790; dusk</button>
   </nav>
 </header>
 
@@ -1467,14 +1456,10 @@
     if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
       map.dragging.disable();
     }
-    var duskMq = window.matchMedia("(prefers-color-scheme: dark)");
-    function tileUrl(dark){ return "https://{s}.basemaps.cartocdn.com/" + (dark ? "dark_all" : "light_all") + "/{z}/{x}/{y}{r}.png"; }
-    var baseTiles = L.tileLayer(tileUrl(window.isDusk ? window.isDusk() : duskMq.matches), {
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom:19
     }).addTo(map);
-    if (duskMq.addEventListener) duskMq.addEventListener("change", function(e){ baseTiles.setUrl(tileUrl(isDusk())); });
-    document.addEventListener("roma-theme", function(){ baseTiles.setUrl(tileUrl(isDusk())); });
     var mapMarkers = [];
     PLACES.forEach(function(p){
       var icon;
@@ -1634,27 +1619,23 @@
 
   /* ------- app install + push notifications ------- */
   var VAPID = "BHS03bWYOl3hiJuQsChM2bKO-j3UV0Kbw9TmGY2v15Tosl_qpFTfaHwXseTagrF5NmiN-8XxyWnx9khhArrhMvQ";
-  function isDusk(){
-    var o = document.documentElement.getAttribute("data-theme");
-    if (o === "dark") return true;
-    if (o === "light") return false;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
-  window.isDusk = isDusk;
-  var duskBtn = document.getElementById("duskbtn");
-  function paintDuskBtn(){
-    duskBtn.innerHTML = isDusk() ? "&#9788; day" : "&#9790; dusk";
-  }
-  if (duskBtn) {
-    paintDuskBtn();
-    duskBtn.addEventListener("click", function(){
-      var next = isDusk() ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("roma26.theme", next); } catch(e){}
-      paintDuskBtn();
-      document.dispatchEvent(new Event("roma-theme"));
-    });
-  }
+  (function(){
+    var navEl = document.querySelector(".nav");
+    if (!navEl) return;
+    var lastY = window.scrollY, ticking = false;
+    window.addEventListener("scroll", function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY;
+        if (y > lastY + 6 && y > 180) navEl.classList.add("away");
+        else if (y < lastY - 6 || y <= 180) navEl.classList.remove("away");
+        navEl.classList.toggle("deep", y > 24);
+        lastY = y;
+        ticking = false;
+      });
+    }, { passive: true });
+  })();
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(function(){});
     // when a newer service worker takes over an already-open page, reload once
@@ -1971,6 +1952,9 @@
     var list = [], idx = 0;
     function show(i){
       idx = (i + list.length) % list.length;
+      img.style.animation = "none";
+      void img.offsetWidth;
+      img.style.animation = "";
       img.src = list[idx];
       count.textContent = list.length > 1 ? (idx + 1) + " / " + list.length : "";
       lbx.querySelector(".lbx-prev").style.display = list.length > 1 ? "" : "none";
