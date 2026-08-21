@@ -810,7 +810,7 @@
   }
   .notte{position:relative;height:170px;margin:0 -1.25rem 2.4rem}
   .notte svg path{stroke:var(--terra);fill:none;stroke-linecap:round;stroke-linejoin:round}
-  .notte-arches{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:max(1700px,160%);height:74px}
+  .notte-arches{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:1700px;height:80px}
   .notte-arches path{stroke-width:1.4;opacity:.5;stroke-dasharray:1;stroke-dashoffset:1}
   .notte-moon{position:absolute;top:2px;right:16%;width:clamp(52px,6vw,68px);opacity:0;transition:opacity 1.8s ease .4s}
   .notte-moon path{stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:1}
@@ -918,12 +918,17 @@
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels, <em>three speeds.</em></h2>
   <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 120">
-    <circle pathLength="1" cx="40" cy="60" r="21"/>
-    <circle pathLength="1" cx="40" cy="60" r="8" style="animation-delay:.25s"/>
-    <path pathLength="1" d="M61 60 H152" style="animation-delay:.4s"/>
-    <path pathLength="1" d="M120 60 V77" style="animation-delay:.6s"/>
-    <path pathLength="1" d="M137 60 V72" style="animation-delay:.7s"/>
-    <path pathLength="1" d="M152 60 V81 H141" style="animation-delay:.8s"/>
+    <circle pathLength="1" cx="52" cy="94" r="11" style="animation-delay:.1s"/>
+    <circle pathLength="1" cx="52" cy="94" r="3" style="animation-delay:.3s"/>
+    <circle pathLength="1" cx="148" cy="94" r="11" style="animation-delay:.2s"/>
+    <circle pathLength="1" cx="148" cy="94" r="3" style="animation-delay:.4s"/>
+    <path pathLength="1" d="M70 24 C64 44 60 66 62 84 C63 91 67 95 74 95 L102 96" style="animation-delay:.5s"/>
+    <path pathLength="1" d="M102 96 C105 76 112 62 124 58 C142 52 156 62 157 78 C158 86 155 92 150 95" style="animation-delay:.7s"/>
+    <path pathLength="1" d="M70 24 C76 21 83 21 89 23" style="animation-delay:.95s"/>
+    <circle pathLength="1" cx="92" cy="23" r="2.5" style="animation-delay:1.05s"/>
+    <circle pathLength="1" cx="63" cy="33" r="4.5" style="animation-delay:1.1s"/>
+    <path pathLength="1" d="M118 55 C127 48 140 48 147 54" style="animation-delay:1.2s"/>
+    <path pathLength="1" d="M42 89 a13 13 0 0 1 21 -5" style="animation-delay:1.3s"/>
   </svg></div>
 
   <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November. Tap a hotel to open its photos and links; the figure is the live cheapest rate for our nights from Booking, Expedia, Hotels.com or the hotel itself, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
@@ -1261,17 +1266,28 @@
 <footer>
   <div class="notte" aria-hidden="true">
     <svg class="notte-moon" id="nottemoon" viewBox="0 0 80 80"><path pathLength="1" d="M52 12 A32 32 0 1 0 68 52 A26 26 0 0 1 52 12 Z"/></svg>
-    <svg class="notte-arches" viewBox="0 0 1200 130" preserveAspectRatio="xMidYMax slice">
+    <svg class="notte-arches" viewBox="0 0 1700 80">
       <g>
-        <path pathLength="1" d="M0 130 V75 a60 66 0 0 1 120 0 V130"/>
-        <path pathLength="1" d="M135 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.15s"/>
-        <path pathLength="1" d="M270 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.3s"/>
-        <path pathLength="1" d="M405 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.45s"/>
-        <path pathLength="1" d="M540 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.6s"/>
-        <path pathLength="1" d="M675 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.75s"/>
-        <path pathLength="1" d="M810 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:.9s"/>
-        <path pathLength="1" d="M945 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:1.05s"/>
-        <path pathLength="1" d="M1080 130 V75 a60 66 0 0 1 120 0 V130" style="animation-delay:1.2s"/>
+        <path pathLength="1" d="M0 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.00s"/>
+        <path pathLength="1" d="M85 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.07s"/>
+        <path pathLength="1" d="M170 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.14s"/>
+        <path pathLength="1" d="M255 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.21s"/>
+        <path pathLength="1" d="M340 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.28s"/>
+        <path pathLength="1" d="M425 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.35s"/>
+        <path pathLength="1" d="M510 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.42s"/>
+        <path pathLength="1" d="M595 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.49s"/>
+        <path pathLength="1" d="M680 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.56s"/>
+        <path pathLength="1" d="M765 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.63s"/>
+        <path pathLength="1" d="M850 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.70s"/>
+        <path pathLength="1" d="M935 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.77s"/>
+        <path pathLength="1" d="M1020 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.84s"/>
+        <path pathLength="1" d="M1105 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.91s"/>
+        <path pathLength="1" d="M1190 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:0.98s"/>
+        <path pathLength="1" d="M1275 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.05s"/>
+        <path pathLength="1" d="M1360 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.12s"/>
+        <path pathLength="1" d="M1445 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.19s"/>
+        <path pathLength="1" d="M1530 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.26s"/>
+        <path pathLength="1" d="M1615 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.33s"/>
       </g>
     </svg>
   </div>
