@@ -247,6 +247,12 @@
   .sug:last-child{border-bottom:none}
   .sug-t{font-family:var(--serif);font-style:italic;font-size:.95rem}
   .sug-n{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);white-space:nowrap}
+  .sug-like{
+    border:1px solid var(--line);background:none;border-radius:999px;cursor:pointer;
+    font-family:var(--sans);font-size:.62rem;color:var(--ink-soft);
+    padding:.16rem .55rem;white-space:nowrap;transition:color .25s,border-color .25s;
+  }
+  .sug-like.on{color:var(--terra);border-color:rgba(168,80,43,.5)}
   .sugg-add{
     background:none;border:none;cursor:pointer;padding:0;margin-top:.5rem;
     font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--terra);
@@ -383,6 +389,7 @@
     white-space:nowrap;opacity:0;transition:opacity .6s;margin-top:.15rem;
   }
   .h-price:empty{display:none}
+  .h-dist{grid-column:1/-1;grid-row:3;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:.22rem}
   .h-price.in{opacity:1;color:var(--ink)}
   .h-name{grid-column:1;grid-row:1;font-family:var(--serif);font-size:1.12rem;display:block;line-height:1.25}
   .h-photos{
@@ -862,7 +869,7 @@
       <div class="day-t">Saturday 28</div>
       <ul class="prog">
         <li class="px"><span class="p-time">~10:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Galleria+Doria+Pamphilj+Roma" target="_blank" rel="noopener">Doria Pamphilj, gallery + secret apartments</a><span class="p-meta"><span class="p-where">Via del Corso</span></span><span class="p-tags"><span class="p-tag cat">culture</span><span class="p-tag ok">no booking needed</span><span class="p-tag">don floridi tour: ask again in sept.</span></span></div><div class="h-photos"><img src="img/program/doria.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-1.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-2.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-3.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-4.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-5.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-6.jpg" alt="Doria Pamphilj" loading="lazy"><img src="img/program/doria-7.jpg" alt="Doria Pamphilj" loading="lazy"></div></li>
-        <li class="px"><span class="p-time">~14:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Armando+al+Pantheon+Roma" target="_blank" rel="noopener">Lunch &middot; Armando al Pantheon</a><span class="p-meta"><span class="p-where">Pantheon</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">roman</span><span class="p-tag">reached out</span></span></div><div class="h-photos"><img src="img/program/armando.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-1.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-2.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-3.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-4.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-5.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-6.jpg" alt="Armando al Pantheon" loading="lazy"><img src="img/program/armando-7.jpg" alt="Armando al Pantheon" loading="lazy"></div></li>
+        <li class="px"><span class="p-time">~14:00</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Pierluigi+Piazza+de+Ricci+Roma" target="_blank" rel="noopener">Lunch &middot; Pierluigi</a><span class="p-meta"><span class="p-where">Piazza de&#39; Ricci, by Campo de&#39; Fiori</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">seafood</span></span></div><div class="h-photos"><img src="img/program/pierluigi-1.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-2.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-3.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-4.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-5.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-6.jpg" alt="Pierluigi" loading="lazy"><img src="img/program/pierluigi-7.jpg" alt="Pierluigi" loading="lazy"></div></li>
         <li class="px"><span class="p-time">~13:15</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Ristorante+Nino+Via+Borgognona+11+Roma" target="_blank" rel="noopener">or Nino</a><span class="p-meta"><span class="p-where">Via Borgognona, by the Spanish Steps</span></span><span class="p-tags"><span class="p-tag cat">restaurant</span><span class="p-tag cat">tuscan</span><span class="p-tag">reached out</span></span></div><div class="h-photos"><img src="img/program/nino.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-1.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-2.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-3.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-4.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-5.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-6.jpg" alt="Nino" loading="lazy"><img src="img/program/nino-7.jpg" alt="Nino" loading="lazy"></div></li>
         <li><span class="p-time">aft.</span><div class="p-main"><span class="p-what">Shopping, maybe a padel match, or nothing at all</span><span class="p-tags"><span class="p-tag cat">sport</span><span class="p-tag">not sure yet</span></span></div></li>
         <li class="px"><span class="p-time">aper.</span><div class="p-main"><a class="p-what" href="https://maps.google.com/?q=Bar+della+Musa+Largo+del+Nazareno+25+Roma" target="_blank" rel="noopener">Aperitivo &middot; Bar della Musa</a><span class="p-meta"><span class="p-where">inside Palazzo Talia, by the Trevi</span></span><span class="p-tags"><span class="p-tag cat">bar</span></span></div><div class="h-photos"><img src="img/program/della-musa.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-1.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-2.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-3.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-4.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-5.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-6.jpg" alt="Bar della Musa" loading="lazy"><img src="img/program/della-musa-7.jpg" alt="Bar della Musa" loading="lazy"></div></li>
@@ -940,27 +947,27 @@
     <div class="tier reveal">
       <div class="tier-t">Affordable</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-tag">great value</span><span class="h-price" data-h="passepartout"></span></div>
+        <div class="hrow-top"><span class="h-name">Passepartout</span><span class="h-tag">great value</span><span class="h-price" data-h="passepartout"></span><span class="h-dist">1.0 km from G&amp;N</span></div>
         <ul class="h-points"><li>Friendly little guesthouse in the Navona district</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Passepartout%20Via%20del%20Governo%20Vecchio%20118%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.passepartoutrome.it/en/index" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-tag">hidden gem</span><span class="h-price" data-h="mario-fiori"></span></div>
+        <div class="hrow-top"><span class="h-name">Mario De' Fiori 37</span><span class="h-tag">hidden gem</span><span class="h-price" data-h="mario-fiori"></span><span class="h-dist">1.4 km from G&amp;N</span></div>
         <ul class="h-points"><li>Tiny tailored hideaway below the Spanish Steps</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Mario%20de%20Fiori%2037%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.romeluxurysuites.com/mario-de-fiori" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-tag">smart budget</span><span class="h-price" data-h="naman"></span></div>
+        <div class="hrow-top"><span class="h-name">Naman Hôtellerie</span><span class="h-tag">smart budget</span><span class="h-price" data-h="naman"></span><span class="h-dist">1.4 km from G&amp;N</span></div>
         <ul class="h-points"><li>Trim, well-kept rooms across several very central spots</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Naman%20Hotellerie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://namanhotellerie.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Aldrovandi Residence</span><span class="h-tag">by villa borghese</span><span class="h-price" data-h="aldrovandi"></span></div>
+        <div class="hrow-top"><span class="h-name">Aldrovandi Residence</span><span class="h-tag">by villa borghese</span><span class="h-price" data-h="aldrovandi"></span><span class="h-dist">2.2 km from G&amp;N</span></div>
         <ul class="h-points"><li>Apartment-style city suites on the green edge of Villa Borghese</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Aldrovandi%20Residence%20City%20Suites%20Via%20Ulisse%20Aldrovandi%2011%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.aldrovandiresidence.it/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-tag">very central</span><span class="h-price" data-h="teatro-pace"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel Teatro Pace</span><span class="h-tag">very central</span><span class="h-price" data-h="teatro-pace"></span><span class="h-dist">1.0 km from G&amp;N</span></div>
         <ul class="h-points"><li>A 17th-century charmer down a cobbled lane behind Navona</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Teatro%20Pace%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a>
       </div>
@@ -968,37 +975,42 @@
     <div class="tier reveal d1">
       <div class="tier-t">Nice</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Trame</span><span class="h-tag">minimalist chic</span><span class="h-price" data-h="trame"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel Trame</span><span class="h-tag">minimalist chic</span><span class="h-price" data-h="trame"></span><span class="h-dist">1.4 km from G&amp;N</span></div>
         <ul class="h-points"><li>Bright minimalist rooms, four minutes from the Pantheon</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Trame%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.hoteltrame.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Locarno</span><span class="h-tag">art-deco icon</span><span class="h-price" data-h="locarno"></span></div>
+        <div class="hrow-top"><span class="h-name">Experimental Roma</span><span class="h-tag">rooftop pool</span><span class="h-price" data-h="experimental"></span><span class="h-dist">2.0 km from G&amp;N</span></div>
+        <ul class="h-points"><li>The Experimental Group&#39;s brand-new house on Via Ludovisi, opens October 2026</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Experimental%20Roma%20Via%20Ludovisi%2046&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.experimentalgroup.com/rome/experimental-roma" target="_blank" rel="noopener">Site</a>
+      </div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Hotel Locarno</span><span class="h-tag">art-deco icon</span><span class="h-price" data-h="locarno"></span><span class="h-dist">1.0 km from G&amp;N</span></div>
         <ul class="h-points"><li>Art-deco legend of 1925 with Rome's most loved hotel bar</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Locarno%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.hotellocarno.com/en" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Nomos Hotel</span><span class="h-tag">monastic calm</span><span class="h-price" data-h="nomos"></span></div>
+        <div class="hrow-top"><span class="h-name">Nomos Hotel</span><span class="h-tag">monastic calm</span><span class="h-price" data-h="nomos"></span><span class="h-dist">1.6 km from G&amp;N</span></div>
         <ul class="h-points"><li>A former Franciscan monastery, spare and serene, by Campo de' Fiori</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Nomos%20Hotel%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://nomoshotel.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Santa Maria</span><span class="h-tag">garden courtyard</span><span class="h-price" data-h="santa-maria"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel Santa Maria</span><span class="h-tag">garden courtyard</span><span class="h-price" data-h="santa-maria"></span><span class="h-dist">1.8 km from G&amp;N</span></div>
         <ul class="h-points"><li>A 16th-century cloister with an orange-tree courtyard in Trastevere</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Santa%20Maria%20Trastevere&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.hotelsantamariatrastevere.it/en/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Albergo Santa Chiara</span><span class="h-tag">very central</span><span class="h-price" data-h="santa-chiara"></span></div>
+        <div class="hrow-top"><span class="h-name">Albergo Santa Chiara</span><span class="h-tag">very central</span><span class="h-price" data-h="santa-chiara"></span><span class="h-dist">1.4 km from G&amp;N</span></div>
         <ul class="h-points"><li>Family-run since 1830, right behind the Pantheon</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Albergo%20Santa%20Chiara%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.albergosantachiara.com/en/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Donna Camilla Savelli</span><span class="h-tag">lovely garden</span><span class="h-price" data-h="donna-camilla"></span></div>
+        <div class="hrow-top"><span class="h-name">Donna Camilla Savelli</span><span class="h-tag">lovely garden</span><span class="h-price" data-h="donna-camilla"></span><span class="h-dist">1.9 km from G&amp;N</span></div>
         <ul class="h-points"><li>A Borromini-built convent with peaceful gardens in Trastevere</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Donna%20Camilla%20Savelli%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.vretreats.com/en/donna-camilla-savelli/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">G-Rough</span><span class="h-tag">very central</span><span class="h-price" data-h="g-rough"></span></div>
+        <div class="hrow-top"><span class="h-name">G-Rough</span><span class="h-tag">very central</span><span class="h-price" data-h="g-rough"></span><span class="h-dist">1.1 km from G&amp;N</span></div>
         <ul class="h-points"><li>Ten raw, gallery-like suites over Piazza di Pasquino</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=G-Rough%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.g-rough.com/" target="_blank" rel="noopener">Site</a>
       </div>
@@ -1006,32 +1018,32 @@
     <div class="tier reveal d2">
       <div class="tier-t">Luxury</div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span></div>
+        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span><span class="h-dist">2.4 km from G&amp;N</span></div>
         <ul class="h-points"><li>Laura Gonzalez interiors and a rooftop bar, on the edge of Monti</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.casamontiroma.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-tag">quietly grand</span><span class="h-price" data-h="palazzo-talia"></span></div>
+        <div class="hrow-top"><span class="h-name">Palazzo Talìa</span><span class="h-tag">quietly grand</span><span class="h-price" data-h="palazzo-talia"></span><span class="h-dist">1.6 km from G&amp;N</span></div>
         <ul class="h-points"><li>A Renaissance palazzo reborn, steps from the Trevi</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Talia%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzotalia.com/en/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel de la Ville</span><span class="h-tag">grand terraces</span><span class="h-price" data-h="de-la-ville"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel de la Ville</span><span class="h-tag">grand terraces</span><span class="h-price" data-h="de-la-ville"></span><span class="h-dist">1.6 km from G&amp;N</span></div>
         <ul class="h-points"><li>Rocco Forte grandeur with rooftop terraces at the top of the Spanish Steps</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20la%20Ville%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-la-ville/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel Hassler</span><span class="h-tag">roman classic</span><span class="h-price" data-h="hassler"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel Hassler</span><span class="h-tag">roman classic</span><span class="h-price" data-h="hassler"></span><span class="h-dist">1.6 km from G&amp;N</span></div>
         <ul class="h-points"><li>The storied grande dame perched above the Spanish Steps</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20Hassler%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.hotelhasslerroma.com/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Hotel de Russie</span><span class="h-tag">secret garden</span><span class="h-price" data-h="de-russie"></span></div>
+        <div class="hrow-top"><span class="h-name">Hotel de Russie</span><span class="h-tag">secret garden</span><span class="h-price" data-h="de-russie"></span><span class="h-dist">1.2 km from G&amp;N</span></div>
         <ul class="h-points"><li>Rocco Forte calm around a terraced garden, just off Piazza del Popolo</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Hotel%20de%20Russie%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-russie/" target="_blank" rel="noopener">Site</a>
       </div>
       <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-tag">polished retreat</span><span class="h-price" data-h="palazzo-ripetta"></span></div>
+        <div class="hrow-top"><span class="h-name">Palazzo Ripetta</span><span class="h-tag">polished retreat</span><span class="h-price" data-h="palazzo-ripetta"></span><span class="h-dist">1.0 km from G&amp;N</span></div>
         <ul class="h-points"><li>Art-filled Relais & Ch&acirc;teaux calm by Piazza del Popolo</li></ul>
         <a class="h-book" href="https://www.google.com/travel/search?q=Palazzo%20Ripetta%20Rome&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.palazzoripetta.com/en/" target="_blank" rel="noopener">Site</a>
       </div>
@@ -1371,6 +1383,8 @@
   var PLACES = [
     { name:"Giulia & Nicola's", lat:41.9058, lng:12.4642, type:"house", map:"Via+Crescenzio+42+Rome" },
     { name:"Casa Monti",           lat:41.8973, lng:12.4905, type:"hotel", map:"Casa+Monti+Roma" },
+    { name:"Palazzo Talìa",        lat:41.90286, lng:12.48357, type:"hotel", map:"Palazzo+Talia+Rome" },
+    { name:"Experimental Roma",    lat:41.90682, lng:12.48816, type:"hotel", map:"Experimental+Roma+Via+Ludovisi+46" },
     { name:"Palazzo Talìa",        lat:41.9021, lng:12.4832, type:"hotel", map:"Palazzo+Talia+Rome" },
     { name:"Hotel Hassler",        lat:41.9061, lng:12.4839, type:"hotel", map:"Hotel+Hassler+Roma" },
     { name:"Hotel de la Ville",    lat:41.9053, lng:12.4836, type:"hotel", map:"Hotel+de+la+Ville+Rome" },
@@ -1395,8 +1409,8 @@
     { name:"Bar San Calisto",       lat:41.88905, lng:12.47074, type:"food", day:"fri", map:"Bar+San+Calisto+Roma" },
     { name:"Rocco",                 lat:41.89506, lng:12.49587, type:"food", day:"fri", map:"Rocco+Ristorante+Via+Giovanni+Lanza+93+Roma" },
     { name:"Doria Pamphilj",        lat:41.89782, lng:12.48156, type:"activity", day:"sat", map:"Galleria+Doria+Pamphilj+Roma" },
-    { name:"Armando al Pantheon",   lat:41.89903, lng:12.47624, type:"food", day:"sat", map:"Armando+al+Pantheon+Roma" },
     { name:"Bar della Musa",        lat:41.90286, lng:12.48357, type:"food", day:"sat", map:"Bar+della+Musa+Largo+del+Nazareno+25+Roma" },
+    { name:"Pierluigi",             lat:41.89679, lng:12.46866, type:"food", day:"sat", map:"Pierluigi+Piazza+de+Ricci+Roma" },
     { name:"Al Moro",               lat:41.90059, lng:12.48256, type:"food", day:"sat", map:"Trattoria+Al+Moro+Roma" },
     { name:"Nino",                  lat:41.90520, lng:12.48114, type:"food", day:"sat", map:"Ristorante+Nino+Via+Borgognona+11+Roma" },
     { name:"La Campana",            lat:41.90265, lng:12.47456, type:"food", day:"sun", map:"Ristorante+La+Campana+Vicolo+della+Campana+Roma" },
@@ -1505,18 +1519,50 @@
   function escapeHtml(s){
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+  var liked = {};
+  try { liked = JSON.parse(localStorage.getItem("roma26.likes")) || {}; } catch(e){}
+  function sugRow(text, key, likes){
+    var on = liked[key] ? " on" : "";
+    return '<div class="sug" data-k="' + escapeHtml(key) + '" data-l="' + likes + '">' +
+      '<span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span>' +
+      (key ? '<button class="sug-like' + on + '" aria-label="Like this idea">&hearts;&#8202;<span>' + likes + '</span></button>' : '') +
+      '</div>';
+  }
   function loadSuggestions(){
     fetch(TALLY_API + "/suggestions", { cache: "no-store" })
       .then(function(r){ if (!r.ok) throw new Error(); return r.json(); })
       .then(function(items){
         if (!Array.isArray(items)) return;
-        suggList.innerHTML = items.map(function(it, i){
-          return '<div class="sug" style="animation-delay:' + (i * 0.07) + 's">' +
-            '<span class="sug-t">&ldquo;' + escapeHtml(it.text) + '&rdquo;</span></div>';
-        }).join("");
+        items.sort(function(a,b){ return (b.likes||0)-(a.likes||0) || a.t-b.t; });
+        suggList.innerHTML = items.map(function(it){ return sugRow(it.text, it.key || "", it.likes || 0); }).join("");
       })
       .catch(function(){});
   }
+  function resortSuggs(){
+    var rows = [].slice.call(suggList.querySelectorAll(".sug"));
+    rows.sort(function(a,b){ return (+b.getAttribute("data-l")) - (+a.getAttribute("data-l")); });
+    rows.forEach(function(r){ suggList.appendChild(r); });
+  }
+  suggList.addEventListener("click", function(e){
+    var btn = e.target.closest(".sug-like");
+    if (!btn) return;
+    var row = btn.closest(".sug");
+    var key = row.getAttribute("data-k");
+    if (!key) return;
+    var delta = liked[key] ? -1 : 1;
+    if (delta === 1) liked[key] = true; else delete liked[key];
+    try { localStorage.setItem("roma26.likes", JSON.stringify(liked)); } catch(e2){}
+    var n = Math.max(0, (+row.getAttribute("data-l")) + delta);
+    row.setAttribute("data-l", n);
+    btn.classList.toggle("on", delta === 1);
+    btn.querySelector("span").textContent = n;
+    resortSuggs();
+    fetch(TALLY_API + "/like", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: key, delta: delta })
+    }).catch(function(){});
+  });
 
   suggPlus.addEventListener("click", function(){
     var opening = suggForm.hidden;
@@ -1536,12 +1582,14 @@
       body: JSON.stringify({ name: "Someone", text: text })
     }).then(function(r){
       if (!r.ok) throw new Error();
+      return r.json();
+    }).then(function(res){
       suggInput.value = "";
       suggForm.hidden = true;
       suggPlus.textContent = "+ add an idea";
       suggStatus.textContent = "Added, everyone can see it now.";
       // show it immediately; the shared list catches up within a minute
-      suggList.innerHTML += '<div class="sug"><span class="sug-t">&ldquo;' + escapeHtml(text) + '&rdquo;</span></div>';
+      suggList.innerHTML += sugRow(text, (res && res.key) || "", 0);
       setTimeout(loadSuggestions, 60000);
       postForm({ _subject: "Roma 2026 suggestion", suggestion: text });
     }).catch(function(){
