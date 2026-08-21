@@ -229,8 +229,10 @@
     .lbx.on img{animation:lbxIn .4s cubic-bezier(.2,.7,.2,1)}
   }
   #postcards .photo:not(.kb) .ph img{transform:scale(1.09);will-change:transform}
-  .vignette{display:flex;justify-content:center;margin:.4rem 0 1.2rem}
-  .vignette svg{width:min(210px,52vw);height:auto;overflow:visible}
+  section{position:relative}
+  .vignette{position:absolute;top:5.9rem;right:1.25rem;margin:0;pointer-events:none}
+  .vignette svg{width:clamp(96px,13vw,150px);height:auto;overflow:visible;opacity:.85}
+  @media(max-width:760px){.vignette{top:4.4rem;right:1rem}.vignette svg{width:78px;opacity:.6}}
   .vignette path,.vignette circle,.vignette line{
     stroke:var(--terra);stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;
     stroke-dasharray:1;stroke-dashoffset:1;
@@ -1675,6 +1677,13 @@
         if (y > lastY + 6 && y > 180) navEl.classList.add("away");
         else if (y < lastY - 6 || y <= 180) navEl.classList.remove("away");
         navEl.classList.toggle("deep", y > 24);
+        var doc = document.documentElement;
+        var prog = Math.min(1, y / Math.max(1, doc.scrollHeight - window.innerHeight));
+        prog = prog * prog * (3 - 2 * prog);
+        function lp(a, b){ return Math.round(a + (b - a) * prog); }
+        doc.style.setProperty("--paper", "rgb(" + lp(246,244) + "," + lp(241,227) + "," + lp(232,206) + ")");
+        doc.style.setProperty("--paper-2", "rgb(" + lp(239,240) + "," + lp(232,221) + "," + lp(218,197) + ")");
+        doc.style.setProperty("--nav-bg", "rgba(" + lp(246,244) + "," + lp(241,227) + "," + lp(232,206) + ",.82)");
         if (fancy) {
           if (sunEl) {
             var sink = Math.min(y * 0.5, window.innerHeight);
