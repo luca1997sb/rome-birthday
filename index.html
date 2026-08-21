@@ -153,6 +153,12 @@
     animation:archdraw 1.8s cubic-bezier(.4,0,.2,1) forwards;
   }
   @keyframes archdraw{to{stroke-dashoffset:0}}
+  .hero-sun{position:absolute;top:15%;right:13%;width:clamp(58px,8vw,94px);opacity:.75;pointer-events:none}
+  .hero-sun circle{
+    stroke:var(--terra);stroke-width:1.5;fill:none;
+    stroke-dasharray:1;stroke-dashoffset:1;
+    animation:archdraw 2.4s cubic-bezier(.4,0,.2,1) .5s forwards;
+  }
   .kicker{
     font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--terra);
     margin-bottom:1.4rem;
@@ -222,6 +228,14 @@
     .h-photos img:nth-child(8){animation-delay:.35s}
     .lbx.on img{animation:lbxIn .4s cubic-bezier(.2,.7,.2,1)}
   }
+  #postcards .photo:not(.kb) .ph img{transform:scale(1.09);will-change:transform}
+  .vignette{display:flex;justify-content:center;margin:.4rem 0 1.2rem}
+  .vignette svg{width:min(210px,52vw);height:auto;overflow:visible}
+  .vignette path,.vignette circle,.vignette line{
+    stroke:var(--terra);stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:1;stroke-dashoffset:1;
+  }
+  .vignette.in path,.vignette.in circle,.vignette.in line{animation:archdraw 1.8s cubic-bezier(.4,0,.2,1) forwards}
   @keyframes stripIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
   @keyframes lbxIn{from{opacity:0;transform:scale(.965)}to{opacity:1;transform:none}}
   .reveal.d1{transition-delay:.12s}
@@ -821,6 +835,7 @@
 
 <div class="hero" id="top">
   <div class="hero-blob"></div>
+  <svg class="hero-sun" id="herosun" viewBox="0 0 80 80" aria-hidden="true"><circle pathLength="1" cx="40" cy="40" r="30"/></svg>
   <div class="arch-par" id="archpar">
   <svg class="hero-arches" viewBox="0 0 1200 260" fill="none" aria-hidden="true">
     <g stroke="#a8502b" stroke-width="1.4" opacity=".55">
@@ -871,6 +886,15 @@
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Hotels, <em>three speeds.</em></h2>
+  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 120">
+    <circle pathLength="1" cx="40" cy="60" r="21"/>
+    <circle pathLength="1" cx="40" cy="60" r="8" style="animation-delay:.25s"/>
+    <path pathLength="1" d="M61 60 H152" style="animation-delay:.4s"/>
+    <path pathLength="1" d="M120 60 V77" style="animation-delay:.6s"/>
+    <path pathLength="1" d="M137 60 V72" style="animation-delay:.7s"/>
+    <path pathLength="1" d="M152 60 V81 H141" style="animation-delay:.8s"/>
+  </svg></div>
+
   <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November. Tap a hotel to open its photos and links; the figure is the live cheapest rate for our nights from Booking, Expedia, Hotels.com or the hotel itself, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
 
   <div class="tiers">
@@ -1019,6 +1043,15 @@
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
   <h2 class="sec-title reveal">The plan, <em>day by day.</em></h2>
+  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 130">
+    <path pathLength="1" d="M58 26 H82 M62 26 V42 M78 26 V42 M78 42 C88 52 96 62 96 78 C96 96 84 106 70 106 C56 106 44 96 44 78 C44 62 52 52 62 42" style="animation-delay:.15s"/>
+    <path pathLength="1" d="M50 76 H90" style="animation-delay:.9s"/>
+    <path pathLength="1" d="M122 30 H162 M122 30 C123 50 132 58 142 58 C152 58 161 50 162 30" style="animation-delay:.45s"/>
+    <path pathLength="1" d="M142 58 V90" style="animation-delay:1s"/>
+    <path pathLength="1" d="M128 92 C128 88 156 88 156 92" style="animation-delay:1.15s"/>
+    <path pathLength="1" d="M127 40 H157" style="animation-delay:1.25s"/>
+  </svg></div>
+
   <p class="hotels-note reveal">Eight of us, one gluten-free. Times are approximate. Tap a row for photos, tap a photo to see it big, tap the name for Maps. Kitchens that confirm gluten-free get the tag.</p>
   <div class="days">
     <div class="day reveal">
@@ -1094,6 +1127,12 @@
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
   <h2 class="sec-title reveal">Rome in <em>late November</em></h2>
+  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 140">
+    <path pathLength="1" d="M96 136 C98 110 100 92 104 72" style="animation-delay:.7s"/>
+    <path pathLength="1" d="M103 98 C112 90 120 86 130 82" style="animation-delay:.95s"/>
+    <path pathLength="1" d="M42 68 C40 46 66 32 92 38 C102 20 142 18 154 36 C174 34 186 50 178 64 C188 80 162 92 142 86 C118 98 72 96 60 80 C48 84 44 78 42 68" style="animation-delay:.1s"/>
+  </svg></div>
+
   <div class="info-grid">
     <div class="info-card reveal">
       <h4>The weather</h4>
@@ -1623,6 +1662,9 @@
     var navEl = document.querySelector(".nav");
     if (!navEl) return;
     var lastY = window.scrollY, ticking = false;
+    var fancy = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    var sunEl = document.getElementById("herosun");
+    var plx = fancy ? [].slice.call(document.querySelectorAll("#postcards .photo:not(.kb) .ph img")) : [];
     window.addEventListener("scroll", function(){
       if (ticking) return;
       ticking = true;
@@ -1631,6 +1673,20 @@
         if (y > lastY + 6 && y > 180) navEl.classList.add("away");
         else if (y < lastY - 6 || y <= 180) navEl.classList.remove("away");
         navEl.classList.toggle("deep", y > 24);
+        if (fancy) {
+          if (sunEl) {
+            var sink = Math.min(y * 0.5, window.innerHeight);
+            sunEl.style.transform = "translateY(" + sink + "px)";
+            sunEl.style.opacity = Math.max(0, 0.75 - y / (window.innerHeight * 0.55));
+          }
+          var vh = window.innerHeight;
+          for (var pi = 0; pi < plx.length; pi++) {
+            var r = plx[pi].parentNode.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > vh) continue;
+            var pp = (r.top + r.height / 2 - vh / 2) / vh;
+            plx[pi].style.transform = "scale(1.09) translateY(" + (pp * 16).toFixed(1) + "px)";
+          }
+        }
         lastY = y;
         ticking = false;
       });
