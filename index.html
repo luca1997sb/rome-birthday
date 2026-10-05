@@ -567,6 +567,15 @@
     transition:transform .25s cubic-bezier(.2,.7,.3,1.4);
   }
   .mk:hover{transform:scale(1.4)}
+  .mki{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+    background:var(--paper);border:1.5px solid var(--terra);box-shadow:0 1px 5px rgba(33,29,24,.28);
+    transition:transform .25s cubic-bezier(.2,.7,.2,1.4)}
+  .mki:hover{transform:scale(1.18)}
+  .mki svg{width:13px;height:13px;fill:none;stroke:var(--terra);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+  .mki.htl{background:var(--terra)}
+  .mki.htl svg{stroke:var(--paper)}
+  .mki.sight{border-color:var(--ink)}
+  .mki.sight svg{stroke:var(--ink)}
   .mk.htl{background:var(--terra)}
   .mk.food{background:var(--paper);border-color:var(--terra)}
   .mk.act{background:var(--terra);position:relative}
@@ -1034,14 +1043,14 @@
     <div class="map-head">
       <div>
         <div class="map-title">Rome, <em>roughly</em></div>
-        <div class="map-sub">Where the weekend will happen. Terracotta dots are the hotels, hollow ones food and drinks, ink dots the sights, pulsing ones the tours. Tap any dot to open it in Maps.</div>
+        <div class="map-sub">Where the weekend will happen. The bed is our hotel, the house is Giulia and Nicola&#39;s, fork and knife the restaurants, the glass the bars, columns the museums and sights. Tap any icon to open it in Maps.</div>
       </div>
     </div>
     <div class="map-filters" id="mapfilters">
       <button class="mf on" data-f="all">All</button>
-      <button class="mf" data-f="hotel">Hotels</button>
-      <button class="mf" data-f="food">Food &amp; drinks</button>
-      <button class="mf" data-f="activity">Tours &amp; sights</button>
+      <button class="mf" data-f="hotel">Hotel</button>
+      <button class="mf" data-f="food">Restaurants &amp; bars</button>
+      <button class="mf" data-f="activity">Museums &amp; sights</button>
       <button class="mf" data-f="thu">Thu</button>
       <button class="mf" data-f="fri">Fri</button>
       <button class="mf" data-f="sat">Sat</button>
@@ -1573,6 +1582,13 @@
       style: "https://tiles.openfreemap.org/styles/positron",
       attribution: '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
     }).addTo(map);
+    var GLYPHS = {
+      hotel:'<path d="M2 12V5M2 9h12v3M14 12V9M4.5 9a1.5 1.5 0 1 1 0-.01M7 7h5a2 2 0 0 1 2 2"/>',
+      food:'<path d="M5 2v4a1.5 1.5 0 0 0 3 0V2M6.5 6v8M11 2c-1.3 0-2 1.6-2 4h2v8"/>',
+      bar:'<path d="M3.5 2.5h9L8 8 3.5 2.5zM8 8v5.5M5.5 13.5h5"/>',
+      activity:'<path d="M2 5.5 8 2.5l6 3M3 6.5h10M4 7v5M8 7v5M12 7v5M2.5 13.5h11"/>',
+      landmark:'<path d="M2 5.5 8 2.5l6 3M3 6.5h10M4 7v5M8 7v5M12 7v5M2.5 13.5h11"/>'
+    };
     var mapMarkers = [];
     PLACES.forEach(function(p){
       var icon;
@@ -1587,11 +1603,12 @@
           iconSize:[30,27], iconAnchor:[15,25]
         });
       } else {
-        var cls = p.type === "activity" ? " act" : p.type === "hotel" ? " htl" : p.type === "food" ? " food" : "";
+        var g = GLYPHS[p.type === "food" && /^Bar /.test(p.name) ? "bar" : p.type] || GLYPHS.landmark;
+        var kind = p.type === "hotel" ? " htl" : p.type === "food" ? " food" : " sight";
         icon = L.divIcon({
           className:"",
-          html:'<span class="mk' + cls + '"></span>',
-          iconSize:[12,12], iconAnchor:[6,6]
+          html:'<span class="mki' + kind + '"><svg viewBox="0 0 16 16" aria-hidden="true">' + g + '</svg></span>',
+          iconSize:[24,24], iconAnchor:[12,12]
         });
       }
       var m = L.marker([p.lat, p.lng], { icon:icon })
