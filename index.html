@@ -533,7 +533,6 @@
   .map-title{font-family:var(--serif);font-weight:400;font-size:1.6rem}
   .map-title em{font-style:italic}
   .map-sub{font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
-  .base-tiles{filter:sepia(.35) saturate(.8) brightness(1.03)}
   .map-filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 .9rem}
   .mf{
     font-family:var(--sans);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
@@ -845,6 +844,9 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js" defer></script>
 <script src="https://www.youtube.com/iframe_api" async></script>
 
 <div class="grain" aria-hidden="true"></div>
@@ -911,67 +913,9 @@
   <h1><span>R</span><span>O</span><span>M</span><span>A</span></h1>
   <div class="dates">Luca's birthday weekend</div>
   <div class="when">26-29 November 2026</div>
-  <a class="scrollcue" href="#hotels">Scroll</a>
+  <a class="scrollcue" href="#program">Scroll</a>
 </div>
 
-
-<section id="hotels">
-  <div class="sec-kicker reveal">Where to stay</div>
-  <h2 class="sec-title reveal">Where we are <em>staying.</em></h2>
-  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 120">
-    <circle pathLength="1" cx="52" cy="94" r="11" style="animation-delay:.1s"/>
-    <circle pathLength="1" cx="52" cy="94" r="3" style="animation-delay:.3s"/>
-    <circle pathLength="1" cx="148" cy="94" r="11" style="animation-delay:.2s"/>
-    <circle pathLength="1" cx="148" cy="94" r="3" style="animation-delay:.4s"/>
-    <path pathLength="1" d="M70 24 C64 44 60 66 62 84 C63 91 67 95 74 95 L102 96" style="animation-delay:.5s"/>
-    <path pathLength="1" d="M102 96 C105 76 112 62 124 58 C142 52 156 62 157 78 C158 86 155 92 150 95" style="animation-delay:.7s"/>
-    <path pathLength="1" d="M70 24 C76 21 83 21 89 23" style="animation-delay:.95s"/>
-    <circle pathLength="1" cx="92" cy="23" r="2.5" style="animation-delay:1.05s"/>
-    <circle pathLength="1" cx="63" cy="33" r="4.5" style="animation-delay:1.1s"/>
-    <path pathLength="1" d="M118 55 C127 48 140 48 147 54" style="animation-delay:1.2s"/>
-    <path pathLength="1" d="M42 89 a13 13 0 0 1 21 -5" style="animation-delay:1.3s"/>
-  </svg></div>
-
-  <p class="hotels-note reveal">Moritz, Georgina, Nikos and Paulina are at Casa Monti, on the edge of Monti; Luca and Justine stay with Giulia and Nicola. Tap the row for photos; the map below shows how the weekend sits around it. The full hotel shortlist lives in the archive at the end of the page.</p>
-
-
-  <div class="tier reveal" style="margin-top:1.8rem">
-    <div class="tier-t">Home base</div>
-      <div class="hrow">
-        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span><span class="h-dist">2.4 km from G&amp;N</span></div>
-        <ul class="h-points"><li>Laura Gonzalez interiors and a rooftop bar, on the edge of Monti</li></ul>
-        <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.casamontiroma.com/" target="_blank" rel="noopener">Site</a>
-      </div>
-  </div>
-
-  <div class="map-card reveal">
-    <div class="map-head">
-      <div>
-        <div class="map-title">Rome, <em>roughly</em></div>
-        <div class="map-sub">Where the weekend will happen. Terracotta dots are the hotels, hollow ones food and drinks, ink dots the sights, pulsing ones the tours. Tap any dot to open it in Maps.</div>
-      </div>
-    </div>
-    <div class="map-filters" id="mapfilters">
-      <button class="mf on" data-f="all">All</button>
-      <button class="mf" data-f="hotel">Hotels</button>
-      <button class="mf" data-f="food">Food &amp; drinks</button>
-      <button class="mf" data-f="activity">Tours &amp; sights</button>
-      <button class="mf" data-f="thu">Thu</button>
-      <button class="mf" data-f="fri">Fri</button>
-      <button class="mf" data-f="sat">Sat</button>
-      <button class="mf" data-f="sun">Sun</button>
-    </div>
-    <div id="leafmap">
-      <div class="fallback">The map loads on the live site. See you in Rome.</div>
-    </div>
-  </div>
-</section>
-
-
-<div id="rsvp" hidden aria-hidden="true"><div id="namechips"></div><button id="btnyes"></button><button id="btnmb"></button><button id="btnno"></button><div id="status"></div><button id="applink" hidden></button><div id="tally"></div></div>
-
-  </figure>
-</div>
 
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
@@ -1056,6 +1000,65 @@
     </div>
   </div>
 </section>
+
+<section id="hotels">
+  <div class="sec-kicker reveal">Where to stay</div>
+  <h2 class="sec-title reveal">Where we are <em>staying.</em></h2>
+  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 120">
+    <circle pathLength="1" cx="52" cy="94" r="11" style="animation-delay:.1s"/>
+    <circle pathLength="1" cx="52" cy="94" r="3" style="animation-delay:.3s"/>
+    <circle pathLength="1" cx="148" cy="94" r="11" style="animation-delay:.2s"/>
+    <circle pathLength="1" cx="148" cy="94" r="3" style="animation-delay:.4s"/>
+    <path pathLength="1" d="M70 24 C64 44 60 66 62 84 C63 91 67 95 74 95 L102 96" style="animation-delay:.5s"/>
+    <path pathLength="1" d="M102 96 C105 76 112 62 124 58 C142 52 156 62 157 78 C158 86 155 92 150 95" style="animation-delay:.7s"/>
+    <path pathLength="1" d="M70 24 C76 21 83 21 89 23" style="animation-delay:.95s"/>
+    <circle pathLength="1" cx="92" cy="23" r="2.5" style="animation-delay:1.05s"/>
+    <circle pathLength="1" cx="63" cy="33" r="4.5" style="animation-delay:1.1s"/>
+    <path pathLength="1" d="M118 55 C127 48 140 48 147 54" style="animation-delay:1.2s"/>
+    <path pathLength="1" d="M42 89 a13 13 0 0 1 21 -5" style="animation-delay:1.3s"/>
+  </svg></div>
+
+  <p class="hotels-note reveal">Moritz, Georgina, Nikos and Paulina are at Casa Monti, on the edge of Monti; Luca and Justine stay with Giulia and Nicola. Tap the row for photos; the map below shows how the weekend sits around it. The full hotel shortlist lives in the archive at the end of the page.</p>
+
+
+  <div class="tier reveal" style="margin-top:1.8rem">
+    <div class="tier-t">Home base</div>
+      <div class="hrow">
+        <div class="hrow-top"><span class="h-name">Casa Monti</span><span class="h-tag">rooftop aperitivo</span><span class="h-price" data-h="casa-monti"></span><span class="h-dist">2.4 km from G&amp;N</span></div>
+        <ul class="h-points"><li>Laura Gonzalez interiors and a rooftop bar, on the edge of Monti</li></ul>
+        <a class="h-book" href="https://www.google.com/travel/search?q=Casa%20Monti%20Roma&ts=CAESCAoCCAMKAggDGhwSGhIUCgcI6g8QCxgaEgcI6g8QCxgdGAEyAggBKgkKBToDQ0hGGgA" target="_blank" rel="noopener">Prices</a><a class="h-book" href="https://www.casamontiroma.com/" target="_blank" rel="noopener">Site</a>
+      </div>
+  </div>
+
+  <div class="map-card reveal">
+    <div class="map-head">
+      <div>
+        <div class="map-title">Rome, <em>roughly</em></div>
+        <div class="map-sub">Where the weekend will happen. Terracotta dots are the hotels, hollow ones food and drinks, ink dots the sights, pulsing ones the tours. Tap any dot to open it in Maps.</div>
+      </div>
+    </div>
+    <div class="map-filters" id="mapfilters">
+      <button class="mf on" data-f="all">All</button>
+      <button class="mf" data-f="hotel">Hotels</button>
+      <button class="mf" data-f="food">Food &amp; drinks</button>
+      <button class="mf" data-f="activity">Tours &amp; sights</button>
+      <button class="mf" data-f="thu">Thu</button>
+      <button class="mf" data-f="fri">Fri</button>
+      <button class="mf" data-f="sat">Sat</button>
+      <button class="mf" data-f="sun">Sun</button>
+    </div>
+    <div id="leafmap">
+      <div class="fallback">The map loads on the live site. See you in Rome.</div>
+    </div>
+  </div>
+</section>
+
+
+<div id="rsvp" hidden aria-hidden="true"><div id="namechips"></div><button id="btnyes"></button><button id="btnmb"></button><button id="btnno"></button><div id="status"></div><button id="applink" hidden></button><div id="tally"></div></div>
+
+  </figure>
+</div>
+
 
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
@@ -1566,12 +1569,9 @@
     if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
       map.dragging.disable();
     }
-    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
-      attribution:'Tiles &copy; Esri',
-      maxZoom:16, className:"base-tiles"
-    }).addTo(map);
-    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom:16, className:"label-tiles"
+    L.maplibreGL({
+      style: "https://tiles.openfreemap.org/styles/positron",
+      attribution: '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
     }).addTo(map);
     var mapMarkers = [];
     PLACES.forEach(function(p){
