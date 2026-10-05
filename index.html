@@ -533,6 +533,7 @@
   .map-title{font-family:var(--serif);font-weight:400;font-size:1.6rem}
   .map-title em{font-style:italic}
   .map-sub{font-size:.78rem;color:var(--ink-soft);margin-top:.15rem}
+  .base-tiles{filter:sepia(.35) saturate(.8) brightness(1.03)}
   .map-filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 .9rem}
   .mf{
     font-family:var(--sans);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
@@ -1565,9 +1566,12 @@
     if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
       map.dragging.disable();
     }
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom:19
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+      attribution:'Tiles &copy; Esri',
+      maxZoom:16, className:"base-tiles"
+    }).addTo(map);
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
+      maxZoom:16, className:"label-tiles"
     }).addTo(map);
     var mapMarkers = [];
     PLACES.forEach(function(p){
