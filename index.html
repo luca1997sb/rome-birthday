@@ -261,17 +261,18 @@
   /* hand-drawn: ink wobble on lines, watercolor washes behind */
   .pine,.hero-arches,.hero-sun{filter:url(#ink)}
   .skyline{filter:url(#pencil)}
-  .vignette svg,.day-sk,.doodle{filter:url(#pencils)}
+  .vignette svg,.day-sk,.doodle{filter:url(#pencil)}
   .wash{mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease .7s}
   .wash ellipse{filter:url(#cwash);stroke:none}
   .in .wash,.hero .wash,.mk-sk .wash{opacity:.72}
+  .stop-sk .wash,.doodle .wash,.mk-sk .wash{transform:translate(1.2px,-.8px) scale(1.18);transform-origin:center;transform-box:fill-box}
   .hero .wash{transition-delay:1.6s}
   .day-sk{width:92px;height:auto;overflow:visible;flex-shrink:0;margin:-.4rem -.2rem -.2rem 0}
-  .day-sk path,.doodle path{stroke:#2e2a26;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025;stroke-dashoffset:0}
+  .day-sk path,.doodle path{stroke:#3b3631;stroke-width:.95;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025;stroke-dashoffset:0}
   .doodle{position:absolute;top:1.3rem;right:1.3rem;width:84px;height:auto;overflow:visible;pointer-events:none}
   .soon,.info-card{position:relative}
-  .stop-sk{display:block;width:34px;height:auto;margin-top:.45rem;overflow:visible;filter:url(#pencils)}
-  .stop-sk path{stroke:#2e2a26;stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025;stroke-dashoffset:0}
+  .stop-sk{display:block;width:34px;height:auto;margin-top:.45rem;overflow:visible;filter:url(#pencil)}
+  .stop-sk path{stroke:#3b3631;stroke-width:.85;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025;stroke-dashoffset:0}
   /* hand-inked card borders: a wobbly main line and a fainter second pass */
   .day,.soon,.info-card,.map-card,.tier{position:relative;border-color:transparent !important}
   .day::before,.soon::before,.info-card::before,.map-card::before,.tier::before{content:"";position:absolute;inset:-1px;border:1.2px solid rgba(58,50,41,.5);border-radius:3px;filter:url(#pen);pointer-events:none}
@@ -280,8 +281,8 @@
   .mk-skw{display:block;width:100%;height:100%;transition:transform .25s cubic-bezier(.2,.7,.3,1.4)}
   .mk-skw:hover{transform:scale(1.2) rotate(-4deg)}
   .mk-skw.lm{opacity:.8}
-  .mk-sk{display:block;width:100%;height:100%;overflow:visible;filter:url(#pencils) drop-shadow(0 1px 2px rgba(33,29,24,.22))}
-  .mk-sk path{stroke:#2e2a26;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025 !important;stroke-dashoffset:0 !important;animation:none !important}
+  .mk-sk{display:block;width:100%;height:100%;overflow:visible;filter:url(#pencil) drop-shadow(0 1px 2px rgba(33,29,24,.18))}
+  .mk-sk path{stroke:#3b3631;stroke-width:.95;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.4 .03 .55 .025 !important;stroke-dashoffset:0 !important;animation:none !important}
   .mk-sk .bg ellipse{fill:#fbf7ef;filter:url(#wash)}
   details.arch summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.55rem;min-height:44px;margin-top:.4rem;font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--terra)}
   details.arch summary::-webkit-details-marker{display:none}
@@ -772,6 +773,7 @@
   }
 
   /* ---------- skyline ---------- */
+  .skyline{overflow:visible}
   .skyline .wash ellipse{filter:url(#cwash)}
   .skyline .wash{opacity:0;transition:opacity 1.6s ease .6s}
   .skyline.in .wash{opacity:.62}
@@ -1201,28 +1203,7 @@
   <p class="cinema-cap reveal">Caro Diario, Nanni Moretti, 1993. The Vespa ride through Rome is the whole mood of this weekend.</p>
 </section>
 
-<svg class="skyline reveal" viewBox="0 0 900 120" fill="none" aria-hidden="true">
-  <g class="wash"><ellipse cx="80" cy="60" rx="24" ry="10" fill="#6e8b3d"/><ellipse cx="150" cy="70" rx="19" ry="8" fill="#6e8b3d"/><ellipse cx="700" cy="64" rx="24" ry="10" fill="#6e8b3d"/><ellipse cx="790" cy="75" rx="18" ry="8" fill="#6e8b3d"/><ellipse cx="450" cy="66" rx="34" ry="20" fill="#e3ae3a"/><ellipse cx="534" cy="107" rx="26" ry="10" fill="#d9a05a"/><ellipse cx="80" cy="98" rx="3" ry="18" fill="#8a5a35"/><ellipse cx="700" cy="100" rx="3" ry="17" fill="#8a5a35"/></g>
-  <g stroke="#2e2a26" stroke-width="1.1" stroke-dasharray="20 1.8 34 1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
-    <!-- umbrella pines -->
-    <path d="M80 118 V78 M80 78 C60 78 52 66 60 58 C50 56 54 44 68 46 C70 36 90 36 92 46 C106 44 110 56 100 58 C108 66 100 78 80 78z"/>
-    <path d="M150 118 V88 M150 88 C134 88 128 78 134 72 C126 70 130 60 141 62 C143 54 157 54 159 62 C170 60 174 70 166 72 C172 78 166 88 150 88z"/>
-    <!-- st peter's dome -->
-    <path d="M430 118 V86 H410 V80 H450 V86"/>
-    <path d="M410 80 h80"/>
-    <path d="M450 118 V86 H490 V80"/>
-    <path d="M414 80 C414 56 442 44 450 44 C458 44 486 56 486 80"/>
-    <path d="M450 44 V32 M444 36 h12"/>
-    <path d="M428 80 C428 62 446 52 450 52 M472 80 C472 62 454 52 450 52"/>
-    <!-- colonnade hint -->
-    <path d="M510 118 V96 M526 118 V96 M542 118 V96 M558 118 V96 M510 96 h48"/>
-    <!-- pines right -->
-    <path d="M700 118 V82 M700 82 C682 82 675 70 682 63 C673 61 677 50 689 52 C691 42 709 42 711 52 C723 50 727 61 718 63 C725 70 718 82 700 82z"/>
-    <path d="M790 118 V92 M790 92 C776 92 771 83 776 78 C769 76 772 67 782 69 C784 61 796 61 798 69 C808 67 811 76 804 78 C809 83 804 92 790 92z"/>
-    <!-- ground -->
-    <line x1="0" y1="118" x2="900" y2="118"/>
-  </g>
-</svg>
+<svg class="skyline reveal" viewBox="0 0 900 120" fill="none" aria-hidden="true"><g class="wash"><ellipse cx="80" cy="60" rx="24" ry="10" fill="#6e8b3d"/><ellipse cx="150" cy="70" rx="19" ry="8" fill="#6e8b3d"/><ellipse cx="808" cy="66" rx="24" ry="10" fill="#6e8b3d"/><ellipse cx="330" cy="66" rx="34" ry="20" fill="#e3ae3a"/><ellipse cx="80" cy="98" rx="3" ry="18" fill="#8a5a35"/><ellipse cx="808" cy="100" rx="3" ry="17" fill="#8a5a35"/><ellipse cx="676" cy="96" rx="28" ry="22" fill="#d9a05a"/><ellipse cx="676" cy="87" rx="17" ry="5" fill="#c8372d"/><ellipse cx="677" cy="108" rx="6" ry="10" fill="#6e8b3d"/><ellipse cx="616" cy="71" rx="8" ry="8" fill="#9cc3e0"/></g><use href="#mousewash" transform="translate(522 34)"/><g stroke="#2e2a26" stroke-width="1.1" stroke-dasharray="20 1.8 34 1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M80 118 V78 M80 78 C60 78 52 66 60 58 C50 56 54 44 68 46 C70 36 90 36 92 46 C106 44 110 56 100 58 C108 66 100 78 80 78z"/><path d="M150 118 V88 M150 88 C134 88 128 78 134 72 C126 70 130 60 141 62 C143 54 157 54 159 62 C170 60 174 70 166 72 C172 78 166 88 150 88z"/><path d="M310 118 V86 H290 V80 H370 V86 H350 V118 M294 80 C294 56 322 44 330 44 C338 44 366 56 366 80 M330 44 V32 M324 36 h12 M308 80 C308 62 326 52 330 52 M352 80 C352 62 334 52 330 52"/><path d="M390 118 V96 M406 118 V96 M422 118 V96 M438 118 V96 M390 96 h48"/><path d="M808 118 V82 M808 82 C790 82 783 70 790 63 C781 61 785 50 797 52 C799 42 817 42 819 52 C831 50 835 61 826 63 C833 70 826 82 808 82z"/><path d="M650 118 V78 H702 V118 M646 78 H706 L676 62 Z M660 84 H692 V92 H660 Z M671 118 V102 C671 96 683 96 683 102 V118 M656 98 H664 V106 H656 Z M690 98 H698 V106 H690 Z"/><use href="#mouse" transform="translate(522 34)"/><path d="M582 90 C592 86 600 80 608 76 M616 71 m-8 0 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M0 118 H900"/></g><text x="676" y="90.5" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="7" fill="#2e2a26">HOTEL</text></svg>
 
 <section id="archive">
   <div class="sec-kicker reveal">For the record</div>
