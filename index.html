@@ -33,11 +33,11 @@
     --ink-soft:#57503f;
     --terra:#a8502b;
     --terra-deep:#8a3f20;
-    --w-ochre:#d9a548;
-    --w-sage:#8f9a6a;
-    --w-rosa:#d9876a;
-    --w-sky:#9db7c4;
-    --w-wine:#a8503b;
+    --w-ochre:#e3ae3a;
+    --w-sage:#6e8b3d;
+    --w-rosa:#d9573f;
+    --w-sky:#7fb0d6;
+    --w-wine:#a8323a;
     --line:rgba(33,29,24,.14);
     --wash:rgba(255,255,255,.45);
     --nav-bg:rgba(246,241,232,.82);
@@ -254,25 +254,24 @@
   .vignette svg{width:clamp(96px,13vw,150px);height:auto;overflow:visible;opacity:.85}
   @media(max-width:760px){.vignette{top:4.4rem;right:1rem}.vignette svg{width:78px;opacity:.6}}
   .vignette path,.vignette circle,.vignette line{
-    stroke:#3a3229;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;
+    stroke:#2e2a26;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;
     stroke-dasharray:1;stroke-dashoffset:1;
   }
   .vignette.in path,.vignette.in circle,.vignette.in line{animation:archdraw 1.8s cubic-bezier(.4,0,.2,1) forwards}
   /* hand-drawn: ink wobble on lines, watercolor washes behind */
   .pine,.hero-arches,.skyline,.hero-sun{filter:url(#ink)}
-  .vignette svg,.day-sk,.doodle{filter:url(#inkb)}
-  .scr{stroke-width:.75 !important;opacity:.5}
+  .vignette svg,.day-sk,.doodle{filter:url(#pencils)}
   .wash{mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease .7s}
   .wash ellipse{filter:url(#wash);stroke:none}
-  .in .wash,.hero .wash{opacity:.68}
+  .in .wash,.hero .wash{opacity:.85}
   .hero .wash{transition-delay:1.6s}
   .day-sk{width:92px;height:auto;overflow:visible;flex-shrink:0;margin:-.4rem -.2rem -.2rem 0}
-  .day-sk path,.doodle path{stroke:#3a3229;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+  .day-sk path,.doodle path{stroke:#2e2a26;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
   .day.in .day-sk path,.in .doodle path{animation:archdraw 1.6s cubic-bezier(.4,0,.2,1) .3s forwards}
   .doodle{position:absolute;top:1.3rem;right:1.3rem;width:84px;height:auto;overflow:visible;pointer-events:none}
   .soon,.info-card{position:relative}
-  .stop-sk{display:block;width:34px;height:auto;margin-top:.45rem;overflow:visible;filter:url(#inkb)}
-  .stop-sk path{stroke:#3a3229;stroke-width:1.25;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+  .stop-sk{display:block;width:34px;height:auto;margin-top:.45rem;overflow:visible;filter:url(#pencils)}
+  .stop-sk path{stroke:#2e2a26;stroke-width:1.25;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
   .day.in .stop-sk path{animation:archdraw 1.4s cubic-bezier(.4,0,.2,1) .6s forwards}
   /* hand-inked card borders: a wobbly main line and a fainter second pass */
   .day,.soon,.info-card,.map-card,.tier{position:relative;border-color:transparent !important}
@@ -282,8 +281,8 @@
   .mk-skw{display:block;width:100%;height:100%;transition:transform .25s cubic-bezier(.2,.7,.3,1.4)}
   .mk-skw:hover{transform:scale(1.2) rotate(-4deg)}
   .mk-skw.lm{opacity:.8}
-  .mk-sk{display:block;width:100%;height:100%;overflow:visible;filter:url(#inkb) drop-shadow(0 1px 2px rgba(33,29,24,.22))}
-  .mk-sk path{stroke:#3a3229;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none !important;stroke-dashoffset:0 !important;animation:none !important}
+  .mk-sk{display:block;width:100%;height:100%;overflow:visible;filter:url(#pencils) drop-shadow(0 1px 2px rgba(33,29,24,.22))}
+  .mk-sk path{stroke:#2e2a26;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none !important;stroke-dashoffset:0 !important;animation:none !important}
   .mk-sk .wash{opacity:.75}
   .mk-sk .bg ellipse{fill:#fbf7ef;filter:url(#wash)}
   details.arch summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.55rem;min-height:44px;margin-top:.4rem;font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--terra)}
@@ -293,6 +292,15 @@
   details.arch .arch-c,details.arch[open] .arch-o{display:none}
   details.arch[open] .arch-c{display:inline}
   details.arch .arch-n{color:var(--ink-soft);font-size:.95rem}
+  /* Loon-style cartoons beside the section headings */
+  .cartoon .wash ellipse{filter:url(#cwash)}
+  .cartoon.in .wash{opacity:.72}
+  .cartoon{position:absolute;top:2.2rem;right:1.25rem;width:235px;margin:0;text-align:center;pointer-events:none}
+  .cartoon svg{display:block;width:100%;height:auto;overflow:visible;filter:url(#pencil)}
+  .cartoon figcaption{font-family:"Gochi Hand",cursive;color:#2e2a26;line-height:1.15;margin-top:.2rem}
+  .cap-main{display:block;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase}
+  .cap-aside{display:block;font-size:.92rem}
+  @media(max-width:1000px){.cartoon{position:static;width:min(280px,82%);margin:1.6rem auto .4rem}}
   .countdown .doodle{position:static;display:block;margin:0 auto .6rem;width:76px}
   @media(prefers-reduced-motion:reduce){.day-sk path,.doodle path,.stop-sk path{stroke-dashoffset:0}.wash{opacity:.55}}
   @keyframes stripIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
@@ -896,6 +904,9 @@
   }
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
@@ -906,6 +917,9 @@
 <div class="grain" aria-hidden="true"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
   <filter id="inkb" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence id="inkbT" type="fractalNoise" baseFrequency=".032" numOctaves="2" seed="1" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="4" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.1 0 0 0 1.4" result="ga"/><feComposite in="d" in2="ga" operator="in"/></filter>
+  <filter id="pencils" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".2" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".9" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="4" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.6 0 0 0 1.3" result="ga"/><feComposite in="d" in2="ga" operator="in"/></filter>
+  <filter id="cwash" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".035 .06" numOctaves="3" seed="8" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1" result="b"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="2" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.45 0 0 0 1.15" result="ga"/><feComposite in="b" in2="ga" operator="in"/></filter>
   <filter id="pen" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="1" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="wash" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".025 .05" numOctaves="3" seed="8" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="12" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.1" result="b"/><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="2" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.9 0 0 0 1.25" result="ga"/><feComposite in="b" in2="ga" operator="in"/></filter>
@@ -982,14 +996,7 @@
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
   <h2 class="sec-title reveal">The plan, <em>day by day.</em></h2>
-  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 130"><g class="wash"><ellipse cx="70" cy="84" rx="23" ry="18" fill="var(--w-wine)"/><ellipse cx="142" cy="42" rx="17" ry="9" fill="var(--w-ochre)"/></g>
-    <path pathLength="1" d="M58 26 H82 M62 26 V42 M78 26 V42 M78 42 C88 52 96 62 96 78 C96 96 84 106 70 106 C56 106 44 96 44 78 C44 62 52 52 62 42" style="animation-delay:.15s"/>
-    <path pathLength="1" d="M50 76 H90" style="animation-delay:.9s"/>
-    <path pathLength="1" d="M122 30 H162 M122 30 C123 50 132 58 142 58 C152 58 161 50 162 30" style="animation-delay:.45s"/>
-    <path pathLength="1" d="M142 58 V90" style="animation-delay:1s"/>
-    <path pathLength="1" d="M128 92 C128 88 156 88 156 92" style="animation-delay:1.15s"/>
-    <path pathLength="1" d="M127 40 H157" style="animation-delay:1.25s"/>
-  </svg></div>
+  <figure class="cartoon reveal"><svg viewBox="0 0 120 100" aria-hidden="true"><g class="wash"><ellipse cx="62" cy="62" rx="30" ry="15" fill="#6e8b3d"/><ellipse cx="58" cy="56" rx="14" ry="7" fill="#e3ae3a"/><ellipse cx="106" cy="68" rx="8" ry="6" fill="#a6a77a"/><ellipse cx="104" cy="52" rx="5" ry="5" fill="#2e2a26"/><ellipse cx="98" cy="74" rx="3" ry="2.5" fill="#c8372d"/></g><g stroke="#2e2a26" stroke-width=".65" stroke-dasharray="20 1.8 34 1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M30 78 C30 52 50 42 66 42 C84 42 96 56 96 78 Z"/><path d="M44 78 L48 58 L66 52 L82 58 L86 78 M48 58 L38 68 M82 58 L93 68 M66 52 V43"/><path d="M96 68 C102 62 112 64 112 70 C112 74 106 76 100 74"/><circle cx="106" cy="68" r="1.1" fill="#2e2a26" stroke="none"/><path d="M101 62 V52 H108 V62 M98 62 H111"/><path d="M98 74 L94 72 L94 78 Z M98 74 L102 72 L102 78 Z"/><path d="M38 78 L36 86 H43 L45 78 M82 78 L84 86 H91 L89 78"/><path d="M30 76 C26 78 24 76 25 74"/><path d="M18 82 C14 82 14 78 18 78 C18 75 22 75 23 78 M8 84 C5 84 5 81 8 81 C8 79 11 79 12 81"/><path d="M14 30 m-8 0 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M14 30 V25 M14 30 L18 32"/></g></svg><figcaption><span class="cap-main">&lsquo;Al Moro, eight o&rsquo;clock sharp&rsquo;</span><span class="cap-aside">(he set off at noon)</span></figcaption></figure>
 
   <p class="hotels-note reveal">Eight of us, one gluten-free. Times are approximate. Tap a row for photos, tap a photo to see it big, tap the name for Maps. Kitchens that confirm gluten-free get the tag.</p>
   <div class="days">
@@ -1067,19 +1074,7 @@
 <section id="hotels">
   <div class="sec-kicker reveal">Where to stay</div>
   <h2 class="sec-title reveal">Where we are <em>staying.</em></h2>
-  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 120"><g class="wash"><ellipse cx="128" cy="74" rx="28" ry="18" fill="var(--w-rosa)"/><ellipse cx="100" cy="104" rx="70" ry="5" fill="var(--w-ochre)"/></g>
-    <circle pathLength="1" cx="52" cy="94" r="11" style="animation-delay:.1s"/>
-    <circle pathLength="1" cx="52" cy="94" r="3" style="animation-delay:.3s"/>
-    <circle pathLength="1" cx="148" cy="94" r="11" style="animation-delay:.2s"/>
-    <circle pathLength="1" cx="148" cy="94" r="3" style="animation-delay:.4s"/>
-    <path pathLength="1" d="M70 24 C64 44 60 66 62 84 C63 91 67 95 74 95 L102 96" style="animation-delay:.5s"/>
-    <path pathLength="1" d="M102 96 C105 76 112 62 124 58 C142 52 156 62 157 78 C158 86 155 92 150 95" style="animation-delay:.7s"/>
-    <path pathLength="1" d="M70 24 C76 21 83 21 89 23" style="animation-delay:.95s"/>
-    <circle pathLength="1" cx="92" cy="23" r="2.5" style="animation-delay:1.05s"/>
-    <circle pathLength="1" cx="63" cy="33" r="4.5" style="animation-delay:1.1s"/>
-    <path pathLength="1" d="M118 55 C127 48 140 48 147 54" style="animation-delay:1.2s"/>
-    <path pathLength="1" d="M42 89 a13 13 0 0 1 21 -5" style="animation-delay:1.3s"/>
-  </svg></div>
+  <figure class="cartoon reveal"><svg viewBox="0 0 120 100" aria-hidden="true"><g class="wash"><ellipse cx="64" cy="62" rx="24" ry="20" fill="#8f8aa8"/><ellipse cx="36" cy="50" rx="13" ry="9" fill="#8f8aa8"/><ellipse cx="66" cy="86" rx="32" ry="6" fill="#c8372d"/><ellipse cx="72" cy="46" rx="16" ry="4" fill="#e7b52c"/><ellipse cx="112" cy="58" rx="7" ry="10" fill="#9cc3e0"/></g><g stroke="#2e2a26" stroke-width=".65" stroke-dasharray="20 1.8 34 1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M34 84 m-10 0 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0 M98 84 m-10 0 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0"/><path d="M30 42 C26 58 26 72 28 80 M44 90 H82 C82 76 88 68 98 66 C106 66 110 72 110 80"/><path d="M24 40 L36 44 M30 42 L28 36"/><path d="M44 80 C36 72 40 46 62 42 C82 40 92 54 88 72 C86 82 74 86 60 86 C52 86 48 84 44 80 Z"/><path d="M50 48 C42 42 32 42 27 48 C23 54 27 62 35 62 C41 62 47 58 51 54"/><path d="M44 42 C44 37 49 37 49 42 M53 43 C54 39 58 40 57 44"/><circle cx="40" cy="47" r="1.2" fill="#2e2a26" stroke="none"/><circle cx="28" cy="52" r=".9" fill="#2e2a26" stroke="none"/><circle cx="31" cy="51" r=".9" fill="#2e2a26" stroke="none"/><path d="M51 58 C45 54 39 48 34 44"/><path d="M52 50 C62 48 72 46 84 38 M53 54 C63 54 74 52 88 46"/><path d="M88 94 H104 M18 96 H26"/><path d="M108 48 H118 M106 56 H118 M110 64 H118"/></g></svg><figcaption><span class="cap-main">&lsquo;Andiamo!&rsquo;</span><span class="cap-aside">(the Vespa had other views)</span></figcaption></figure>
 
   <p class="hotels-note reveal">Moritz, Georgina, Nikos and Paulina are at Casa Monti, on the edge of Monti; Luca and Justine stay with Giulia and Nicola. Tap the row for photos; the map below shows how the weekend sits around it. The full hotel shortlist lives in the archive at the end of the page.</p>
 
@@ -1126,13 +1121,7 @@
 <section id="info">
   <div class="sec-kicker reveal">Good to know</div>
   <h2 class="sec-title reveal">Rome in <em>late November</em></h2>
-  <div class="vignette reveal" aria-hidden="true"><svg viewBox="0 0 200 150"><g class="wash"><ellipse cx="108" cy="58" rx="66" ry="21" fill="var(--w-sage)"/><ellipse cx="104" cy="120" rx="10" ry="26" fill="#b98552"/></g>
-    <path pathLength="1" d="M40 72 C36 50 62 34 90 40 C100 22 140 20 152 38 C172 36 184 52 176 66 C164 78 130 82 104 80 C76 82 50 80 40 72" style="animation-delay:.1s"/>
-    <path pathLength="1" d="M78 58 C92 52 110 50 126 54" style="animation-delay:.9s"/>
-    <path pathLength="1" d="M96 144 C99 122 102 102 103 80" style="animation-delay:.65s"/>
-    <path pathLength="1" d="M107 144 C109 124 110 106 112 82" style="animation-delay:.8s"/>
-    <path pathLength="1" d="M104 108 C114 102 124 98 134 94" style="animation-delay:1s"/>
-  </svg></div>
+  <figure class="cartoon reveal"><svg viewBox="0 0 120 100" aria-hidden="true"><g class="wash"><ellipse cx="53" cy="27" rx="10" ry="11" fill="#8a5a35"/><ellipse cx="53" cy="50" rx="11" ry="12" fill="#e7b52c"/><ellipse cx="52" cy="74" rx="12" ry="11" fill="#c8372d"/><ellipse cx="96" cy="86" rx="24" ry="7" fill="#5e9bcb"/><ellipse cx="72" cy="11" rx="3" ry="3" fill="#d4a04a"/></g><g stroke="#2e2a26" stroke-width=".65" stroke-dasharray="20 1.8 34 1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M44 28 C42 18 58 14 62 24 C64 32 58 38 52 38 C46 38 44 34 44 28 Z"/><path d="M48 30 C48 36 59 36 59 30 C56 28 51 28 48 30 Z"/><path d="M44 26 C40 24 40 30 44 30 M62 25 C66 23 66 29 62 29"/><circle cx="51" cy="25" r="1.1" fill="#2e2a26" stroke="none"/><circle cx="57" cy="25" r="1.1" fill="#2e2a26" stroke="none"/><path d="M51 33 C53 34 56 34 57 33"/><path d="M46 38 C40 44 40 58 44 62 H62 C66 58 66 44 60 38"/><path d="M44 62 L40 85 H48 L52 67 L56 85 H64 L62 62"/><path d="M44 68 H62 M43 74 H63 M42 80 H64 M48 62 L46 85 M57 62 L59 85"/><path d="M39 85 C36 87 36 89 40 89 H48 M56 85 H64 C67 86 67 89 63 89 H56"/><path d="M60 42 C66 36 67 28 64 21"/><path d="M46 44 C40 50 40 56 42 60"/><path d="M72 11 m-2 0 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 M64 19 C65 12 68 9 70 9"/><path d="M72 84 H118 M72 84 C72 93 118 93 118 84"/><path d="M82 84 C84 77 88 77 90 84 M98 84 C100 75 106 75 108 84"/></g></svg><figcaption><span class="cap-main">&lsquo;Three coins in the fountain&rsquo;</span><span class="cap-aside">(and one chimp)</span></figcaption></figure>
 
   <div class="info-grid">
     <div class="info-card reveal">
@@ -2216,25 +2205,6 @@
   setInterval(function(){
     if (document.visibilityState === "visible") { loadTally(); loadSuggestions(); }
   }, 60000);
-})();
-</script>
-<script>
-(function(){
-  // Second, thinner stroke slightly offset from each line: the scratchy pen look.
-  document.querySelectorAll('.vignette svg, .day-sk, .doodle, .stop-sk').forEach(function(svg){
-    svg.querySelectorAll('path, circle, line').forEach(function(el){
-      if (el.closest('.wash')) return;
-      var c = el.cloneNode(); c.setAttribute('class','scr');
-      c.setAttribute('transform','translate(.9 -.7)');
-      el.parentNode.insertBefore(c, el.nextSibling);
-    });
-  });
-  // Line boil: re-seed the ink wobble a few times a second, like hand-drawn animation.
-  var t = document.getElementById('inkbT');
-  if (t && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var seeds = [1, 4, 7], i = 0;
-    setInterval(function(){ i = (i + 1) % seeds.length; t.setAttribute('seed', seeds[i]); }, 220);
-  }
 })();
 </script>
 </body>
