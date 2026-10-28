@@ -2,7 +2,7 @@
    Everything is fetched fresh from the network on every load ({cache:"no-store"}
    also bypasses the browser HTTP cache, which GitHub Pages sets to 10 min);
    the cache is used ONLY when the network is unreachable. */
-var CACHE = "roma26-v4";
+var CACHE = "roma26-v5";
 
 self.addEventListener("install", function (e) {
   self.skipWaiting();
