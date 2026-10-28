@@ -286,6 +286,13 @@
   .mk-sk path{stroke:#3a3229;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none !important;stroke-dashoffset:0 !important;animation:none !important}
   .mk-sk .wash{opacity:.75}
   .mk-sk .bg ellipse{fill:#fbf7ef;filter:url(#wash)}
+  details.arch summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.55rem;min-height:44px;margin-top:.4rem;font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--terra)}
+  details.arch summary::-webkit-details-marker{display:none}
+  details.arch summary::before{content:"+";font-style:normal;font-family:var(--sans);font-size:1.1rem;width:1.6rem;height:1.6rem;display:inline-flex;align-items:center;justify-content:center;border:1px solid currentColor;border-radius:50%;filter:url(#pen)}
+  details.arch[open] summary::before{content:"\2212"}
+  details.arch .arch-c,details.arch[open] .arch-o{display:none}
+  details.arch[open] .arch-c{display:inline}
+  details.arch .arch-n{color:var(--ink-soft);font-size:.95rem}
   .countdown .doodle{position:static;display:block;margin:0 auto .6rem;width:76px}
   @media(prefers-reduced-motion:reduce){.day-sk path,.doodle path,.stop-sk path{stroke-dashoffset:0}.wash{opacity:.55}}
   @keyframes stripIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
@@ -1206,6 +1213,8 @@
 <section id="archive">
   <div class="sec-kicker reveal">For the record</div>
   <h2 class="sec-title reveal">The hotel scout, <em>archived.</em></h2>
+  <details class="arch">
+    <summary><span class="arch-o">Open the shortlist</span><span class="arch-c">Close the shortlist</span> <span class="arch-n">· 18 hotels</span></summary>
   <p class="hotels-note reveal">Every link opens the hotel with our dates pre-filled, 26-29 November. Tap a hotel to open its photos and links; the figure is the live cheapest rate for our nights from Booking, Expedia, Hotels.com or the hotel itself, in CHF, refreshed every few days. Check where each one sits on the map below. Late November is quiet season, but book early anyway.</p>
   <div class="tiers">
     <div class="tier reveal">
@@ -1315,6 +1324,7 @@
       </div>
     </div>
   </div>
+  </details>
 </section>
 
 <footer>
