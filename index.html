@@ -1788,7 +1788,7 @@
   suggInput.addEventListener("keydown", function(e){ if (e.key === "Enter") sendSuggestion(); });
 
   /* ------- app install + push notifications ------- */
-  var VAPID = "BHS03bWYOl3hiJuQsChM2bKO-j3UV0Kbw9TmGY2v15Tosl_qpFTfaHwXseTagrF5NmiN-8XxyWnx9khhArrhMvQ";
+  var VAPID = "BLcpyTCL21iQ8DKxzDCcnoX5l0iytafIMHxNZKs2zdweyqrIVf4CeXfhK2lDQcoMV2_xXZCEjHqdvYXdTinqWMM";
   (function(){
     var navEl = document.querySelector(".nav");
     if (!navEl) return;
@@ -1953,6 +1953,22 @@
     if (!asked) {
       try { localStorage.setItem("roma26.standalone-asked", "1"); } catch(e){}
       setTimeout(openAppModal, 1200);
+    }
+  }
+
+  // the push key was rotated in Nov: anyone who already allowed notifications is
+  // re-subscribed silently with the new key (no prompt, permission is already granted)
+  if ("Notification" in window && Notification.permission === "granted" && "serviceWorker" in navigator) {
+    var rekeyed = null;
+    try { rekeyed = localStorage.getItem("roma26.vapid2"); } catch(e){}
+    if (!rekeyed) {
+      navigator.serviceWorker.ready.then(function(reg){
+        return reg.pushManager.getSubscription().then(function(old){ return old && old.unsubscribe(); });
+      }).then(function(){
+        enablePush(function(state){
+          if (state === "ok") { try { localStorage.setItem("roma26.vapid2", "1"); } catch(e){} }
+        });
+      }).catch(function(){});
     }
   }
 
