@@ -684,6 +684,8 @@
     padding:2rem 1.9rem;min-width:0;
     transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
   }
+  #weather{padding-top:3rem;padding-bottom:0}
+  .info-grid>.info-card:only-child{grid-column:1/-1}
   .info-card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(33,29,24,.35)}
   .info-card h4{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:0 0 .3rem}
   .info-card .hint{font-size:.85rem;color:var(--ink-soft);margin:0 0 1.4rem}
@@ -1037,6 +1039,18 @@
 </div>
 
 
+<section id="weather">
+  <div class="info-card reveal">
+      <svg class="doodle" viewBox="0 0 72 60" aria-hidden="true"><g class="wash"><ellipse cx="52" cy="18" rx="9" ry="9" fill="var(--w-ochre)"/><ellipse cx="30" cy="34" rx="20" ry="9" fill="var(--w-sky)"/></g><path pathLength="1" d="M44 14 a9 9 0 0 1 17 6 M52 4 V1 M63 8 L66 5 M67 19 H70"/><path pathLength="1" d="M12 42 C5 42 5 31 14 31 C14 22 27 20 31 27 C35 20 48 23 46 33 C54 33 54 42 46 42 Z"/><path pathLength="1" d="M19 48 L16 55 M30 48 L27 55 M41 48 L38 55"/></svg>
+      <h4>The weather</h4>
+      <p class="hint">Live forecast. Sunset around 16:40.</p>
+      <div class="wx-live">
+        <div class="wx-live-t">Rome, Thursday 26 to Sunday 29 November</div>
+        <div class="wx-strip" id="wxstrip"><span class="wx-loading">Checking the sky over Rome…</span></div>
+      </div>
+    </div>
+</section>
+
 <section id="program">
   <div class="sec-kicker reveal">The plan</div>
   <h2 class="sec-title reveal">The plan, <em>day by day.</em><span class="h-mouse" aria-hidden="true"><svg viewBox="10 4 106 86"><g class="wash"><ellipse cx="91" cy="75" rx="21" ry="15" fill="#c8372d"/><ellipse cx="82" cy="41" rx="9" ry="5" fill="#e7b52c"/></g><use href="#mousewash" transform="translate(-20 2)"/><g stroke="#2e2a26" stroke-width=".65" stroke-dasharray="20 1.8 34 1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#mouse" transform="translate(-20 2)"/><path d="M70 60 H112 V90 H70 Z M84 60 V54 H98 V60 M78 60 V90 M104 60 V90"/><path d="M86 68 H96 V78 H86 Z M91 70 V76 M88 73 H94"/><path d="M74 44 L90 36 L90 46 Z M83 41 a1 1 0 1 0 .1 0 M87 43 a.8 .8 0 1 0 .1 0"/><path d="M40 58 C50 52 62 46 74 44"/></g></svg></span></h2>
@@ -1166,15 +1180,6 @@
 
   <div class="info-grid">
     <div class="info-card reveal">
-      <svg class="doodle" viewBox="0 0 72 60" aria-hidden="true"><g class="wash"><ellipse cx="52" cy="18" rx="9" ry="9" fill="var(--w-ochre)"/><ellipse cx="30" cy="34" rx="20" ry="9" fill="var(--w-sky)"/></g><path pathLength="1" d="M44 14 a9 9 0 0 1 17 6 M52 4 V1 M63 8 L66 5 M67 19 H70"/><path pathLength="1" d="M12 42 C5 42 5 31 14 31 C14 22 27 20 31 27 C35 20 48 23 46 33 C54 33 54 42 46 42 Z"/><path pathLength="1" d="M19 48 L16 55 M30 48 L27 55 M41 48 L38 55"/></svg>
-      <h4>The weather</h4>
-      <p class="hint">Live forecast. Sunset around 16:40.</p>
-      <div class="wx-live">
-        <div class="wx-live-t">Rome, Thursday 26 to Sunday 29 November</div>
-        <div class="wx-strip" id="wxstrip"><span class="wx-loading">Checking the sky over Rome…</span></div>
-      </div>
-    </div>
-    <div class="info-card reveal d1">
       <svg class="doodle" viewBox="0 0 72 60" aria-hidden="true"><g class="wash"><ellipse cx="35" cy="23" rx="22" ry="8" fill="var(--w-rosa)"/></g><path pathLength="1" d="M12 30 C14 13 56 13 58 30 C54 26 49 26 46 30 C43 26 38 26 35 30 C32 26 27 26 24 30 C21 26 15 26 12 30 Z"/><path pathLength="1" d="M35 30 V50 C35 55 28 55 28 50"/><path pathLength="1" d="M35 16 V11"/><path pathLength="1" d="M18 44 L16 48 M54 40 L52 44 M60 48 L58 52"/></svg>
       <h4>What to bring</h4>
       <p class="hint">The short list.</p>
@@ -2101,9 +2106,10 @@
       document.getElementById("cdnum").textContent = "Ora";
       document.getElementById("cdlabel").textContent = "it's Roma weekend";
     } else {
-      var days = Math.ceil((start - now) / 86400000);
-      document.getElementById("cdnum").textContent = days;
-      document.getElementById("cdlabel").textContent = days === 1 ? "day to Roma" : "days to Roma";
+      var romeDay = function(d){ return Date.parse(d.toLocaleDateString("en-CA", { timeZone:"Europe/Rome" })); };
+      var days = Math.round((romeDay(start) - romeDay(now)) / 86400000);
+      document.getElementById("cdnum").textContent = days > 0 ? days : "Oggi";
+      document.getElementById("cdlabel").textContent = days > 1 ? "days to Roma" : days === 1 ? "day to Roma" : "we fly to Roma";
     }
   })();
 
