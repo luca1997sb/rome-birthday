@@ -709,7 +709,20 @@
   .wxd .t{font-family:var(--serif);font-size:.95rem}
   .wxd .t span{color:var(--ink-soft);font-size:.8rem}
   .wxd .r{font-size:.62rem;color:var(--ink-soft);margin-top:.15rem}
-  #wxstrip .wxd{flex:1}
+  #wxstrip{flex-direction:column;gap:.6rem;overflow:visible}
+  #wxstrip .wxd{text-align:left;padding:.75rem .9rem .8rem}
+  .wxd-h{display:flex;align-items:baseline;gap:.6rem}
+  .wxd-h .d{min-width:3.6rem}
+  .wxd-h .g{margin:0;font-size:1.05rem}
+  .wxd-h .w{font-family:var(--serif);font-style:italic;font-size:1rem;flex:1}
+  .wx-bars{display:grid;grid-template-columns:repeat(16,1fr);gap:2px;margin-top:.6rem;height:14px}
+  .wx-bars i{background:var(--w-sky);opacity:calc(.12 + var(--p) * .88);border-radius:1px}
+  .wx-bars i.meal{outline:1px solid var(--terra);outline-offset:1px}
+  .wx-axis{display:grid;grid-template-columns:repeat(16,1fr);gap:2px;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:.3rem;white-space:nowrap}
+  .wx-axis span:nth-child(1){grid-column:1/span 3}
+  .wx-axis span:nth-child(2){grid-column:6/span 5}
+  .wx-axis span:nth-child(3){grid-column:13/span 4}
+  #wxstrip .wxd .r{font-size:.78rem;line-height:1.45;margin-top:.45rem;color:var(--ink)}
 
   .bring{list-style:none;margin:0;padding:0}
   .bring li{
@@ -912,6 +925,7 @@
   .notte-moon path{stroke-width:1.3;stroke-dasharray:.4 .03 .55 .025}
   .notte.in .notte-moon{opacity:.8}
   .countdown{margin-bottom:1.8rem}
+  .hero .countdown{margin:1.8rem 0 0;position:relative;z-index:2}
   .countdown .cd-n{
     display:block;font-family:var(--serif);font-size:clamp(2.6rem,7vw,4rem);
     line-height:1;color:var(--terra);
@@ -1035,6 +1049,10 @@
   <h1><span>R</span><span>O</span><span>M</span><span>A</span></h1>
   <div class="dates">Luca's birthday weekend</div>
   <div class="when">26-29 November 2026</div>
+  <div class="countdown" id="countdown" hidden>
+    <span class="cd-n" id="cdnum"></span>
+    <span class="cd-l" id="cdlabel"></span>
+  </div>
   <a class="scrollcue" href="#program">Scroll</a>
 </div>
 
@@ -1350,10 +1368,6 @@
         <path pathLength="1" d="M1615 80 V44 a35 38 0 0 1 70 0 V80" style="animation-delay:1.33s"/>
       </g>
     </svg>
-  </div>
-  <div class="countdown reveal" id="countdown" hidden>
-    <span class="cd-n" id="cdnum"></span>
-    <span class="cd-l" id="cdlabel"></span>
   </div>
   <div class="big">Ci vediamo a Roma.</div>
   <div class="small">26-29 November 2026</div>
@@ -2057,19 +2071,57 @@
     return "☁";
   }
   var wxStrip = document.getElementById("wxstrip");
-  fetch("https://api.open-meteo.com/v1/forecast?latitude=41.8967&longitude=12.4822&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FRome&start_date=2026-11-26&end_date=2026-11-29")
+  function wxWords(c){
+    if (c === 0) return "Clear";
+    if (c === 1) return "Mostly sunny";
+    if (c === 2) return "Sun and cloud";
+    if (c === 3) return "Overcast";
+    if (c >= 45 && c <= 48) return "Fog";
+    if (c >= 51 && c <= 57) return "Drizzle";
+    if (c >= 61 && c <= 67) return c >= 65 ? "Heavy rain" : "Rain";
+    if (c >= 71 && c <= 77) return "Snow";
+    if (c >= 80 && c <= 82) return "Showers";
+    if (c >= 95) return "Thunderstorms";
+    return "Cloudy";
+  }
+  function hh(h){ return (h < 10 ? "0" : "") + h + ":00"; }
+  fetch("https://api.open-meteo.com/v1/forecast?latitude=41.8967&longitude=12.4822&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_speed_10m_max&hourly=temperature_2m,precipitation,precipitation_probability&timezone=Europe%2FRome&start_date=2026-11-26&end_date=2026-11-29")
     .then(function(r){ return r.json(); })
     .then(function(d){
-      var days = d.daily;
+      var days = d.daily, hr = d.hourly;
       var names = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
       var html = "";
       for (var i = 0; i < days.time.length; i++) {
         var dt = new Date(days.time[i] + "T12:00:00");
+        var bars = "", wet = [], lunch = null, dinner = null;
+        for (var h = 8; h < 24; h++) {
+          var k = i * 24 + h, pp = hr.precipitation_probability[k] || 0, mm = hr.precipitation[k] || 0;
+          var isWet = mm >= 0.1 || pp >= 50;
+          if (isWet) wet.push(h);
+          if (h === 13) lunch = hr.temperature_2m[k];
+          if (h === 20) dinner = hr.temperature_2m[k];
+          bars += '<i class="' + (h === 13 || h === 20 ? "meal " : "") + '" style="--p:' + (mm >= 0.1 ? Math.max(pp, 60) : pp) / 100 + '" title="' + hh(h) + ": " + pp + '% rain"></i>';
+        }
+        // group wet hours into ranges like 09:00-14:00
+        var spans = [];
+        for (var j = 0; j < wet.length; j++) {
+          var last = spans[spans.length - 1];
+          if (last && wet[j] === last[1] + 1) last[1] = wet[j]; else spans.push([wet[j], wet[j]]);
+        }
+        var rainTxt = spans.length
+          ? "Rain " + spans.map(function(s){ return hh(s[0]) + "–" + hh(s[1] + 1 === 24 ? 0 : s[1] + 1); }).join(", ") + " (" + Math.round(days.precipitation_sum[i]) + " mm)"
+          : "Dry all day";
+        var dinnerWet = wet.indexOf(20) > -1, lunchWet = wet.indexOf(13) > -1;
         html += '<div class="wxd" style="animation-delay:' + (i * 0.06) + 's">' +
-          '<div class="d">' + names[dt.getDay()] + " " + dt.getDate() + '</div>' +
-          '<div class="g">' + wxGlyph(days.weather_code[i]) + '</div>' +
-          '<div class="t">' + Math.round(days.temperature_2m_max[i]) + '° <span>' + Math.round(days.temperature_2m_min[i]) + '°</span></div>' +
-          '<div class="r">' + (days.precipitation_probability_max[i] >= 20 ? days.precipitation_probability_max[i] + '% rain' : 'dry') + '</div>' +
+          '<div class="wxd-h"><span class="d">' + names[dt.getDay()] + " " + dt.getDate() + '</span>' +
+          '<span class="g">' + wxGlyph(days.weather_code[i]) + '</span>' +
+          '<span class="w">' + wxWords(days.weather_code[i]) + '</span>' +
+          '<span class="t">' + Math.round(days.temperature_2m_max[i]) + '° <span>' + Math.round(days.temperature_2m_min[i]) + '°</span></span></div>' +
+          '<div class="wx-bars" aria-hidden="true">' + bars + '</div>' +
+          '<div class="wx-axis" aria-hidden="true"><span>08</span><span>lunch</span><span>dinner</span></div>' +
+          '<div class="r">' + rainTxt + '. Lunch ' + Math.round(lunch) + '°' + (lunchWet ? ", wet" : "") +
+          ', dinner ' + Math.round(dinner) + '°' + (dinnerWet ? ", bring the umbrella" : ", dry") +
+          '. Wind up to ' + Math.round(days.wind_speed_10m_max[i]) + ' km/h.</div>' +
         '</div>';
       }
       wxStrip.innerHTML = html;
